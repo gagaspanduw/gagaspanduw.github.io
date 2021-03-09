@@ -15,8 +15,8 @@ class Navbar extends Component {
         return(
                 <navbar>
                     <div className="flex flex-row justify-between items-center pt-3">
-                    <a className="pl-20"></a>
-                    <ul className="pr-20 text-lg font-bold">
+                    <a className="pl-5 lg:pl-20"></a>
+                    <ul className="pr-5 lg:pr-20 text-lg font-bold">
                         {
                             this.state.menus.map( menu => (
                                 <li className="hover:text-gray-300" style={styles.menuLi}>
