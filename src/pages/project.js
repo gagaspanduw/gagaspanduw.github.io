@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import owntols from '../img/owntols.png';
 import nubie from '../img/nubie.png';
+import pengarsipan from '../img/pengarsipan.png';
+import absensi from '../img/absensi.png';
 import uiuxwebsite from '../img/uiuxwebsite.png';
 import uiuxapp from '../img/uiuxapp.png';
+import { Link } from 'react-router-dom';
 
 const Project = (props) => (
     <div>
@@ -24,6 +27,27 @@ const Project = (props) => (
                     <a target="_blank" href="https://www.nubie.id"><img className="w-4/4 lg:w-3/4" src={nubie}></img></a>
                     <div className="text-sm pt-5 pb-20 flex flex-row">
                         <a target="_blank" href="https://www.nubie.id" className="flex flex-row">
+                        <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>&nbsp;View website</a>
+                    </div>
+                </div>
+            </div>
+
+            <div className="flex flex-col justify-center lg:flex-row">
+                <div className="flex flex-col">
+                    <a target="_blank" href=""><img className="w-4/4 lg:w-3/4" src={pengarsipan}></img></a>
+                    <div className="text-sm pt-5 pb-20 flex flex-row">
+                        <a target="_blank" href="" className="flex flex-row">
+                        <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>&nbsp;View website</a>
+                    </div>
+                </div>
+                <div className="flex flex-col justify-center">
+                    <a target="_blank" href=""><img className="w-4/4 lg:w-3/4" src={absensi}></img></a>
+                    <div className="text-sm pt-5 pb-20 flex flex-row">
+                        <a target="_blank" href="" className="flex flex-row">
                         <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                         </svg>&nbsp;View website</a>

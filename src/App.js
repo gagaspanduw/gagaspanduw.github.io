@@ -19,7 +19,7 @@ function App() {
       <header className="App-header text-right">
         <Navbar  title="Coba React" />
         <Route path="/" exact component={Home}/>
-        <Route path="/project" exact component={Project}/>     
+        <Route path="/project" exact component={Project}/>    
       </header>
       <footer className="pl-10 pr-10 lg:pl-32 lg:pr-32 pt-10 pb-10 bg-gray-800">
         <p className="text-white text-2xl font-bold">Get in touch with me</p>
