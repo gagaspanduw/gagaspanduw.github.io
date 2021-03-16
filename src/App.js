@@ -33,6 +33,8 @@ function App() {
                         </svg></a>
                     </div>
       <p className="text-white pt-10">© 2021 Gagas pandu wibowo, All Rights Reserved. All other trademarks belong to their respective owners.</p>
+      <br></br><div className="flex flex-row"><p className="text-white flex flex-row">Created with &nbsp; </p><p className="text-red-400">&#10084;</p><p className="text-white">, React.Js, and Tailwind CSS.</p>
+      </div>
       </footer>
     </div>
   </Router>
