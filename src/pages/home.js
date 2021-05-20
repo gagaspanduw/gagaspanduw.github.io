@@ -20,7 +20,7 @@ const Home = (props) => (
                 <div>
                     <h3 className="text-red-600 text-3xl font-bold">Hello, I'm Gagas Pandu Wibowo</h3>
                     <h2 className="font-bold text-5xl pt-1 pb-1">Software Developer And Also A Designer</h2>
-                    <p className="text-sm pt-6 pb-6">I’m from Indonesia and I have programming experience for more than 1 years. 
+                    <p className="text-sm pt-6 pb-6">I’m from Indonesia and I have programming experience. 
                     I’ve worked making program since i was studying on college for other student thesis, 
                     I build my own business since 2017, and start making the website with wordpress on 2020. 
                     Apart from developing website i also can design UI UX website or app with Figma.   
