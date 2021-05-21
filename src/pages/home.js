@@ -18,7 +18,7 @@ const Home = (props) => (
         <div className="lg:pl-32 lg:pr-32 p-10 text-left">
             <div className="flex flex-1 items-center">
                 <div>
-                    <h3 className="text-red-600 text-3xl font-bold">Hello, I'm Gagas Pandu Wibowo</h3>
+                    <h3 className="text-red-600 text-3xl font-bold">Hello, I'm Gagas Pandu W</h3>
                     <h2 className="font-bold text-5xl pt-1 pb-1">Software Developer And Also A Designer</h2>
                     <p className="text-sm pt-6 pb-6">I’m from Indonesia and I have programming experience. 
                     I’ve worked making program since i was studying on college for other student thesis, 
