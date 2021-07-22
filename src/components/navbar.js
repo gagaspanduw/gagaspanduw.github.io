@@ -8,6 +8,7 @@ class Navbar extends Component {
             menus: [
                 {label: 'Home', path: '/' }, 
                 {label: 'Project', path: '/project' },
+                {label: 'Certificate', path: '/certificate'}
             ]
         }
     }
@@ -22,7 +23,7 @@ class Navbar extends Component {
                                 <li className="hover:text-gray-300" style={styles.menuLi}>
                                 <Link to={menu.path}>{menu.label}</Link> </li>))
                         }
-                        <li className="hover:text-gray-300" style={styles.menuLi}><a href="mailto:gagasanduw@gmail.com">Contact</a></li>
+                        <li className="hover:text-gray-300" style={styles.menuLi}><a href="mailto:gagaspanduw@gmail.com">Contact</a></li>
                     </ul>
                     </div>
                 </navbar>

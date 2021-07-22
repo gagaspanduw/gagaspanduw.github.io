@@ -126,21 +126,47 @@ const Home = (props) => (
         </div>
         
         <div className="bg-gray-600 lg:pl-20 lg:pr-20">
-            <h3 className="flex justify-center p-10 text-3xl font-bold">Skills</h3>
+            <h3 className="flex justify-center p-10 text-3xl font-bold">Skills &amp; Technologies</h3>
             <div className="flex flex-col justify-center pb-10">
                 <div className="flex flex-row justify-center">
-                <a className="p-5"><img width="100" height="100" src={photoshoplogo}></img></a>
-                <a className="p-5"><img width="100" height="100" src={illustratorlogo}></img></a>
-                <a className="p-5"><img width="100" height="100" src={figmalogo}></img></a>
-                <a className="p-5"><img width="100" height="100" src={css3logo}></img></a>
-                <a className="p-5"><img width="100" height="100" src={html5logo}></img></a>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" height="100" src={photoshoplogo}></img></a><br/>
+                        <p>Photoshop</p>
+                    </div>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" height="100" src={figmalogo}></img></a><br/>
+                        <p>Figma</p>
+                    </div>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" height="100" src={css3logo}></img></a><br/>
+                        <p>CSS</p>
+                    </div>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" height="100" src={html5logo}></img></a><br/>
+                        <p>HTML</p>
+                    </div>
                 </div>
                 <div className="flex flex-row justify-center">
-                <a className="p-5"><img width="100" height="100" src={javascriptlogo}></img></a>
-                <a className="p-5"><img className="bg-gray-200 rounded" width="100" height="100" src={phplogo}></img></a>
-                <a className="p-5"><img width="100" height="100" src={bootstraplogo}></img></a>
-                <a className="p-5"><img className="bg-gray-200 rounded" width="100" height="100" src={tailwindcsslogo}></img></a>
-                <a className="p-5"><img className="bg-gray-200 rounded" width="100" height="100" src={wordpresslogo}></img></a>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" height="100" src={javascriptlogo}></img></a><br/>
+                        <p>Javascript</p>
+                    </div>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" className="bg-gray-200 rounded" height="100" src={phplogo}></img></a><br/>
+                        <p>PHP</p>
+                    </div>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" height="100" src={bootstraplogo}></img></a><br/>
+                        <p>Bootstrap</p>
+                    </div>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" className="bg-gray-200 rounded" height="100" src={tailwindcsslogo}></img></a><br/>
+                        <p>Taildwind.CSS</p>
+                    </div>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" className="bg-gray-200 rounded" height="100" src={wordpresslogo}></img></a><br/>
+                        <p>Wordpress</p>
+                    </div>
                 </div>
              </div>
         </div>
