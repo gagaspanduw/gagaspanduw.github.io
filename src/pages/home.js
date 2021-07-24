@@ -4,9 +4,9 @@ import css3logo from '../img/css3logo.png';
 import html5logo from '../img/html5logo.png';
 import javascriptlogo from '../img/javascriptlogo.jpg';
 import phplogo from '../img/phplogo.png';
-import illustratorlogo from '../img/illustratorlogo.png';
 import figmalogo from '../img/figmalogo.png';
 import bootstraplogo from '../img/bootstraplogo.png';
+import javalogo from '../img/javalogo.png';
 import tailwindcsslogo from '../img/tailwindcsslogo.svg';
 import wordpresslogo from '../img/wordpresslogo.svg';
 import owntols from '../img/owntols.png';
@@ -19,7 +19,7 @@ const Home = (props) => (
             <div className="flex flex-1 items-center">
                 <div>
                     <h3 className="text-red-600 text-3xl font-bold">Hello, I'm Gagas Pandu W</h3>
-                    <h2 className="font-bold text-5xl pt-1 pb-1">Software Developer And Also A Designer</h2>
+                    <h2 className="font-bold text-5xl pt-1 pb-1">Software Engineer Focusing on Software Testing</h2>
                     <p className="text-sm pt-6 pb-6">I’m from Indonesia and I have programming experience. 
                     I’ve worked making program since i was studying on college for other student thesis, 
                     I build my own business since 2017, and start making the website with wordpress on 2020. 
@@ -144,6 +144,10 @@ const Home = (props) => (
                     <div className="text-center text-sm p-5">
                         <a className="pb-1"><img width="100" height="100" src={html5logo}></img></a><br/>
                         <p>HTML</p>
+                    </div>
+                    <div className="text-center text-sm p-5">
+                        <a className="pb-1"><img width="100" className="bg-gray-200 rounded" height="100" src={javalogo}></img></a><br/>
+                        <p>Java</p>
                     </div>
                 </div>
                 <div className="flex flex-row justify-center">
