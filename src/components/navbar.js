@@ -14,10 +14,10 @@ class Navbar extends Component {
     }
     render(){
         return(
-                <navbar>
+                <navbar className="flex justify-center lg:justify-end">
                     <div className="flex flex-row justify-between items-center pt-3">
                     <a className="pl-5 lg:pl-20"></a>
-                    <ul className="pr-5 lg:pr-20 text-lg font-bold">
+                    <ul className="pr-5 lg:pr-20 text-sm lg:text-2xl font-bold">
                         {
                             this.state.menus.map( menu => (
                                 <li className="hover:text-gray-300" style={styles.menuLi}>
