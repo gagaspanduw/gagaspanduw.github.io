@@ -37,7 +37,7 @@ class Certificates extends Component {
                 link:'https://testautomationu.applitools.com/certificate/?id=053c7a30'},
                 {image:'https://firebasestorage.googleapis.com/v0/b/testautomationu-9e0b6.appspot.com/o/certificates%2FTAU-55a7c5a8.png?alt=media&token=0d0be566-8062-4769-a92e-c9127993c3cc', 
                 courseName:'Continuous Integration with Jenkins', 
-                organizationName:'Coming Soon', 
+                organizationName:'Test Automation University', 
                 link:'https://testautomationu.applitools.com/certificate/?id=55a7c5a8'},
                 {image:'', 
                 courseName:'Coming Soon', 
@@ -50,7 +50,7 @@ class Certificates extends Component {
         return(
             <div className="pr-10 pl-10 lg:pr-32 lg:pl-32 text-left ">
             <h2 className="pb-10 text-3xl font-bold">CERTIFICATE</h2>
-            <div className="grid grid-cols-3 justify-center content-center lg:flex-row">
+            <div className="grid grid-cols-1 lg:grid-cols-3 justify-center content-center lg:flex-row">
                     {
                             this.state.menu.map(menu => (
                                 <div className="flex flex-col ">
