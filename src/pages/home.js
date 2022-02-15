@@ -25,7 +25,7 @@ const Home = (props) => (
                     <h3 className="text-red-600 text-3xl font-bold">Hello, I'm Gagas Pandu W</h3>
                     <h2 className="font-bold text-5xl pt-1 pb-1">Software Engineer Focusing on Software Testing</h2>
                     <p className="text-sm pt-6 pb-6">I am from Indonesia, i work as Software Quality Assurance who have
-                    responsibility to make create test case, do manual test, and make automation testing.   
+                    responsibility to make test case, do manual test, and make automation testing.   
                     right now I am looking forward to collaborate with you!
                     </p>
                     <div className="flex flex-row">
