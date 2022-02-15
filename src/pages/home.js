@@ -24,10 +24,8 @@ const Home = (props) => (
                 <div>
                     <h3 className="text-red-600 text-3xl font-bold">Hello, I'm Gagas Pandu W</h3>
                     <h2 className="font-bold text-5xl pt-1 pb-1">Software Engineer Focusing on Software Testing</h2>
-                    <p className="text-sm pt-6 pb-6">I’m from Indonesia and I have programming experience. 
-                    I’ve worked making program since i was studying on college for other student thesis, 
-                    I build my own business since 2017, and start making the website with wordpress on 2020. 
-                    Apart from developing website i also can design UI UX website or app with Figma.   
+                    <p className="text-sm pt-6 pb-6">I am from Indonesia, i work as Software Quality Assurance who have
+                    responsibility to make create test case, do manual test, and make automation testing.   
                     right now I am looking forward to collaborate with you!
                     </p>
                     <div className="flex flex-row">
@@ -47,7 +45,7 @@ const Home = (props) => (
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg> &nbsp; Mail me </a>
                         </div>
-                        <a className="hover:text-gray-400 text-sm ml-2 flex flex-row" href="https://drive.google.com/file/d/1RtY6uwJqfKPCqgrTSfSM2R85N4zsdIZP/view?usp=sharing"><svg className="animate-bounce" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <a className="hover:text-gray-400 text-sm ml-2 flex flex-row" href="https://drive.google.com/file/d/148Wxv5lOffhVm9k4ANt2qOuTS23V1i8N/view?usp=sharing"><svg className="animate-bounce" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
                         </svg> &nbsp;Download CV</a>
                     </div>
