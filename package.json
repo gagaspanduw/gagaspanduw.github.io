@@ -1,7 +1,7 @@
 {
   "name": "coba-react",
   "version": "0.1.0",
-  "homepage": "https://gagaspanduw.github.io/coba-react/",
+  "homepage": "https://gagaspanduw.github.io/",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.1",
