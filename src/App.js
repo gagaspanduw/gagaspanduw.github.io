@@ -15,7 +15,7 @@ import Certificate from './pages/certificate';
 function App() {
   return (
   <Router>
-    <div className="App">
+    <div className="bg-gray-800">
       <header className="App-header text-right">
         <Navbar  title="Coba React" />
         <Route path="/" exact component={Home}/>

@@ -14,7 +14,7 @@ class Navbar extends Component {
     }
     render(){
         return(
-                <navbar className="flex justify-center lg:justify-end">
+                <navbar className="sticky top-0 z-50 bg-gray-800 flex justify-center lg:justify-end">
                     <div className="flex flex-row justify-between items-center pt-3">
                     <a className="pl-5 lg:pl-20"></a>
                     <ul className="pr-5 lg:pr-20 text-sm lg:text-2xl font-bold">
