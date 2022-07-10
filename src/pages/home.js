@@ -16,6 +16,7 @@ import owntols from '../img/owntols.png';
 import nubie from '../img/nubie.png';
 import demoblazetesting from '../img/demoblazetesting.png';
 import { Link } from 'react-router-dom';
+import Skills from '../components/skills';
 
 const Home = (props) => (
     <div>
@@ -131,8 +132,9 @@ const Home = (props) => (
                 </div>
             </div>
         </div>
+        <Skills></Skills>
         
-        <div className="bg-gray-600 pr-5 pl-5 lg:pl-32 lg:pr-32">
+        {/* <div className="bg-gray-600 pr-5 pl-5 lg:pl-32 lg:pr-32">
             <h3 className="flex justify-center p-10 text-3xl font-bold text-center">Skills &amp; Technologies</h3>
             <div className="flex flex-col justify-center pb-10">
                 <div className="flex flex-row justify-center">
@@ -190,7 +192,7 @@ const Home = (props) => (
                     </div>
                 </div>
              </div>
-        </div>
+        </div> */}
 
     </div>
 

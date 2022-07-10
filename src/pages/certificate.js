@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import googlecertificate from '../img/fundamentaldigitalmarketing.jpg'
-import dicodingawscloud from '../img/cloudpractitioneressentials.jpg'
+import images from '../img/image.js'
+// import googlecertificate from '../img/fundamentaldigitalmarketing.jpg'
+// import dicodingawscloud from '../img/cloudpractitioneressentials.jpg'
 
 class Certificates extends Component {
     constructor(){
@@ -19,11 +20,11 @@ class Certificates extends Component {
                 courseName:'IntelliJ for Test Automation Engineers', 
                 organizationName:'Test Automation University', 
                 link:'https://testautomationu.applitools.com/certificate/?id=9d208e5e'},
-                {image:googlecertificate, 
+                {image:images.googledigiralmarketingcertificate, 
                 courseName:'Fundamental of Digital Marketing', 
                 organizationName:'Google Digital Garage', 
                 link:'https://learndigital.withgoogle.com/digitalgarage/validate-certificate-code'},
-                {image:dicodingawscloud, 
+                {image:images.dicodingawscloud, 
                 courseName:'Cloud Practitioner Essentials (Belajar Dasar AWS Cloud', 
                 organizationName:'Dicoding', 
                 link:'https://www.dicoding.com/certificates/RVZK4580EPD5'},
