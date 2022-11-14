@@ -22,6 +22,7 @@ class Skills extends Component {
                 {label: "Flutter Gherkin", img:image.flutterlogo},
                 {label: "Postman", img:image.postmantlogo},
                 {label: "Cucumber", img:image.cucumberlogo},
+                {label: "Appium", img:"https://www.pinclipart.com/picdir/big/567-5676022_appium-perfecto-appium-logo-clipart.png"},
             ]
         }
     }
