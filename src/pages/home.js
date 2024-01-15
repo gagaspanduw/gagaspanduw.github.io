@@ -68,7 +68,7 @@ const Home = (props) => (
                 </div>
                 <div className="flex flex-col justify-center">
                     <p>Robot Process Automation</p>
-                    <a target="_blank" href="https://github.com/gagaspanduw/auto-download-send-sftp"><img className="w-3/4" src={automationdownloadsendsftp}></img></a>
+                    <a target="_blank" href="https://github.com/gagaspanduw/auto-download-send-sftp"><img className="w-4/4" src={automationdownloadsendsftp}></img></a>
                     <div className="pt-5 pb-20 flex flex-row">
                         <a target="_blank" href="https://github.com/gagaspanduw/auto-download-send-sftp" className="text-sm flex flex-row">
                         <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
