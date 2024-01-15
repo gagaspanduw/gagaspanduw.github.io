@@ -15,6 +15,8 @@ import testnglogo from '../img/testnglogo.png';
 import owntols from '../img/owntols.png';
 import nubie from '../img/nubie.png';
 import demoblazetesting from '../img/demoblazetesting.png';
+import automationdownloadsendsftp from '../img/automation-download-send-sftp.png'
+import automationfluttergherkin from '../img/automation-flutter-gherkin.png'
 import { Link } from 'react-router-dom';
 import Skills from '../components/skills';
 
@@ -26,7 +28,7 @@ const Home = (props) => (
                     <h3 className="text-red-600 text-3xl font-bold">Hello, I'm Gagas</h3>
                     <h2 className="font-bold text-5xl pt-1 pb-1">Software Engineer Focusing on Software Testing</h2>
                     <p className="text-sm pt-6 pb-6">I am from Indonesia, i work as Software Quality Assurance who have
-                    responsibility to make test case, do manual test, and make automation testing.   
+                    responsibility to create test case, do manual test, and create automation testing.   
                     right now I am looking forward to collaborate with you!
                     </p>
                     <div className="flex flex-row">
@@ -55,23 +57,23 @@ const Home = (props) => (
             <div className="">
             <h2 className="pt-20 lg:pt-0 pb-10 font-bold text-3xl">PROJECTS</h2>
                 <div className="flex flex-col justify-center">
-                    <p>Software testing</p>
-                    <a target="_blank" href="https://github.com/gagaspanduw/demoblaze.com_testing"><img className="w-3/4" src={demoblazetesting}></img></a>
+                    <p>Automation Testing</p>
+                    <a target="_blank" href="https://github.com/gagaspanduw/automation-flutter_gherkin"><img className="w-3/4" src={automationfluttergherkin}></img></a>
                     <div className="pt-5 pb-20 flex flex-row">
-                        <a target="_blank" href="https://github.com/gagaspanduw/demoblaze.com_testing" className="text-sm flex flex-row">
+                        <a target="_blank" href="https://github.com/gagaspanduw/automation-flutter_gherkin" className="text-sm flex flex-row">
                         <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                         </svg>&nbsp;View source code</a>
                     </div>
                 </div>
                 <div className="flex flex-col justify-center">
-                    <p>Web developtment</p>
-                    <a target="_blank" href="https://www.owntols.com"><img src={owntols}></img></a>
+                    <p>Robot Process Automation</p>
+                    <a target="_blank" href="https://github.com/gagaspanduw/auto-download-send-sftp"><img className="w-3/4" src={automationdownloadsendsftp}></img></a>
                     <div className="pt-5 pb-20 flex flex-row">
-                        <a target="_blank" href="https://www.owntols.com" className="text-sm flex flex-row">
+                        <a target="_blank" href="https://github.com/gagaspanduw/auto-download-send-sftp" className="text-sm flex flex-row">
                         <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>&nbsp;View website</a>
+                        </svg>&nbsp;View source code</a>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,8 @@ import uiuxwebsite from '../img/uiuxwebsite.png';
 import uiuxapp from '../img/uiuxapp.png';
 import demoblazetesting from '../img/demoblazetesting.png';
 import theinternettesting from '../img/theinternettesting.png';
+import automationdownloadsendsftp from '../img/automation-download-send-sftp.png'
+import automationfluttergherkin from '../img/automation-flutter-gherkin.png'
 import { Link } from 'react-router-dom';
 
 const Project = (props) => (
@@ -15,6 +17,23 @@ const Project = (props) => (
             <h2 className="pb-10 text-3xl font-bold">PROJECTS</h2>
 
             <h2 className="pb-5 text-1xl font-bold">Software Testing</h2>
+            <div className="flex flex-col lg:flex-row">
+                <div className="flex flex-col justify-center">
+                <a target="_blank" href="https://github.com/gagaspanduw/automation-flutter_gherkin"><img className="w-4/4 lg:w-3/4" src={automationfluttergherkin}></img></a>
+                    <a href="https://github.com/gagaspanduw/automation-flutter_gherkin" className="text-sm pt-5 pb-20 flex flex-row">
+                    <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                    </svg>&nbsp;View source code</a>
+                </div>
+                <div className="flex flex-col justify-center">
+                <a target="_blank" href="https://github.com/gagaspanduw/auto-download-send-sftp"><img className="w-3/4 lg:w-3/4" src={automationdownloadsendsftp}></img></a>
+                    <a href="https://github.com/gagaspanduw/auto-download-send-sftp" className="text-sm pt-5 pb-20 flex flex-row">
+                    <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                    </svg>&nbsp;View source code</a>
+                </div>
+            </div>
+            
             <div className="flex flex-col lg:flex-row">
                 <div className="flex flex-col justify-center">
                 <a target="_blank" href="https://github.com/gagaspanduw/demoblaze.com_testing"><img className="w-4/4 lg:w-3/4" src={demoblazetesting}></img></a>
