@@ -58,7 +58,7 @@ const Home = (props) => (
             <h2 className="pt-20 lg:pt-0 pb-10 font-bold text-3xl">PROJECTS</h2>
                 <div className="flex flex-col justify-center">
                     <p>Automation Testing</p>
-                    <a target="_blank" href="https://github.com/gagaspanduw/automation-flutter_gherkin"><img className="w-3/4" src={automationfluttergherkin}></img></a>
+                    <a target="_blank" href="https://github.com/gagaspanduw/automation-flutter_gherkin"><img className="w-4/4" src={automationfluttergherkin}></img></a>
                     <div className="pt-5 pb-20 flex flex-row">
                         <a target="_blank" href="https://github.com/gagaspanduw/automation-flutter_gherkin" className="text-sm flex flex-row">
                         <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
