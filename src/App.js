@@ -13,6 +13,7 @@ import Home from './pages/home';
 import Project from './pages/project';
 import Certificate from './pages/certificate';
 import Bday from './pages/bday';
+import Naybday from './pages/naybday';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/project" exact component={Project}/>
         <Route path="/certificate" exact component={Certificate}/>    
         <Route path="/bday" exact component={Bday}/>    
+        <Route path="/naybday" exact component={Naybday}/>    
       </header>
       <footer className="pl-10 pr-10 lg:pl-32 lg:pr-32 pt-10 pb-10 bg-gray-800">
         <p className="text-white text-2xl font-bold">Get in touch with me</p>
