@@ -179,7 +179,7 @@ class Bdays extends Component{
                     ) : null}
                 </div>
                 ) : (
-                <p className="text-3xl font-bold text-center">{this.state.countdown}</p>
+                <p className="-mt-80 lg:mt-0 mx-auto justify-center text-3xl font-bold text-center">{this.state.countdown}</p>
                 )}
           </div>
           </div>
