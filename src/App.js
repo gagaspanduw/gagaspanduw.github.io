@@ -5,7 +5,8 @@ import Navbar from './components/navbar';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  HashRouter
 } from 'react-router-dom';
 
 import Home from './pages/home';
@@ -15,14 +16,14 @@ import Bday from './pages/bday';
 
 function App() {
   return (
-  <Router>
+  <HashRouter>
     <div className="bg-gray-800">
       <header className="App-header text-right">
         <Navbar  title="Coba React" />
         <Route path="/" exact component={Home}/>
         <Route path="/project" exact component={Project}/>
         <Route path="/certificate" exact component={Certificate}/>    
-        <Route path="/routes/bday" exact component={Bday}/>    
+        <Route path="/bday" exact component={Bday}/>    
       </header>
       <footer className="pl-10 pr-10 lg:pl-32 lg:pr-32 pt-10 pb-10 bg-gray-800">
         <p className="text-white text-2xl font-bold">Get in touch with me</p>
@@ -42,7 +43,7 @@ function App() {
       <br></br><span className="text-white">Created with <div className="text-red-400 inline">&#10084;</div>, React.Js, and Tailwind CSS.</span>
       </footer>
     </div>
-  </Router>
+  </HashRouter>
   );
 }
 
