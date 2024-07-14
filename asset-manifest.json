@@ -1,21 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.2b19ced8.chunk.css",
-    "main.js": "/static/js/main.4dfd3736.chunk.js",
-    "main.js.map": "/static/js/main.4dfd3736.chunk.js.map",
+    "main.css": "/static/css/main.0f581d97.chunk.css",
+    "main.js": "/static/js/main.dbb16b93.chunk.js",
+    "main.js.map": "/static/js/main.dbb16b93.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.9f616886.js",
     "runtime-main.js.map": "/static/js/runtime-main.9f616886.js.map",
-    "static/js/2.e60aaea6.chunk.js": "/static/js/2.e60aaea6.chunk.js",
-    "static/js/2.e60aaea6.chunk.js.map": "/static/js/2.e60aaea6.chunk.js.map",
+    "static/js/2.e605ab13.chunk.js": "/static/js/2.e605ab13.chunk.js",
+    "static/js/2.e605ab13.chunk.js.map": "/static/js/2.e605ab13.chunk.js.map",
     "static/js/3.9238f0a0.chunk.js": "/static/js/3.9238f0a0.chunk.js",
     "static/js/3.9238f0a0.chunk.js.map": "/static/js/3.9238f0a0.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.2b19ced8.chunk.css.map": "/static/css/main.2b19ced8.chunk.css.map",
-    "static/js/2.e60aaea6.chunk.js.LICENSE.txt": "/static/js/2.e60aaea6.chunk.js.LICENSE.txt",
+    "static/css/main.0f581d97.chunk.css.map": "/static/css/main.0f581d97.chunk.css.map",
+    "static/js/2.e605ab13.chunk.js.LICENSE.txt": "/static/js/2.e605ab13.chunk.js.LICENSE.txt",
     "static/media/absensi.png": "/static/media/absensi.af73964a.png",
     "static/media/automation-download-send-sftp.afc8fcd8.png": "/static/media/automation-download-send-sftp.afc8fcd8.png",
     "static/media/automation-flutter-gherkin.5ff5b23f.png": "/static/media/automation-flutter-gherkin.5ff5b23f.png",
+    "static/media/banner.15b424b9.png": "/static/media/banner.15b424b9.png",
     "static/media/bootstraplogo.png": "/static/media/bootstraplogo.8df2daf9.png",
+    "static/media/cake_animation.3eb00f20.gif": "/static/media/cake_animation.3eb00f20.gif",
     "static/media/cloudpractitioneressentials.jpg": "/static/media/cloudpractitioneressentials.7bbabde7.jpg",
     "static/media/cucumberlogo.png": "/static/media/cucumberlogo.a414c746.png",
     "static/media/cypresslogo.png": "/static/media/cypresslogo.deecaa82.png",
@@ -23,6 +25,7 @@
     "static/media/figmalogo.png": "/static/media/figmalogo.99c25564.png",
     "static/media/flutterlogo.png": "/static/media/flutterlogo.2e31d94a.png",
     "static/media/fundamentaldigitalmarketing.jpg": "/static/media/fundamentaldigitalmarketing.58acb530.jpg",
+    "static/media/hbd.c19a90b2.mp3": "/static/media/hbd.c19a90b2.mp3",
     "static/media/javalogo.png": "/static/media/javalogo.5d5cffa0.png",
     "static/media/javascriptlogo.jpg": "/static/media/javascriptlogo.84363266.jpg",
     "static/media/logo.6ce24c58.svg": "/static/media/logo.6ce24c58.svg",
@@ -42,8 +45,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.9f616886.js",
-    "static/js/2.e60aaea6.chunk.js",
-    "static/css/main.2b19ced8.chunk.css",
-    "static/js/main.4dfd3736.chunk.js"
+    "static/js/2.e605ab13.chunk.js",
+    "static/css/main.0f581d97.chunk.css",
+    "static/js/main.dbb16b93.chunk.js"
   ]
 }
