@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.43c3822a.chunk.css",
-    "main.js": "/static/js/main.56fe37cc.chunk.js",
-    "main.js.map": "/static/js/main.56fe37cc.chunk.js.map",
+    "main.css": "/static/css/main.316b5248.chunk.css",
+    "main.js": "/static/js/main.8282fd05.chunk.js",
+    "main.js.map": "/static/js/main.8282fd05.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.9f616886.js",
     "runtime-main.js.map": "/static/js/runtime-main.9f616886.js.map",
     "static/js/2.96c668b0.chunk.js": "/static/js/2.96c668b0.chunk.js",
@@ -10,7 +10,7 @@
     "static/js/3.9238f0a0.chunk.js": "/static/js/3.9238f0a0.chunk.js",
     "static/js/3.9238f0a0.chunk.js.map": "/static/js/3.9238f0a0.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.43c3822a.chunk.css.map": "/static/css/main.43c3822a.chunk.css.map",
+    "static/css/main.316b5248.chunk.css.map": "/static/css/main.316b5248.chunk.css.map",
     "static/js/2.96c668b0.chunk.js.LICENSE.txt": "/static/js/2.96c668b0.chunk.js.LICENSE.txt",
     "static/media/absensi.png": "/static/media/absensi.af73964a.png",
     "static/media/automation-download-send-sftp.afc8fcd8.png": "/static/media/automation-download-send-sftp.afc8fcd8.png",
@@ -46,7 +46,7 @@
   "entrypoints": [
     "static/js/runtime-main.9f616886.js",
     "static/js/2.96c668b0.chunk.js",
-    "static/css/main.43c3822a.chunk.css",
-    "static/js/main.56fe37cc.chunk.js"
+    "static/css/main.316b5248.chunk.css",
+    "static/js/main.8282fd05.chunk.js"
   ]
 }
