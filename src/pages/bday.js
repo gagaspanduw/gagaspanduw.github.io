@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import hbdsong from '../img/hbd.mp3';
 import cake_animation from '../img/cake_animation.gif';
 import bannerbday from '../img/banner.png'
+import moment from 'moment-timezone';
 import image from '../img/image';
 
 class Bdays extends Component{
@@ -16,7 +17,7 @@ class Bdays extends Component{
             birthdayText: '',
             prankText: ['Cieee kena prank :P', 
                 'Ngga ngga coba pencet tombol dibawah'],
-            words: ['Happy Birthday Naya Bocil!',
+            words: ['Happy Birthday Naya Bocil !',
                 'Today is',
 				'as beautiful as other days',
 				'but you realize',
@@ -65,10 +66,13 @@ class Bdays extends Component{
     }
 
     getCountdown = () => {
-        const targetDate = new Date('2024-07-28T00:00:00.000Z'); // July 28th, 2023
+        // const targetDate = new Date('2024-07-28T07:00:00.000Z'); // July 28th, 2024
+        const targetDate = moment.tz('2024-07-28 00:00:00', 'Asia/Jakarta'); // July 28th, 2024, 07:00:00 GMT+7
         const currentDate = new Date();
+
+        console.log(currentDate.getFullYear())
     
-        if (currentDate >= targetDate) {
+        if (currentDate.getFullYear() === targetDate.year() && currentDate.getMonth() === targetDate.month() && currentDate.getDate() === targetDate.date()) {
           this.setState({ isActive: true });
         } else {
           const timeDiff = targetDate - currentDate;
@@ -116,7 +120,7 @@ class Bdays extends Component{
         if (this.state.wish !== '') {
             this.setState({ redirect: true });
             // redirect to a link after submitting the wish
-            window.location.href = 'https://wa.me/085810840979?text=Aku mau' + this.state.wish;
+            window.location.href = 'https://wa.me/085810840979?text=Aku mau ' + this.state.wish;
         } else if(this.state.wish === '') {
             alert('Gaboleh kosong!');
         }

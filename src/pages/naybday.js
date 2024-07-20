@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment-timezone";
 import Bday from "./bday";
 
 class Naybdays extends Component {
@@ -22,7 +23,8 @@ class Naybdays extends Component {
     }
 
     getCountdown = () => {
-        const targetDate = new Date('2024-07-28T00:00:00.000Z'); // July 28th, 2023
+        // const targetDate = new Date('2024-07-21T07:00:00.000Z'); // July 28th, 2023
+        const targetDate = moment.tz('2024-07-28 00:00:00', 'Asia/Jakarta'); // July 28th, 2024, 07:00:00 GMT+7
         const currentDate = new Date();
     
         if (currentDate >= targetDate) {
@@ -57,7 +59,7 @@ class Naybdays extends Component {
                 setTimeout(() => {
                     this.setState({ isTextFullyDisplayed: true });
                 }, 8000);
-            }, 4000);
+            }, 3000);
         } 
     }
 
