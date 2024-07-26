@@ -159,19 +159,19 @@ class Bdays extends Component{
                     </div>
                 ) : null}
                 {this.state.showCake ? (
-                    <div className='flex flex-row -mb-96 lg:-mb-40 lg:mt-24'>
+                    <div className='flex flex-row -mb-80 lg:-mb-40 lg:mt-24'>
                         <img width="200" height="200" className='items-center justify-center mx-auto' src={cake_animation} alt="birthday cake" />
                     </div>
                 ) : null}
             <div className="h-screen flex justify-center items-center">
                 {this.state.isActive ? (
                 <div>
-                    <p className={`mt-5 lg:-mt-12 text-3xl font-bold text-center ${this.state.isPlaying ? 'opacity-100' : 'invisible'}`} style={{ transition: 'opacity 0.5s' }}>{this.state.birthdayText}</p>
+                    <p className={`mt-40 lg:-mt-12 text-3xl font-bold text-center ${this.state.isPlaying ? 'opacity-100' : 'invisible'}`} style={{ transition: 'opacity 0.5s' }}>{this.state.birthdayText}</p>
                     {/* <p className={`mt-5 lg:-mt-12 text-3xl font-bold text-center ${this.state.showBanner==true && this.state.isPrankText==true? 'invisible' : this.state.isPrankText ? 'opacity-100' : 'invisible'}`} style={{ transition: 'opacity 0.5s' }}>{this.state.prankText}</p> */}
                     {/* <button className={`mx-auto bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.isPrankText? 'hidden' : 'opacity-100'}`} style={{ transition: 'opacity 0.5s' }} onClick={this.handleShowPrankText}>For Naya</button> */}
-                    <button className={`mx-auto bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.showBanner==false? 'opacity-100' : 'hidden'}`} style={{ transition: 'opacity 0.5s' }} onClick={this.handleShowBanner}>Let's decorate</button>
-                    <button className={`-mt-40 mx-auto bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.showCake==false && this.state.showBanner==true? 'opacity-100' : 'hidden'}`} style={{ transition: 'opacity 0.5s' }} onClick={this.handleShowCake}>Delicious cake</button>
-                    <button className={`mx-auto bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.showCake==true && this.state.isPlaying==false? 'opacity-100' : 'hidden'}`} style={{ transition: 'opacity 0.5s' }} onClick={this.handlePlayMusic}>Play music</button>
+                    <button className={`-mt-80 lg:mt-0 mx-auto bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.showBanner==false? 'opacity-100' : 'hidden'}`} style={{ transition: 'opacity 0.5s' }} onClick={this.handleShowBanner}>Let's decorate</button>
+                    <button className={`-mt-96 lg:mt-0 mx-auto bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.showCake==false && this.state.showBanner==true? 'opacity-100' : 'hidden'}`} style={{ transition: 'opacity 0.5s' }} onClick={this.handleShowCake}>Delicious cake</button>
+                    <button className={`-mt-10 lg:mt-0 mx-auto bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.showCake==true && this.state.isPlaying==false? 'opacity-100' : 'hidden'}`} style={{ transition: 'opacity 0.5s' }} onClick={this.handlePlayMusic}>Play music</button>
                     {this.state.isPlaying? (
                         <audio src={hbdsong} autoPlay loop />
                     ) : null}
