@@ -1,9 +1,9 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment-timezone";
-import Bday from "./bday";
+import B from "./b";
 
-class Naybdays extends Component {
+class As extends Component {
     constructor() {
         super()
         this.state = {
@@ -24,7 +24,7 @@ class Naybdays extends Component {
 
     getCountdown = () => {
         // const targetDate = new Date('2024-07-21T07:00:00.000Z'); // July 28th, 2023
-        const targetDate = moment.tz('2024-07-28 00:00:00', 'Asia/Jakarta'); // July 28th, 2024, 07:00:00 GMT+7
+        const targetDate = moment.tz('2024-07-26 00:00:00', 'Asia/Jakarta'); // July 28th, 2024, 07:00:00 GMT+7
         const currentDate = new Date();
     
         if (currentDate >= targetDate) {
@@ -71,7 +71,7 @@ class Naybdays extends Component {
                     <div className="text-center"> {/* Add text-center class */}
                         <p className={`mt-5 lg:-mt-12 text-3xl font-bold text-center ${this.state.isShow? 'opacity-100' : 'invisible'}`} style={{ transition: 'opacity 0.5s' }}>{this.state.birthdayText}</p>
                         <button className={`bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.isShow? 'invisible' : 'opacity-100'}`} style={{ transition: 'opacity 0.5s' }} onClick={this.handleShowText}>Open</button>
-                        <Link to="/bday">
+                        <Link to="/b">
                             <button className={`mx-auto bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded flex items-center ${this.state.isTextFullyDisplayed? 'opacity-100' : 'invisible'}`} style={{ transition: 'opacity 0.5s' }}>Open</button>
                         </Link>
                     </div>
@@ -84,10 +84,10 @@ class Naybdays extends Component {
     }
 }
 
-const Naybday = (props) => (
+const A = (props) => (
     <div>
-        <Naybdays></Naybdays>
+        <As></As>
     </div>
 )
 
-export default Naybday
+export default A
