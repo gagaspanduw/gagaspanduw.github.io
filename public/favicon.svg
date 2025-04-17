@@ -1,0 +1,21 @@
+<svg 
+  width="32" 
+  height="32" 
+  viewBox="0 0 32 32" 
+  fill="none" 
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Custom logo with initials GPW - optimized for favicon -->
+  <rect width="32" height="32" rx="16" fill="#F87171" />
+  <path 
+    d="M8 9.6C8 8.71634 8.71634 8 9.6 8H22.4C23.2837 8 24 8.71634 24 9.6V22.4C24 23.2837 23.2837 24 22.4 24H9.6C8.71634 24 8 23.2837 8 22.4V9.6Z" 
+    fill="#1F2937" 
+  />
+  <path 
+    d="M12.4 13.2C12.4 11.6 13.4 10.4 14.8 10.4C16 10.4 16.8 11 17.2 12M12.4 13.2C12.4 14.8 13.4 16 14.8 16C16 16 16.8 15.4 17.2 14.4M12.4 13.2H16.4M11.2 17.6L14.4 22.4M14.4 17.6L17.6 22.4M19.2 10.4L22.4 16M19.2 21.6L22.4 16" 
+    stroke="white" 
+    strokeWidth="1.6" 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  />
+</svg>

@@ -68,3 +68,45 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Docker Instructions
+
+This project can be easily run using Docker, which packages everything needed to run the application.
+
+## Building the Docker Image
+
+To build the Docker image, run the following command from the project root directory:
+
+```bash
+docker build -t portfolio-website .
+```
+
+This will create a Docker image named `portfolio-website` containing your React application.
+
+## Running the Docker Container
+
+After building the image, you can start a container using:
+
+```bash
+docker run -p 8080:80 portfolio-website
+```
+
+This command:
+- Maps port 8080 on your machine to port 80 in the container
+- Starts the container using your image
+
+Once running, you can access your portfolio website by navigating to:
+**http://localhost:8080** in your web browser.
+
+## Stopping the Container
+
+To stop the running container:
+1. Find the container ID with `docker ps`
+2. Run `docker stop [CONTAINER_ID]`
+
+## Troubleshooting
+
+If you encounter any issues:
+- Ensure Docker is installed and running on your system
+- Check Docker logs with `docker logs [CONTAINER_ID]`
+- Verify ports 8080 is not being used by another application

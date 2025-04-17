@@ -12,108 +12,97 @@ import automationfluttergherkin from '../img/automation-flutter-gherkin.png'
 import { Link } from 'react-router-dom';
 
 const Project = (props) => (
-    <div>
-        <div className="pr-10 pl-10 lg:pr-32 lg:pl-32 text-left">
-            <h2 className="pb-10 text-3xl font-bold">PROJECTS</h2>
+    <div className="bg-gray-900 min-h-screen text-white">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+            <h2 className="pb-10 text-3xl font-bold text-center text-red-400">PROJECTS</h2>
 
-            <h2 className="pb-5 text-1xl font-bold">Software Testing</h2>
-            <div className="flex flex-col lg:flex-row">
-                <div className="flex flex-col justify-center">
-                <a target="_blank" href="https://github.com/gagaspanduw/automation-flutter_gherkin"><img className="w-4/4 lg:w-3/4" src={automationfluttergherkin}></img></a>
-                    <a href="https://github.com/gagaspanduw/automation-flutter_gherkin" className="text-sm pt-5 pb-20 flex flex-row">
-                    <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>&nbsp;View source code</a>
+            {/* Software Testing Section */}
+            <h3 className="pb-5 text-xl font-bold text-gray-200">Software Testing</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                {/* Project Card Example */}
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/gagaspanduw/automation-flutter_gherkin">
+                        <img className="w-48 h-32 object-contain rounded mb-4" src={automationfluttergherkin} alt="Automation Flutter Gherkin" />
+                    </a>
+                    <h4 className="font-bold text-lg mb-2">Automation Flutter Gherkin</h4>
+                    <p className="text-gray-400 text-sm mb-2 text-center">End-to-end automation for Flutter apps using Gherkin syntax.</p>
+                    <a href="https://github.com/gagaspanduw/automation-flutter_gherkin" className="text-red-400 hover:underline text-sm">View source code</a>
                 </div>
-                <div className="flex flex-col justify-center">
-                <a target="_blank" href="https://github.com/gagaspanduw/auto-download-send-sftp"><img className="w-4/4 lg:w-3/4" src={automationdownloadsendsftp}></img></a>
-                    <a href="https://github.com/gagaspanduw/auto-download-send-sftp" className="text-sm pt-5 pb-20 flex flex-row">
-                    <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>&nbsp;View source code</a>
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/gagaspanduw/auto-download-send-sftp">
+                        <img className="w-48 h-32 object-contain rounded mb-4" src={automationdownloadsendsftp} alt="RPA SFTP" />
+                    </a>
+                    <h4 className="font-bold text-lg mb-2">Robotic Process Automation SFTP</h4>
+                    <p className="text-gray-400 text-sm mb-2 text-center">Automates file download and SFTP upload processes.</p>
+                    <a href="https://github.com/gagaspanduw/auto-download-send-sftp" className="text-red-400 hover:underline text-sm">View source code</a>
                 </div>
-            </div>
-            
-            <div className="flex flex-col lg:flex-row">
-                <div className="flex flex-col justify-center">
-                <a target="_blank" href="https://github.com/gagaspanduw/demoblaze.com_testing"><img className="w-4/4 lg:w-3/4" src={demoblazetesting}></img></a>
-                    <a href="https://github.com/gagaspanduw/demoblaze.com_testing" className="text-sm pt-5 pb-20 flex flex-row">
-                    <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>&nbsp;View source code</a>
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/gagaspanduw/demoblaze.com_testing">
+                        <img className="w-48 h-32 object-contain rounded mb-4" src={demoblazetesting} alt="Demoblaze Testing" />
+                    </a>
+                    <h4 className="font-bold text-lg mb-2">Demoblaze.com Testing</h4>
+                    <p className="text-gray-400 text-sm mb-2 text-center">Automated UI testing for Demoblaze.com using Selenium.</p>
+                    <a href="https://github.com/gagaspanduw/demoblaze.com_testing" className="text-red-400 hover:underline text-sm">View source code</a>
                 </div>
-                <div className="flex flex-col justify-center">
-                <a target="_blank" href="https://github.com/gagaspanduw/seleniumjava_course"><img className="w-4/4 lg:w-3/4" src={theinternettesting}></img></a>
-                    <a href="https://github.com/gagaspanduw/demoblaze.com_testing" className="text-sm pt-5 pb-20 flex flex-row">
-                    <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>&nbsp;View source code</a>
-                </div>
-            </div>
-
-            <h2 className="pb-5 text-1xl font-bold">Website Developing</h2>
-            <div className="flex flex-col justify-center lg:flex-row">
-                <div className="flex flex-col">
-                    <a target="_blank" href="https://www.owntols.com"><img className="w-4/4 lg:w-3/4" src={owntols}></img></a>
-                    <div className="text-sm pt-5 pb-20 flex flex-row">
-                        <a target="_blank" href="https://www.owntols.com" className="flex flex-row">
-                        <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>&nbsp;View website</a>
-                    </div>
-                </div>
-                <div className="flex flex-col justify-center">
-                    <a target="_blank" href="https://www.nubie.id"><img className="w-4/4 lg:w-3/4" src={nubie}></img></a>
-                    <div className="text-sm pt-5 pb-20 flex flex-row">
-                        <a target="_blank" href="https://www.nubie.id" className="flex flex-row">
-                        <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>&nbsp;View website</a>
-                    </div>
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/gagaspanduw/seleniumjava_course">
+                        <img className="w-48 h-32 object-contain rounded mb-4" src={theinternettesting} alt="Selenium Java Course" />
+                    </a>
+                    <h4 className="font-bold text-lg mb-2">Selenium Java Course</h4>
+                    <p className="text-gray-400 text-sm mb-2 text-center">Selenium automation for The Internet testing site.</p>
+                    <a href="https://github.com/gagaspanduw/seleniumjava_course" className="text-red-400 hover:underline text-sm">View source code</a>
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center lg:flex-row">
-                <div className="flex flex-col">
-                    <a target="_blank" href=""><img className="w-4/4 lg:w-3/4" src={pengarsipan}></img></a>
-                    <div className="text-sm pt-5 pb-20 flex flex-row">
-                        <a target="_blank" href="" className="flex flex-row">
-                        <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>&nbsp;View website</a>
-                    </div>
+            {/* Website Development Section */}
+            <h3 className="pb-5 text-xl font-bold text-gray-200">Website Development</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.owntols.com">
+                        <img className="w-48 h-32 object-contain rounded mb-4" src={owntols} alt="Owntols" />
+                    </a>
+                    <h4 className="font-bold text-lg mb-2">Owntols</h4>
+                    <p className="text-gray-400 text-sm mb-2 text-center">Corporate website for Owntols.</p>
+                    <a href="https://www.owntols.com" className="text-red-400 hover:underline text-sm">View website</a>
                 </div>
-                <div className="flex flex-col justify-center">
-                    <a target="_blank" href=""><img className="w-4/4 lg:w-3/4" src={absensi}></img></a>
-                    <div className="text-sm pt-5 pb-20 flex flex-row">
-                        <a target="_blank" href="" className="flex flex-row">
-                        <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>&nbsp;View website</a>
-                    </div>
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.nubie.id">
+                        <img className="w-48 h-32 object-contain rounded mb-4" src={nubie} alt="Nubie" />
+                    </a>
+                    <h4 className="font-bold text-lg mb-2">Nubie</h4>
+                    <p className="text-gray-400 text-sm mb-2 text-center">Corporate website for Nubie.</p>
+                    <a href="https://www.nubie.id" className="text-red-400 hover:underline text-sm">View website</a>
                 </div>
-            </div>
-
-            <h2 className="pb-5 text-1xl font-bold">UI/UX Design</h2>
-            <div className="flex flex-col lg:flex-row">
-                <div className="flex flex-col justify-center">
-                <a target="_blank" href="https://www.instagram.com/gagaspanduw"><img className="w-4/4 lg:w-3/4 transition ease-in-out duration-700 transform hover:scale-150" src={uiuxwebsite}></img></a>
-                    <a href="https://www.instagram.com/gagaspanduw" className="text-sm pt-5 pb-20 flex flex-row">
-                    <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>&nbsp;View details</a>
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <img className="w-48 h-32 object-contain rounded mb-4" src={pengarsipan} alt="Pengarsipan" />
+                    <h4 className="font-bold text-lg mb-2">Pengarsipan</h4>
+                    <p className="text-gray-400 text-sm mb-2 text-center">Document archiving web application.</p>
                 </div>
-                <div className="flex flex-col justify-center">
-                    <a target="_blank" href="https://www.instagram.com/gagaspanduw"><img className="w-4/4 lg:w-3/4 transition ease-in-out duration-700 transform hover:scale-150" src={uiuxapp}></img></a>
-                    <div className="text-sm pt-5 pb-20 flex flex-row">
-                        <a target="_blank" href="https://www.instagram.com/gagaspanduw" className="flex flex-row">
-                        <svg width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>&nbsp;View details</a>
-                    </div>
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <img className="w-48 h-32 object-contain rounded mb-4" src={absensi} alt="Absensi" />
+                    <h4 className="font-bold text-lg mb-2">Absensi</h4>
+                    <p className="text-gray-400 text-sm mb-2 text-center">Attendance management web application.</p>
                 </div>
             </div>
 
+            {/* UI/UX Design Section */}
+            <h3 className="pb-5 text-xl font-bold text-gray-200">UI/UX Design</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/gagaspanduw">
+                        <img className="w-48 h-32 object-contain rounded mb-4 transition-transform duration-300 hover:scale-110" src={uiuxwebsite} alt="UI/UX Website" />
+                    </a>
+                    <h4 className="font-bold text-lg mb-2">UI/UX Website Design</h4>
+                    <a href="https://www.instagram.com/gagaspanduw" className="text-red-400 hover:underline text-sm">View details</a>
+                </div>
+                <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/gagaspanduw">
+                        <img className="w-48 h-32 object-contain rounded mb-4 transition-transform duration-300 hover:scale-110" src={uiuxapp} alt="UI/UX App" />
+                    </a>
+                    <h4 className="font-bold text-lg mb-2">UI/UX Mobile App Design</h4>
+                    <a href="https://www.instagram.com/gagaspanduw" className="text-red-400 hover:underline text-sm">View details</a>
+                </div>
+            </div>
         </div>
     </div>
 )

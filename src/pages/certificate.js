@@ -93,31 +93,22 @@ class Certificates extends Component {
     }
     render(){
         return(
-            <div className="pr-10 pl-10 lg:pr-32 lg:pl-32 text-left ">
-            <h2 className="pb-10 text-3xl font-bold">CERTIFICATE</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 justify-center content-center lg:flex-row">
-                    {
-                            this.state.menu.map(menu => (
-                                <div className="flex flex-col ">
-                                <div className="p-5 flex justify-center lg:transition ease-in-out lg:duration-700 lg:transform hover:scale-150">
-                                    <a target="_blank" href={menu.link}><img className="w-80 object-center object-contain" src={menu.image}></img></a>
-                                </div>
-                                <div className="flex-row text-center text-sm">
-                                    <div>
-                                        <a target="_blank" href={menu.link}>{menu.courseName}</a><br/>
-                                        <a className="font-bold" target="_blank" href={menu.link}>{menu.organizationName}</a><br/>
-                                    </div>
-                                    <div className="grid cols-auto justify-center pt-5 pb-10">
-                                        <a target="_blank" href={menu.link} className="flex flex-row text-sm">
-                                        <svg width="10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                                        </svg>&nbsp;Check certificate</a>
-                                    </div>
-                                </div>
-                            </div>  
-                            ))
-                        }
-            </div>
+            <div className="bg-gray-900 min-h-screen text-white">
+                <div className="max-w-7xl mx-auto px-4 py-12">
+                    <h2 className="pb-10 text-3xl font-bold text-center text-red-400">CERTIFICATES</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {this.state.menu.map(menu => (
+                            <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
+                                <a target="_blank" rel="noopener noreferrer" href={menu.link}>
+                                    <img className="w-48 h-32 object-contain rounded mb-4" src={menu.image} alt={menu.courseName} />
+                                </a>
+                                <h4 className="font-bold text-lg mb-1 text-center">{menu.courseName}</h4>
+                                <span className="text-gray-400 text-sm mb-2 text-center">{menu.organizationName}</span>
+                                <a target="_blank" rel="noopener noreferrer" href={menu.link} className="mt-2 text-red-400 hover:underline text-sm">Check certificate</a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         )
     }
