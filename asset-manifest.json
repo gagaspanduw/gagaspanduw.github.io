@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.2b32e490.chunk.css",
-    "main.js": "/static/js/main.93ff270b.chunk.js",
-    "main.js.map": "/static/js/main.93ff270b.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.3eda270c.js",
-    "runtime-main.js.map": "/static/js/runtime-main.3eda270c.js.map",
-    "static/js/2.ee2e4b3e.chunk.js": "/static/js/2.ee2e4b3e.chunk.js",
-    "static/js/2.ee2e4b3e.chunk.js.map": "/static/js/2.ee2e4b3e.chunk.js.map",
-    "static/js/3.a07b0627.chunk.js": "/static/js/3.a07b0627.chunk.js",
-    "static/js/3.a07b0627.chunk.js.map": "/static/js/3.a07b0627.chunk.js.map",
+    "main.css": "/static/css/main.8ff40e91.chunk.css",
+    "main.js": "/static/js/main.4bebd433.chunk.js",
+    "main.js.map": "/static/js/main.4bebd433.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.bba61ea7.js",
+    "runtime-main.js.map": "/static/js/runtime-main.bba61ea7.js.map",
+    "static/js/2.a2a59671.chunk.js": "/static/js/2.a2a59671.chunk.js",
+    "static/js/2.a2a59671.chunk.js.map": "/static/js/2.a2a59671.chunk.js.map",
+    "static/js/3.00a575e5.chunk.js": "/static/js/3.00a575e5.chunk.js",
+    "static/js/3.00a575e5.chunk.js.map": "/static/js/3.00a575e5.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.2b32e490.chunk.css.map": "/static/css/main.2b32e490.chunk.css.map",
-    "static/js/2.ee2e4b3e.chunk.js.LICENSE.txt": "/static/js/2.ee2e4b3e.chunk.js.LICENSE.txt",
+    "static/css/main.8ff40e91.chunk.css.map": "/static/css/main.8ff40e91.chunk.css.map",
+    "static/js/2.a2a59671.chunk.js.LICENSE.txt": "/static/js/2.a2a59671.chunk.js.LICENSE.txt",
     "static/media/absensi.png": "/static/media/absensi.af73964a.png",
     "static/media/automation-download-send-sftp.afc8fcd8.png": "/static/media/automation-download-send-sftp.afc8fcd8.png",
     "static/media/automation-flutter-gherkin.5ff5b23f.png": "/static/media/automation-flutter-gherkin.5ff5b23f.png",
@@ -28,7 +28,6 @@
     "static/media/hbd.c19a90b2.mp3": "/static/media/hbd.c19a90b2.mp3",
     "static/media/javalogo.png": "/static/media/javalogo.5d5cffa0.png",
     "static/media/javascriptlogo.jpg": "/static/media/javascriptlogo.84363266.jpg",
-    "static/media/logo.6ce24c58.svg": "/static/media/logo.6ce24c58.svg",
     "static/media/nubie.png": "/static/media/nubie.07737360.png",
     "static/media/owntols.png": "/static/media/owntols.ea106bb1.png",
     "static/media/pengarsipan.png": "/static/media/pengarsipan.b7cdc481.png",
@@ -44,9 +43,9 @@
     "static/media/wordpresslogo.svg": "/static/media/wordpresslogo.6e6c848a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.3eda270c.js",
-    "static/js/2.ee2e4b3e.chunk.js",
-    "static/css/main.2b32e490.chunk.css",
-    "static/js/main.93ff270b.chunk.js"
+    "static/js/runtime-main.bba61ea7.js",
+    "static/js/2.a2a59671.chunk.js",
+    "static/css/main.8ff40e91.chunk.css",
+    "static/js/main.4bebd433.chunk.js"
   ]
 }
