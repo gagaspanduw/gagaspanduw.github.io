@@ -2,6 +2,27 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Node.js Version Compatibility
+
+**Important:** This project requires Node.js version 16.x or 18.x for proper functionality. Using Node.js versions 20+ (particularly v22+) may cause build errors due to compatibility issues with some dependencies.
+
+If you encounter errors like `ERR_PACKAGE_PATH_NOT_EXPORTED` when building or deploying, please downgrade your Node.js version:
+
+```bash
+# Using nvm (Node Version Manager)
+nvm install 16
+nvm use 16
+
+# Or download directly from nodejs.org
+# https://nodejs.org/download/release/v16.20.2/
+```
+
+After switching to a compatible Node.js version, reinstall dependencies:
+
+```bash
+npm install
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
