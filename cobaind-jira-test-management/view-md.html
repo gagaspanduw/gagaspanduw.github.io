@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>View Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
+    <style>
+      :root { --bg: #0b1220; --card: #071024; --accent: #fb923c; --muted: #94a3b8; }
+      body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: var(--bg); color: #e6edf3; margin: 0; padding: 20px; }
+      .container { max-width: 900px; margin: 0 auto; }
+      a { color: var(--accent); }
+      h1 { color: var(--accent); }
+      .card { background: var(--card); padding: 18px; border-radius: 8px; box-shadow: 0 3px 10px rgba(2,6,23,0.4); }
+      pre, code { background: #071225; padding: 8px; border-radius: 6px; overflow: auto; }
+      .meta { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
+    </style>
+    <!-- marked for markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1 id="title">Document</h1>
+        <div class="meta" id="meta">Loading...</div>
+        <div id="content">Loading...</div>
+      </div>
+      <div style="height: 12px"></div>
+      <p style="color:#94a3b8">If the document does not render, you can <a id="rawLink" href="#" target="_blank">open the raw file</a>.</p>
+    </div>
+
+    <script>
+      function getParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+
+      const file = getParam('file');
+      const meta = document.getElementById('meta');
+      const title = document.getElementById('title');
+      const content = document.getElementById('content');
+      const rawLink = document.getElementById('rawLink');
+
+      if (!file) {
+        title.innerText = 'No file specified';
+        meta.innerText = '';
+        content.innerHTML = '<p style="color:#ef4444">No `file` query parameter provided. Example: view-md.html?file=PRIVACY.md</p>';
+      } else {
+        fetch(file)
+          .then(res => {
+            if (!res.ok) throw new Error('file not found');
+            rawLink.href = file;
+            title.innerText = file;
+            meta.innerText = 'Fetched from: ' + window.location.origin + window.location.pathname.replace(/view-md.html$/, '') + file;
+            return res.text();
+          })
+          .then(md => {
+            // render markdown via marked
+            const html = marked.parse(md);
+            content.innerHTML = html;
+          })
+          .catch(err => {
+            meta.innerText = '';
+            title.innerText = file;
+            content.innerHTML = '<p style="color:#f87171">Error loading file: ' + err.message + '</p>';
+          });
+      }
+    </script>
+  </body>
+</html>
