@@ -131,3 +131,14 @@ If you encounter any issues:
 - Ensure Docker is installed and running on your system
 - Check Docker logs with `docker logs [CONTAINER_ID]`
 - Verify ports 8080 is not being used by another application
+
+## Public Document Links (Cobaind Jira Test Management)
+
+The folder `public/cobaind-jira-test-management` contains several files that are exposed as static pages on GitHub Pages after deployment. You can link directly to these pages (recommended to use the HTML wrappers so content renders properly in a browser):
+
+- `https://gagaspanduw.github.io/cobaind-jira-test-management/index.html` — Document index
+- `https://gagaspanduw.github.io/cobaind-jira-test-management/PRIVACY.html` — Privacy policy (rendered HTML)
+- `https://gagaspanduw.github.io/cobaind-jira-test-management/PRIVACY.md` — Privacy policy (raw Markdown)
+
+Use the `.html` URL for embedding or linking in external applications (like JIRA Forge) for a nicely formatted display.
+
