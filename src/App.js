@@ -16,6 +16,15 @@ import Bday from './pages/bday';
 import Naybday from './pages/naybday';
 import A from './pages/a';
 import B from './pages/b';
+import ValentineIntro from './pages/valentineIntro';
+import Valentine from './pages/valentine';
+import ValentineSuccess from './pages/valentineSuccess';
+
+// Tools
+import BugReportBuilder from './pages/tools/BugReportBuilder';
+import TestCaseGenerator from './pages/tools/TestCaseGenerator';
+import ApiPlayground from './pages/tools/ApiPlayground';
+import ToolsIndex from './pages/tools/index';
 
 function App() {
   return (
@@ -30,12 +39,19 @@ function App() {
           <Route path="/bday" exact component={Bday}/>    
           <Route path="/naybday" exact component={Naybday}/>    
           <Route path="/a" exact component={A}/>    
-          <Route path="/b" exact component={B}/>    
+          <Route path="/b" exact component={B}/>
+          <Route path="/valentine" exact component={ValentineIntro}/>
+          <Route path="/valentine/question" exact component={Valentine}/>
+          <Route path="/valentine/success" exact component={ValentineSuccess}/>
+          <Route path="/tools/bug-report" exact component={BugReportBuilder}/>
+          <Route path="/tools/test-case" exact component={TestCaseGenerator}/>
+          <Route path="/tools/api-playground" exact component={ApiPlayground}/>
+          <Route path="/tools" exact component={ToolsIndex}/>
         </Switch>
       </main>
       <footer className="bg-gray-900 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 pt-12 pb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div className="md:col-span-2">
               <div className="flex items-center mb-4">
                 <Logo />
@@ -82,6 +98,15 @@ function App() {
                 <li className="text-gray-400">QA Consulting</li>
                 <li className="text-gray-400">Performance Testing</li>
                 <li className="text-gray-400">Mobile App Testing</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-white font-semibold text-lg mb-4">QA Tools</h3>
+              <ul className="space-y-2">
+                <li><a href="/#/tools/bug-report" className="text-gray-400 hover:text-red-400 transition-colors duration-300">Bug Report Builder</a></li>
+                <li><a href="/#/tools/test-case" className="text-gray-400 hover:text-red-400 transition-colors duration-300">Test Case Generator</a></li>
+                <li><a href="/#/tools/api-playground" className="text-gray-400 hover:text-red-400 transition-colors duration-300">API Playground</a></li>
               </ul>
             </div>
           </div>
