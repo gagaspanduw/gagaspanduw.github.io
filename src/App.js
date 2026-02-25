@@ -12,13 +12,10 @@ import {
 import Home from './pages/home';
 import Project from './pages/project';
 import Certificate from './pages/certificate';
-import Bday from './pages/bday';
-import Naybday from './pages/naybday';
-import A from './pages/a';
-import B from './pages/b';
-import ValentineIntro from './pages/valentineIntro';
-import Valentine from './pages/valentine';
-import ValentineSuccess from './pages/valentineSuccess';
+import ValentineIntro from './pages/mimi/valentineIntro';
+import Valentine from './pages/mimi/valentine';
+import ValentineSuccess from './pages/mimi/valentineSuccess';
+import ForMimi from './pages/mimi/forMimi';
 
 // Tools
 import BugReportBuilder from './pages/tools/BugReportBuilder';
@@ -36,13 +33,10 @@ function App() {
           <Route path="/" exact component={Home}/>
           <Route path="/project" exact component={Project}/>
           <Route path="/certificate" exact component={Certificate}/>    
-          <Route path="/bday" exact component={Bday}/>    
-          <Route path="/naybday" exact component={Naybday}/>    
-          <Route path="/a" exact component={A}/>    
-          <Route path="/b" exact component={B}/>
           <Route path="/valentine" exact component={ValentineIntro}/>
           <Route path="/valentine/question" exact component={Valentine}/>
           <Route path="/valentine/success" exact component={ValentineSuccess}/>
+          <Route path="/for-mimi" exact component={ForMimi}/>
           <Route path="/tools/bug-report" exact component={BugReportBuilder}/>
           <Route path="/tools/test-case" exact component={TestCaseGenerator}/>
           <Route path="/tools/api-playground" exact component={ApiPlayground}/>

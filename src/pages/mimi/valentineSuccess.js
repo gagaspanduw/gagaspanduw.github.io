@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../App.css';
+import '../../App.css';
 
 const ValentineSuccess = () => {
   const [hearts, setHearts] = useState([]);
@@ -66,8 +66,8 @@ const ValentineSuccess = () => {
                   to do something to show you how much you mean to me.
                 </p>
                 <p style={styles.letterText}>
-                  Every message from you makes me smile, every moment we share (even virtually) 
-                  is precious to me. You're someone truly special, and I'm grateful for you.
+                  Every message from you makes me smile, every moment we share — even across 
+                  the distance — is precious to me. You're someone truly special, and I'm grateful for you.
                 </p>
                 <p style={styles.letterText}>
                   Thank you for being you, for your kindness, your laughter, and for just being 
@@ -84,7 +84,7 @@ const ValentineSuccess = () => {
               <div style={styles.giftIcon}>♥</div>
               <p style={styles.giftTitle}>A Special Gift</p>
               <p style={styles.giftText}>
-                I have something special prepared for you. I can't wait to give it to you!
+                I have something special prepared for you. I can't wait to share it with you!
               </p>
             </div>
 
@@ -118,11 +118,12 @@ const ValentineSuccess = () => {
                 Surprise!
               </p>
             </div>
-          </div>
 
-          <div style={styles.heartBeat}>
-            ♥
           </div>
+        </div>
+
+        <div style={styles.heartBeat}>
+          ♥
         </div>
       </div>
     </div>
@@ -302,6 +303,7 @@ const styles = {
     marginTop: '30px',
     color: '#d32f2f',
     animation: 'heartbeat 1.5s infinite',
+    textAlign: 'center',
   },
 };
 

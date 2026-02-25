@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import '../App.css';
+import '../../App.css';
 
 const Valentine = () => {
   const history = useHistory();
@@ -128,7 +128,7 @@ const Valentine = () => {
             Will you be my Valentine?
           </p>
           <p style={styles.subtext}>
-            I know we can't meet right now, but I wanted to do something special for you
+            I know we're far apart right now, but I wanted to do something special for you
           </p>
         </div>
 
