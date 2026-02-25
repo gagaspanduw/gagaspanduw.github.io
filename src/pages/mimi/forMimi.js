@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const ForMimi = () => {
   const [stage, setStage] = useState('envelope'); // envelope → opening → letter
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -11,12 +12,26 @@ const ForMimi = () => {
     document.head.appendChild(link);
   }, []);
 
+  // Auto-play when letter opens
+  useEffect(() => {
+    if (stage === 'letter' && audioRef.current) {
+      const p = audioRef.current.play();
+      if (p !== undefined) {
+        p.then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      }
+    }
+  }, [stage]);
+
   const handleOpenEnvelope = () => {
     setStage('opening');
     setTimeout(() => setStage('letter'), 1200);
   };
 
   const handleFoldBack = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
     setIsPlaying(false);
     setStage('opening');
     setTimeout(() => setStage('envelope'), 800);
@@ -169,25 +184,28 @@ const ForMimi = () => {
       {/* ── MUSIC PLAYER ── */}
       {stage === 'letter' && (
         <div style={styles.musicPlayer}>
-          {/* iframe only mounts when user taps play — direct user gesture = works on mobile */}
-          {isPlaying && (
-            <iframe
-              key="yt"
-              title="bg-music"
-              width="1" height="1"
-              src="https://www.youtube.com/embed/Jhh2y-1JVZE?autoplay=1&loop=1&playlist=Jhh2y-1JVZE"
-              allow="autoplay; encrypted-media"
-              style={{ position: 'fixed', bottom: 0, right: 0, opacity: 0.01, pointerEvents: 'none' }}
-            />
-          )}
+          <audio
+            ref={audioRef}
+            loop
+            src="https://archive.org/download/yiruma-frame-2017/Yiruma%20-%20Frame%20(2017)/11.%20River%20Flows%20In%20You%20('f%20r%20a%20m%20e'%20Ver.).mp3"
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+          />
           <span style={{ ...styles.musicNote, animationPlayState: isPlaying ? 'running' : 'paused' }}>♪</span>
           <div style={styles.musicInfo}>
-            <span style={styles.musicTitle}>Lucky</span>
-            <span style={styles.musicArtist}>Jason Mraz ft. Colbie Caillat</span>
+            <span style={styles.musicTitle}>River Flows In You</span>
+            <span style={styles.musicArtist}>Yiruma</span>
           </div>
           <button
             style={styles.musicBtn}
-            onClick={() => setIsPlaying(p => !p)}
+            onClick={() => {
+              if (!audioRef.current) return;
+              if (isPlaying) {
+                audioRef.current.pause();
+              } else {
+                audioRef.current.play().catch(() => {});
+              }
+            }}
           >
             {isPlaying ? '⏸' : '▶'}
           </button>
@@ -277,7 +295,7 @@ const styles = {
     width: '100%',
     maxWidth: '640px',
     animation: 'fadeUp 0.9s ease-out both',
-    paddingBottom: '100px',
+    paddingBottom: '90px',
   },
   letterPage: {
     background: '#fffdf6',
@@ -386,18 +404,34 @@ const styles = {
   /* Music player */
   musicPlayer: {
     position: 'fixed',
-    bottom: '18px',
+    bottom: '14px',
     right: '14px',
-    background: 'rgba(255,253,246,0.96)',
+    background: 'rgba(255,253,246,0.97)',
     borderRadius: '50px',
-    padding: '10px 14px 10px 12px',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.16)',
+    padding: '8px 14px',
+    boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
     border: '1px solid rgba(180,160,130,0.35)',
+    zIndex: 999,
+    fontFamily: "'Lora', serif",
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    zIndex: 999,
-    fontFamily: "'Lora', serif",
+  },
+  musicBtn: {
+    background: 'transparent',
+    border: '1.5px solid rgba(183,28,28,0.5)',
+    borderRadius: '50%',
+    width: '28px',
+    height: '28px',
+    cursor: 'pointer',
+    color: '#b71c1c',
+    fontSize: '13px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    padding: 0,
+    WebkitTapHighlightColor: 'transparent',
   },
   musicNote: {
     fontSize: '17px',
@@ -420,21 +454,6 @@ const styles = {
     fontSize: '10px',
     color: '#9a7a5a',
     lineHeight: 1.3,
-  },
-  musicBtn: {
-    background: '#b71c1c',
-    border: 'none',
-    borderRadius: '50%',
-    width: '32px',
-    height: '32px',
-    cursor: 'pointer',
-    color: 'white',
-    fontSize: '13px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-    WebkitTapHighlightColor: 'transparent',
   },
 };
 
