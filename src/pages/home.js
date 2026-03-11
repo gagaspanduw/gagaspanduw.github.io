@@ -6,6 +6,7 @@ import Logo from '../components/Logo';
 // Import project images directly
 import flutterGherkinImg from '../img/automation-flutter-gherkin.png';
 import sftpAutomationImg from '../img/automation-download-send-sftp.png';
+import playwrightLogoImg from '../img/playwrightlogo.png';
 
 const Home = (props) => (
     <div className="bg-gray-900 min-h-screen text-white">
@@ -276,10 +277,8 @@ const Home = (props) => (
                 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div className="bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
-                        <div className="h-48 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 flex items-center justify-center">
-                            <svg className="w-20 h-20 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
-                            </svg>
+                        <div className="h-48 overflow-hidden bg-gray-900 flex items-center justify-center p-8">
+                            <img className="h-28 w-28 object-contain" src={playwrightLogoImg} alt="Playwright AI Parabank" />
                         </div>
                         <div className="p-6">
                             <h3 className="font-bold text-xl mb-2">Playwright AI Parabank</h3>
@@ -335,22 +334,6 @@ const Home = (props) => (
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section className="py-12">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 md:p-8">
-                    <h3 className="text-2xl font-bold text-red-400 mb-4">Core QA Automation Stack</h3>
-                    <div className="flex flex-wrap gap-3">
-                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">Playwright</span>
-                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">Selenium</span>
-                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">Cypress</span>
-                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">Gherkin BDD</span>
-                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">API Testing</span>
-                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">CI/CD Testing</span>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ import demoblazetesting from '../img/demoblazetesting.png';
 import theinternettesting from '../img/theinternettesting.png';
 import automationdownloadsendsftp from '../img/automation-download-send-sftp.png'
 import automationfluttergherkin from '../img/automation-flutter-gherkin.png'
+import playwrightLogoImg from '../img/playwrightlogo.png'
 
 const Project = (props) => (
     <div className="bg-gray-900 min-h-screen text-white">
@@ -19,10 +20,8 @@ const Project = (props) => (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition">
                     <a target="_blank" rel="noopener noreferrer" href="https://github.com/gagaspanduw/playwright-ai-parabank">
-                        <div className="w-48 h-32 rounded mb-4 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 flex items-center justify-center">
-                            <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
-                            </svg>
+                        <div className="w-48 h-32 rounded mb-4 bg-gray-900 flex items-center justify-center p-4">
+                            <img className="h-20 w-20 object-contain" src={playwrightLogoImg} alt="Playwright AI Parabank" />
                         </div>
                     </a>
                     <h4 className="font-bold text-lg mb-2">Playwright AI Parabank</h4>

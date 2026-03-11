@@ -1,6 +1,14 @@
 import { Component } from "react";
 import image from "../img/image";
 
+const initialsFromLabel = (label) =>
+    label
+        .split(" ")
+        .map((word) => word.charAt(0))
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
+
 class Skills extends Component {
     constructor(){
         super()
@@ -28,13 +36,26 @@ class Skills extends Component {
                 {
                     name: "Testing Tools",
                     skills: [
+                        {label: "Playwright", img: image.playwrightlogo},
                         {label: "Selenium", img: image.seleniumlogo},
                         {label: "Cypress", img: image.cypresslogo},
                         {label: "WebDriverIO", img: image.webdriveriologo},
                         {label: "Flutter Tests", img: image.flutterlogo},
                         {label: "Cucumber", img: image.cucumberlogo},
                         {label: "Postman", img: image.postmantlogo},
-                        {label: "Appium", img: "https://www.pinclipart.com/picdir/big/567-5676022_appium-perfecto-appium-logo-clipart.png"},
+                        {label: "Appium", img: image.appiumlogo},
+                        {label: "TestNG", img: image.testnglogo},
+                    ]
+                },
+                {
+                    name: "DevOps & Collaboration",
+                    skills: [
+                        {label: "GitLab", img: image.gitlablogo},
+                        {label: "Git", img: image.gitlogo},
+                        {label: "Jira", img: image.jiralogo},
+                        {label: "GitHub Actions", img: image.githubactionslogo},
+                        {label: "Jenkins", img: image.jenkinslogo},
+                        {label: "Docker", img: image.dockerlogo},
                     ]
                 }
             ]
@@ -55,14 +76,29 @@ class Skills extends Component {
                                 {category.skills.map((skill, skillIndex) => (
                                     <div 
                                         key={skillIndex} 
-                                        className="flex flex-col items-center bg-gray-800 rounded-xl shadow-lg p-5 hover:shadow-xl hover:transform hover:scale-105 transition-all duration-300 hover:bg-gray-750"
+                                        className="flex flex-col items-center bg-gray-800 rounded-xl shadow-lg p-5 hover:shadow-xl hover:transform hover:scale-105 transition-all duration-300 hover:bg-gray-700"
                                     >
                                         <div className="w-16 h-16 bg-white bg-opacity-10 rounded-full p-3 mb-3 flex items-center justify-center">
-                                            <img 
-                                                className="max-h-10" 
-                                                src={skill.img} 
-                                                alt={skill.label} 
-                                            />
+                                            {skill.img ? (
+                                                <img
+                                                    className="max-h-10 max-w-full object-contain"
+                                                    src={skill.img}
+                                                    alt={skill.label}
+                                                    onError={(event) => {
+                                                        event.currentTarget.style.display = "none";
+                                                        const fallback = event.currentTarget.parentElement?.querySelector("[data-skill-fallback]");
+                                                        if (fallback) {
+                                                            fallback.classList.remove("hidden");
+                                                        }
+                                                    }}
+                                                />
+                                            ) : null}
+                                            <span
+                                                data-skill-fallback
+                                                className={`text-sm font-semibold text-gray-200 ${skill.img ? "hidden" : ""}`}
+                                            >
+                                                {initialsFromLabel(skill.label)}
+                                            </span>
                                         </div>
                                         <p className="text-center text-gray-200 font-medium">{skill.label}</p>
                                     </div>
