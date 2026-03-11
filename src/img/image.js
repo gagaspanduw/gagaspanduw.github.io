@@ -1,4 +1,4 @@
-export default {
+const images = {
     absensi: require('../img/absensi.png'),
     bootstraplogo: require ('../img/bootstraplogo.png'),
     dicodingawscloud: require ('../img/cloudpractitioneressentials.jpg'),
@@ -27,4 +27,6 @@ export default {
     testnglogo: require ('../img/testnglogo.png'),
     theinternettesting: require ('../img/theinternettesting.png'),
     wordpresslogo: require ('../img/wordpresslogo.svg'),
-}
+};
+
+export default images;

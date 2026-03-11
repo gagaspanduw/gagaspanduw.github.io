@@ -12,9 +12,9 @@ class Navbar extends Component {
                 {label: 'Certificates', path: '/certificate'}
             ],
             tools: [
-                {label: 'Bug Report Builder', path: '/tools/bug-report', icon: '🐛' },
-                {label: 'Test Case Generator', path: '/tools/test-case', icon: '📋' },
-                {label: 'API Playground', path: '/tools/api-playground', icon: '🔌' }
+                {label: 'Bug Report Builder', path: '/tools/bug-report' },
+                {label: 'Test Case Generator', path: '/tools/test-case' },
+                {label: 'API Playground', path: '/tools/api-playground' }
             ],
             isMenuOpen: false,
             isToolsOpen: false
@@ -80,7 +80,6 @@ class Navbar extends Component {
                                                     className="block px-4 py-2 text-gray-200 hover:text-red-400 hover:bg-gray-700 transition"
                                                     onClick={this.closeTools}
                                                 >
-                                                    <span className="mr-2">{tool.icon}</span>
                                                     {tool.label}
                                                 </Link>
                                             ))}
@@ -147,7 +146,6 @@ class Navbar extends Component {
                                     className="text-gray-200 hover:text-red-400 hover:bg-gray-800 block px-3 py-2 rounded-md text-base font-medium pl-6"
                                     onClick={this.toggleMenu}
                                 >
-                                    <span className="mr-2">{tool.icon}</span>
                                     {tool.label}
                                 </Link>
                             ))}

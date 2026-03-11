@@ -3,7 +3,6 @@ import './App.css';
 import Navbar from './components/navbar';
 import Logo from './components/Logo';
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
   HashRouter
@@ -78,7 +77,7 @@ function App() {
             <div>
               <h3 className="text-white font-semibold text-lg mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a href="/" className="text-gray-400 hover:text-red-400 transition-colors duration-300">Home</a></li>
+                <li><a href="/#/" className="text-gray-400 hover:text-red-400 transition-colors duration-300">Home</a></li>
                 <li><a href="/#/project" className="text-gray-400 hover:text-red-400 transition-colors duration-300">Projects</a></li>
                 <li><a href="/#/certificate" className="text-gray-400 hover:text-red-400 transition-colors duration-300">Certificates</a></li>
                 <li><a href="mailto:gagaspanduw@gmail.com" className="text-gray-400 hover:text-red-400 transition-colors duration-300">Contact</a></li>

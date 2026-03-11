@@ -1,26 +1,50 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const ToolIcon = ({ name }) => {
+    if (name === 'bug') {
+        return (
+            <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9h6m-6 6h6M8 3h8l1 3H7l1-3zm-3 7h14l-1 9a2 2 0 01-2 2H8a2 2 0 01-2-2l-1-9z" />
+            </svg>
+        );
+    }
+
+    if (name === 'test') {
+        return (
+            <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5h10M9 9h10M9 13h10M9 17h10M5 6h.01M5 10h.01M5 14h.01M5 18h.01" />
+            </svg>
+        );
+    }
+
+    return (
+        <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h8M12 8v8M4 6h16v12H4z" />
+        </svg>
+    );
+};
+
 const ToolsIndex = () => {
     const tools = [
         {
             title: 'Bug Report Builder',
             description: 'Create professional, well-structured bug reports in seconds. Generate markdown-formatted reports ready to paste into your issue tracker.',
-            icon: '🐛',
+            icon: 'bug',
             path: '/tools/bug-report',
             features: ['Customizable templates', 'Severity & priority levels', 'Save drafts locally', 'Copy to clipboard']
         },
         {
             title: 'Test Case Generator',
             description: 'Build comprehensive test cases with steps and expected results. Export to Markdown, Gherkin (BDD), or CSV format.',
-            icon: '📋',
+            icon: 'test',
             path: '/tools/test-case',
             features: ['Multiple output formats', 'Test suite management', 'Step-by-step builder', 'Local storage']
         },
         {
             title: 'API Test Playground',
             description: 'Test REST APIs directly from your browser. Send requests, view responses, and save your request history.',
-            icon: '🔌',
+            icon: 'api',
             path: '/tools/api-playground',
             features: ['All HTTP methods', 'Custom headers', 'Request history', 'Sample APIs included']
         }
@@ -46,9 +70,9 @@ const ToolsIndex = () => {
                         <Link 
                             key={tool.path}
                             to={tool.path}
-                            className="group bg-gray-800 rounded-xl p-8 hover:bg-gray-750 transition-all duration-300 border border-gray-700 hover:border-red-400"
+                            className="group bg-gray-800 rounded-xl p-8 hover:bg-gray-700 transition-all duration-300 border border-gray-700 hover:border-red-400"
                         >
-                            <div className="text-5xl mb-4">{tool.icon}</div>
+                            <div className="mb-4"><ToolIcon name={tool.icon} /></div>
                             <h2 className="text-2xl font-bold mb-3 group-hover:text-red-400 transition-colors">
                                 {tool.title}
                             </h2>
@@ -95,7 +119,7 @@ const ToolsIndex = () => {
                                 <div className="text-sm text-gray-400">Usage Limit</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-red-400">🔒</div>
+                                <div className="text-3xl font-bold text-red-400">Secure</div>
                                 <div className="text-sm text-gray-400">Private Data</div>
                             </div>
                         </div>

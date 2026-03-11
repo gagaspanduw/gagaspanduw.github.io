@@ -13,7 +13,6 @@ const ApiPlayground = () => {
     const [error, setError] = useState(null);
     const [history, setHistory] = useState([]);
     const [activeTab, setActiveTab] = useState('body');
-    const [responseTime, setResponseTime] = useState(null);
 
     useEffect(() => {
         const saved = localStorage.getItem('apiHistory');
@@ -66,7 +65,6 @@ const ApiPlayground = () => {
 
             const res = await fetch(request.url, options);
             const endTime = performance.now();
-            setResponseTime(Math.round(endTime - startTime));
 
             const contentType = res.headers.get('content-type');
             let data;
@@ -109,7 +107,6 @@ const ApiPlayground = () => {
 
         } catch (err) {
             setError(err.message || 'Request failed');
-            setResponseTime(null);
         } finally {
             setLoading(false);
         }
@@ -408,25 +405,25 @@ const ApiPlayground = () => {
                                     onClick={() => setRequest({ ...request, url: 'https://jsonplaceholder.typicode.com/posts/1', method: 'GET' })}
                                     className="w-full text-left text-gray-300 hover:text-red-400 transition"
                                 >
-                                    → JSONPlaceholder - Get Post
+                                    JSONPlaceholder - Get Post
                                 </button>
                                 <button
                                     onClick={() => setRequest({ ...request, url: 'https://api.github.com/users/octocat', method: 'GET' })}
                                     className="w-full text-left text-gray-300 hover:text-red-400 transition"
                                 >
-                                    → GitHub - Get User
+                                    GitHub - Get User
                                 </button>
                                 <button
                                     onClick={() => setRequest({ ...request, url: 'https://catfact.ninja/fact', method: 'GET' })}
                                     className="w-full text-left text-gray-300 hover:text-red-400 transition"
                                 >
-                                    → Cat Facts - Random Fact
+                                    Cat Facts - Random Fact
                                 </button>
                                 <button
                                     onClick={() => setRequest({ ...request, url: 'https://httpbin.org/get', method: 'GET' })}
                                     className="w-full text-left text-gray-300 hover:text-red-400 transition"
                                 >
-                                    → HTTPBin - Test GET
+                                    HTTPBin - Test GET
                                 </button>
                                 <button
                                     onClick={() => setRequest({ 
@@ -437,14 +434,14 @@ const ApiPlayground = () => {
                                     })}
                                     className="w-full text-left text-gray-300 hover:text-red-400 transition"
                                 >
-                                    → JSONPlaceholder - Create Post
+                                    JSONPlaceholder - Create Post
                                 </button>
                             </div>
                         </div>
 
                         {/* Info */}
                         <div className="bg-gray-800 rounded-lg p-6 mt-6">
-                            <h2 className="text-xl font-semibold mb-4">ℹ️ Note</h2>
+                            <h2 className="text-xl font-semibold mb-4">Important Note</h2>
                             <p className="text-sm text-gray-400">
                                 This tool runs entirely in your browser. Some APIs may not work due to CORS restrictions. 
                                 For full API testing, consider using tools like Postman or curl.

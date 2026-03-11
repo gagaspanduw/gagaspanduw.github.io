@@ -6,7 +6,6 @@ import Logo from '../components/Logo';
 // Import project images directly
 import flutterGherkinImg from '../img/automation-flutter-gherkin.png';
 import sftpAutomationImg from '../img/automation-download-send-sftp.png';
-import absensiImg from '../img/absensi.png';
 
 const Home = (props) => (
     <div className="bg-gray-900 min-h-screen text-white">
@@ -217,7 +216,9 @@ const Home = (props) => (
                     <div className="bg-gray-700 rounded-xl shadow-lg p-8 flex-1 mx-2 mb-6 lg:mb-0 hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
                         <div className="flex justify-center mb-6">
                             <div className="bg-red-400 bg-opacity-20 p-4 rounded-full">
-                                <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" width="64" xmlns="http://www.w3.org/2000/svg"><g><g><path d="m453.669 7.5h-395.341c-18.649 0-33.768 15.118-33.768 33.768v61.195c0 18.649 15.118 33.768 33.768 33.768h26.953c4.361 0 7.659 3.946 6.886 8.237l-7.616 42.288c-.672 3.733 3.815 6.155 6.567 3.543l54.933-52.146c1.3-1.234 3.025-1.922 4.817-1.922h210.261c1.793 0 3.517.688 4.817 1.922l54.933 52.146c2.751 2.612 7.239.19 6.567-3.543l-7.616-42.288c-.773-4.292 2.526-8.237 6.886-8.237h26.953c18.649 0 33.767-15.118 33.767-33.768v-61.195c.001-18.65-15.117-33.768-33.767-33.768z" fill="#F87171"/></g></g></svg>
+                                <svg className="w-16 h-16 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h18M3 12h18M3 19h10" />
+                                </svg>
                             </div>
                         </div>
                         <h3 className="flex justify-center font-bold text-xl mb-4 text-red-400">Communicative</h3>
@@ -228,7 +229,9 @@ const Home = (props) => (
                     <div className="bg-gray-700 rounded-xl shadow-lg p-8 flex-1 mx-2 mb-6 lg:mb-0 hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
                         <div className="flex justify-center mb-6">
                             <div className="bg-red-400 bg-opacity-20 p-4 rounded-full">
-                                <svg id="Flat" viewBox="0 0 512 512" width="64" xmlns="http://www.w3.org/2000/svg"><g><g clip-rule="evenodd" fill-rule="evenodd"><path d="m386.228 494.183 107.941-107.81c9.153-9.142 9.153-24.115 0-33.257l-17.797-17.747c-9.153-9.143-24.116-9.143-33.269 0l-.481.452-107.006 106.877-.454.481c-9.153 9.142-9.153-24.087 0-33.229l17.797 17.775c1.814 1.812 3.882 3.284 6.092 4.387h21.084c2.211-1.103 4.251-2.575 6.093-4.387z" fill="#F87171"/></g></g></svg>
+                                <svg className="w-16 h-16 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-3 3-3-3z" />
+                                </svg>
                             </div>
                         </div>
                         <h3 className="flex justify-center font-bold text-xl mb-4 text-red-400">Collaborative</h3>
@@ -239,7 +242,9 @@ const Home = (props) => (
                     <div className="bg-gray-700 rounded-xl shadow-lg p-8 flex-1 mx-2 hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
                         <div className="flex justify-center mb-6">
                             <div className="bg-red-400 bg-opacity-20 p-4 rounded-full">
-                                <svg id="Capa_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" width="64" xmlns="http://www.w3.org/2000/svg"><g><path d="m256 512c-68.38 0-132.667-26.629-181.02-74.98-48.351-48.353-74.98-112.64-74.98-181.02s26.629-132.667 74.98-181.02c48.353-48.351 112.64-74.98 181.02-74.98s132.667 26.629 181.02 74.98c48.351 48.353 74.98 112.64 74.98 181.02s-26.629 132.667-74.98 181.02c-48.353 48.351-112.64 74.98-181.02 74.98z" fill="#F87171"/></g></svg>
+                                <svg className="w-16 h-16 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                             </div>
                         </div>
                         <h3 className="flex justify-center font-bold text-xl mb-4 text-red-400">Solution-Oriented</h3>
@@ -271,21 +276,23 @@ const Home = (props) => (
                 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div className="bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
-                        <div className="h-48 overflow-hidden">
-                            <img className="w-full h-full object-cover transform hover:scale-110 transition duration-500" src={flutterGherkinImg} alt="Flutter Gherkin Automation" />
+                        <div className="h-48 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 flex items-center justify-center">
+                            <svg className="w-20 h-20 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+                            </svg>
                         </div>
                         <div className="p-6">
-                            <h3 className="font-bold text-xl mb-2">Flutter Gherkin Automation</h3>
+                            <h3 className="font-bold text-xl mb-2">Playwright AI Parabank</h3>
                             <p className="text-gray-300 mb-4">
-                                Automated testing framework for Flutter applications using Gherkin for BDD-style testing.
+                                AI-assisted end-to-end web test automation using Playwright for the Parabank application.
                             </p>
                             <div className="flex justify-end">
-                                <Link to="/project" className="text-red-400 hover:text-red-300 inline-flex items-center">
-                                    Learn more
+                                <a href="https://github.com/gagaspanduw/playwright-ai-parabank" target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 inline-flex items-center">
+                                    View source code
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                                         <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                                     </svg>
-                                </Link>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -312,22 +319,38 @@ const Home = (props) => (
                     
                     <div className="bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
                         <div className="h-48 overflow-hidden">
-                            <img className="w-full h-full object-cover transform hover:scale-110 transition duration-500" src={absensiImg} alt="Attendance System" />
+                            <img className="w-full h-full object-cover transform hover:scale-110 transition duration-500" src={flutterGherkinImg} alt="Flutter Gherkin Test" />
                         </div>
                         <div className="p-6">
-                            <h3 className="font-bold text-xl mb-2">Attendance System</h3>
+                            <h3 className="font-bold text-xl mb-2">Flutter Gherkin Test</h3>
                             <p className="text-gray-300 mb-4">
-                                Comprehensive testing of a digital attendance tracking system with real-time monitoring.
+                                End-to-end Flutter mobile automation using Gherkin scenarios for clear and scalable BDD testing.
                             </p>
                             <div className="flex justify-end">
-                                <Link to="/project" className="text-red-400 hover:text-red-300 inline-flex items-center">
-                                    Learn more
+                                <a href="https://github.com/gagaspanduw/automation-flutter_gherkin" target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 inline-flex items-center">
+                                    View source code
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                                         <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                                     </svg>
-                                </Link>
+                                </a>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section className="py-12">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 md:p-8">
+                    <h3 className="text-2xl font-bold text-red-400 mb-4">Core QA Automation Stack</h3>
+                    <div className="flex flex-wrap gap-3">
+                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">Playwright</span>
+                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">Selenium</span>
+                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">Cypress</span>
+                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">Gherkin BDD</span>
+                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">API Testing</span>
+                        <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-200 text-sm">CI/CD Testing</span>
                     </div>
                 </div>
             </div>
