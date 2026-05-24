@@ -1,43 +1,61 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const ForMimi = () => {
-  const [stage, setStage] = useState('envelope'); // envelope → opening → letter
+const IfYoureReady = () => {
+  const [stage, setStage] = useState('envelope');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [songIndex, setSongIndex] = useState(0);
   const audioRef = useRef(null);
+  const timerRef = useRef(null);
+
+  const playlist = [
+    { title: 'ILYSB', artist: 'LANY', src: 'https://archive.org/download/LANYILYSBlyricVideo/LANY%20-%20ILYSB%20%28lyric%20video%29.mp3' },
+    { title: 'River Flows In You', artist: 'Yiruma', src: "https://archive.org/download/yiruma-frame-2017/Yiruma%20-%20Frame%20(2017)/11.%20River%20Flows%20In%20You%20('f%20r%20a%20m%20e'%20Ver.).mp3" },
+  ];
 
   useEffect(() => {
-    if (!document.getElementById('for-mimi-fonts')) {
+    if (!document.getElementById('mimi-ready-fonts')) {
       const link = document.createElement('link');
-      link.id = 'for-mimi-fonts';
+      link.id = 'mimi-ready-fonts';
       link.href = 'https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@500;600;700&display=swap';
       link.rel = 'stylesheet';
       document.head.appendChild(link);
     }
+    return () => {
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+    };
   }, []);
 
-  // Auto-play when letter opens
   useEffect(() => {
     if (stage === 'letter' && audioRef.current) {
+      audioRef.current.src = playlist[songIndex].src;
       const p = audioRef.current.play();
       if (p !== undefined) {
         p.then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
       }
     }
-  }, [stage]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage, songIndex]);
 
-  const handleOpenEnvelope = () => {
+  const handleOpenLetter = () => {
     setStage('opening');
-    setTimeout(() => setStage('letter'), 1200);
+    timerRef.current = window.setTimeout(() => setStage('letter'), 1200);
   };
 
-  const handleFoldBack = () => {
+  const handleBackToEnvelope = () => {
+    if (timerRef.current) window.clearTimeout(timerRef.current);
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
     setIsPlaying(false);
+    setSongIndex(0);
     setStage('opening');
-    setTimeout(() => setStage('envelope'), 800);
+    window.setTimeout(() => setStage('envelope'), 800);
+  };
+
+  const handleNextSong = () => {
+    const next = (songIndex + 1) % playlist.length;
+    setSongIndex(next);
   };
 
   const ENV_W = 300;
@@ -49,11 +67,9 @@ const ForMimi = () => {
       {/* ── ENVELOPE STAGE ── */}
       {(stage === 'envelope' || stage === 'opening') && (
         <div style={styles.envelopeWrapper}>
-          <p style={styles.preLabel}>You have a new letter</p>
+          <p style={styles.preLabel}>Read only when you feel ready</p>
 
-          {/* Envelope body */}
           <div style={{ width: `${ENV_W}px`, height: `${ENV_H}px`, position: 'relative', filter: 'drop-shadow(0 12px 30px rgba(0,0,0,0.22))' }}>
-
             {/* Back */}
             <div style={{ position: 'absolute', inset: 0, background: '#e8d5b7', borderRadius: '4px' }} />
 
@@ -86,7 +102,7 @@ const ForMimi = () => {
                 gap: '3px',
               }}>
                 <span style={{ fontSize: '18px', lineHeight: 1 }}>♥</span>
-                <span style={{ fontFamily: "'Caveat', cursive", fontSize: '8px', color: '#6b3a1f', letterSpacing: '0.5px' }}>LOVE</span>
+                <span style={{ fontFamily: "'Caveat', cursive", fontSize: '8px', color: '#6b3a1f', letterSpacing: '0.5px' }}>SORRY</span>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '10px', alignItems: 'flex-start', width: '130px' }}>
@@ -110,8 +126,8 @@ const ForMimi = () => {
           </div>
 
           {stage === 'envelope' && (
-            <button className="mimi-open-btn" style={styles.openBtn} onClick={handleOpenEnvelope}>
-              Open letter  ↑
+            <button className="mimi-open-btn" style={styles.openBtn} onClick={handleOpenLetter}>
+              Open the letter  ↑
             </button>
           )}
           {stage === 'opening' && (
@@ -133,53 +149,42 @@ const ForMimi = () => {
 
             <div className="mimi-letter-content" style={styles.letterContent}>
               <div style={{...styles.letterMetaRow, animation: 'readyRise 0.5s ease-out both', animationDelay: '0s'}}>
-                <span style={styles.privateTag}>Private letter</span>
-                <span style={styles.dateText}>February 26, 2026</span>
+                <span style={styles.privateTag}>Private note</span>
+                <span style={styles.dateText}>May 13, 2026</span>
               </div>
 
-              <p style={{...styles.salutation, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.08s'}}>Dear Mimi,</p>
+              <p style={{...styles.salutation, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.08s'}}>Dear Langga,</p>
 
               <p style={{...styles.para, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.18s'}}>
-                You wanted something formal. So I built you a whole website. With a wax seal.
-                I think that's formal enough.
+                I keep going back to all the little things we have shared — the late nights talking about nothing and everything, the reels we have shared, the inside jokes that probably only make sense to us. Those things were not small to me.
               </p>
 
               <p style={{...styles.para, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.28s'}}>
-                Here it is, officially: I want us to be together — properly, not just
-                the "we're a thing I guess" kind of way. You and me. For real this time.
+                I remember every game we stayed up for just to have more time together. Every time you laughed at something I said and it felt like the best thing in the world.
               </p>
 
               <div style={{...styles.highlightBox, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.4s'}}>
                 <p style={styles.highlightText}>
-                  Yes, I know the distance is hard. I'm choosing you anyway.
-                  You're worth the late nights, the waiting, and every game
-                  we've played together just to have a reason to stay up late.
+                  What we built together — that was real. I do not want to let it go, and I am sorry for the moments I made you feel like I did not see how precious it was.
                 </p>
               </div>
 
               <p style={{...styles.para, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.52s'}}>
-                So next time someone asks "what are you two?" — you can just send them this link.
-                That's what this is. My answer. In writing. On the internet. Very official.
+                I know I made things harder than they needed to be. I am not writing this to make you feel guilty — I am writing this because you deserve to know that none of it was because I stopped caring. I never stopped.
               </p>
 
               <p style={{...styles.para, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.62s'}}>
-                You are my person, Mimi. Even from far away.
+                If your heart still has a small corner for us, I am here.
               </p>
 
               <div style={{...styles.signatureArea, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.74s'}}>
-                <p style={styles.signatureLine}>Yours, officially and completely,</p>
-                <p style={styles.signatureName}>— The guy who coded a love letter instead of just texting you</p>
-                <p style={styles.signatureHint}>(Yes, I mean every word. No, I'm not nervous. Okay, a little. wkwkwkwk)</p>
+                <p style={styles.signatureLine}>Always yours,</p>
+                <p style={styles.signatureName}>Gagas</p>
+                <p style={styles.signatureHint}>(No pressure. Take all the time you need. ♥)</p>
               </div>
 
-              <div style={{...styles.psArea, animation: 'readyRise 0.5s ease-out both', animationDelay: '0.86s'}}>
-                <p style={styles.psText}>P.S. You wanted formal — I gave you a wax seal and ruled paper. You're welcome.</p>
-                <p style={styles.psText}>P.P.S. The distance is annoying. But giving up on you would be worse. ♥</p>
-              </div>
-
-              {/* Fold back button */}
-              <div style={{ textAlign: 'center', marginTop: '40px', animation: 'readyRise 0.5s ease-out both', animationDelay: '0.96s' }}>
-                <button className="mimi-fold-btn" style={styles.foldBackBtn} onClick={handleFoldBack}>
+              <div style={{ textAlign: 'center', marginTop: '40px', animation: 'readyRise 0.5s ease-out both', animationDelay: '0.86s' }}>
+                <button className="mimi-fold-btn" style={styles.foldBackBtn} onClick={handleBackToEnvelope}>
                   ↩ Back to envelope
                 </button>
               </div>
@@ -193,15 +198,15 @@ const ForMimi = () => {
         <div style={styles.musicPlayer}>
           <audio
             ref={audioRef}
-            loop
-            src="https://archive.org/download/yiruma-frame-2017/Yiruma%20-%20Frame%20(2017)/11.%20River%20Flows%20In%20You%20('f%20r%20a%20m%20e'%20Ver.).mp3"
+            src={playlist[songIndex].src}
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
+            onEnded={handleNextSong}
           />
           <span style={{ ...styles.musicNote, animationPlayState: isPlaying ? 'running' : 'paused' }}>♪</span>
           <div style={styles.musicInfo}>
-            <span style={styles.musicTitle}>River Flows In You</span>
-            <span style={styles.musicArtist}>Yiruma</span>
+            <span style={styles.musicTitle}>{playlist[songIndex].title}</span>
+            <span style={styles.musicArtist}>{playlist[songIndex].artist}</span>
           </div>
           <button
             style={styles.musicBtn}
@@ -216,12 +221,17 @@ const ForMimi = () => {
           >
             {isPlaying ? '⏸' : '▶'}
           </button>
+          <button
+            style={{...styles.musicBtn, fontSize: '11px'}}
+            onClick={handleNextSong}
+            title="Next song"
+          >
+            ⏭
+          </button>
         </div>
       )}
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@500;600;700&display=swap');
-
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(40px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -264,7 +274,17 @@ const ForMimi = () => {
 
         @media (max-width: 640px) {
           .mimi-letter-content {
-            padding: 0 16px 0 26px !important;
+            padding: 0 14px 0 22px !important;
+          }
+          .mimi-open-btn {
+            padding: 12px 32px !important;
+            font-size: 16px !important;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .mimi-letter-content {
+            padding: 0 10px 0 16px !important;
           }
         }
       `}</style>
@@ -295,6 +315,8 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     gap: '28px',
+    width: '100%',
+    maxWidth: '340px',
   },
   preLabel: {
     fontFamily: "'Caveat', cursive",
@@ -303,6 +325,7 @@ const styles = {
     margin: 0,
     letterSpacing: '0.5px',
     opacity: 0.85,
+    textAlign: 'center',
   },
   openBtn: {
     background: 'transparent',
@@ -370,13 +393,14 @@ const styles = {
     margin: 0,
   },
   salutation: {
-    fontFamily: "'Cormorant Garamond', serif",
-    fontSize: 'clamp(36px, 5vw, 56px)',
+    fontFamily: "'Caveat', cursive",
+    fontSize: 'clamp(38px, 10vw, 56px)',
+    fontWeight: 700,
     color: '#3d2b1f',
     marginBottom: '26px',
     marginTop: '0',
-    lineHeight: 1,
-    letterSpacing: '-0.015em',
+    lineHeight: 1.05,
+    letterSpacing: '0.3px',
   },
   para: {
     fontSize: '16px',
@@ -384,6 +408,7 @@ const styles = {
     lineHeight: '2.0',
     marginBottom: '20px',
     marginTop: '0',
+    fontFamily: "'Lora', Georgia, serif",
   },
   highlightBox: {
     borderLeft: '4px solid #b71c1c',
@@ -398,6 +423,7 @@ const styles = {
     lineHeight: '1.9',
     margin: '0',
     fontStyle: 'italic',
+    fontFamily: "'Lora', Georgia, serif",
   },
   signatureArea: {
     marginTop: '36px',
@@ -414,29 +440,17 @@ const styles = {
   },
   signatureName: {
     fontFamily: "'Caveat', cursive",
-    fontSize: '15px',
-    color: '#999',
+    fontSize: '32px',
+    color: '#3d2b1f',
     margin: '0 0 4px 0',
+    fontWeight: 700,
   },
   signatureHint: {
     fontSize: '13px',
     color: '#c0b0a0',
     fontStyle: 'italic',
     margin: '0',
-  },
-  psArea: {
-    background: 'rgba(183,28,28,0.03)',
-    borderRadius: '6px',
-    padding: '15px 18px',
-    marginTop: '18px',
-    border: '1px dashed rgba(183,28,28,0.18)',
-  },
-  psText: {
-    fontSize: '14px',
-    color: '#7a4a3a',
-    fontStyle: 'italic',
-    margin: '6px 0',
-    lineHeight: '1.75',
+    fontFamily: "'Lora', serif",
   },
   foldBackBtn: {
     background: 'transparent',
@@ -455,11 +469,14 @@ const styles = {
   /* Music player */
   musicPlayer: {
     position: 'fixed',
-    bottom: '14px',
-    right: '14px',
+    bottom: '12px',
+    right: '10px',
+    left: '10px',
+    maxWidth: '280px',
+    marginLeft: 'auto',
     background: 'rgba(255,253,246,0.97)',
     borderRadius: '50px',
-    padding: '8px 14px',
+    padding: '8px 12px',
     boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
     border: '1px solid rgba(180,160,130,0.35)',
     zIndex: 999,
@@ -508,4 +525,4 @@ const styles = {
   },
 };
 
-export default ForMimi;
+export default IfYoureReady;

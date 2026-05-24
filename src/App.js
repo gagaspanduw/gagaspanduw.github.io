@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import './App.css';
 import Navbar from './components/navbar';
 import Logo from './components/Logo';
 import {
   Route,
   Switch,
-  HashRouter
+  HashRouter,
+  useLocation
 } from 'react-router-dom';
 
 import Home from './pages/home';
@@ -15,6 +16,8 @@ import ValentineIntro from './pages/mimi/valentineIntro';
 import Valentine from './pages/mimi/valentine';
 import ValentineSuccess from './pages/mimi/valentineSuccess';
 import ForMimi from './pages/mimi/forMimi';
+import IfYoureReady from './pages/mimi/ifYoureReady';
+import FourthMonthversary from './pages/mimi/monthversary/months/1-4thMonthversary';
 
 // Tools
 import BugReportBuilder from './pages/tools/BugReportBuilder';
@@ -22,27 +25,38 @@ import TestCaseGenerator from './pages/tools/TestCaseGenerator';
 import ApiPlayground from './pages/tools/ApiPlayground';
 import ToolsIndex from './pages/tools/index';
 
-function App() {
+const ThreeJSTreeTrial = lazy(() => import('./pages/mimi/monthversary/ThreeJSTreeTrial'));
+
+const immersiveRoutes = ['/mimi/if-youre-ready', '/mimi/monthversary', '/mimi/monthversary/4'];
+
+function AppLayout() {
+  const location = useLocation();
+  const isImmersive = immersiveRoutes.includes(location.pathname);
+
   return (
-  <HashRouter>
-    <div className="bg-gray-900 min-h-screen flex flex-col">
-      <Navbar />
+    <div className={`${isImmersive ? 'min-h-screen flex flex-col' : 'bg-gray-900 min-h-screen flex flex-col'}`}>
+      {!isImmersive && <Navbar />}
       <main className="flex-grow">
-        <Switch>
-          <Route path="/" exact component={Home}/>
-          <Route path="/project" exact component={Project}/>
-          <Route path="/certificate" exact component={Certificate}/>    
-          <Route path="/valentine" exact component={ValentineIntro}/>
-          <Route path="/valentine/question" exact component={Valentine}/>
-          <Route path="/valentine/success" exact component={ValentineSuccess}/>
-          <Route path="/for-mimi" exact component={ForMimi}/>
-          <Route path="/tools/bug-report" exact component={BugReportBuilder}/>
-          <Route path="/tools/test-case" exact component={TestCaseGenerator}/>
-          <Route path="/tools/api-playground" exact component={ApiPlayground}/>
-          <Route path="/tools" exact component={ToolsIndex}/>
-        </Switch>
+        <Suspense fallback={null}>
+          <Switch>
+            <Route path="/" exact component={Home}/>
+            <Route path="/project" exact component={Project}/>
+            <Route path="/certificate" exact component={Certificate}/>
+            <Route path="/valentine" exact component={ValentineIntro}/>
+            <Route path="/valentine/question" exact component={Valentine}/>
+            <Route path="/valentine/success" exact component={ValentineSuccess}/>
+            <Route path="/for-mimi" exact component={ForMimi}/>
+            <Route path="/mimi/if-youre-ready" exact component={IfYoureReady}/>
+            <Route path="/mimi/monthversary" exact component={ThreeJSTreeTrial}/>
+            <Route path="/mimi/monthversary/4" exact component={FourthMonthversary}/>
+            <Route path="/tools/bug-report" exact component={BugReportBuilder}/>
+            <Route path="/tools/test-case" exact component={TestCaseGenerator}/>
+            <Route path="/tools/api-playground" exact component={ApiPlayground}/>
+            <Route path="/tools" exact component={ToolsIndex}/>
+          </Switch>
+        </Suspense>
       </main>
-      <footer className="bg-gray-900 border-t border-gray-800">
+      {!isImmersive && <footer className="bg-gray-900 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 pt-12 pb-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div className="md:col-span-2">
@@ -113,8 +127,15 @@ function App() {
             </div>
           </div>
         </div>
-      </footer>
+      </footer>}
     </div>
+  );
+}
+
+function App() {
+  return (
+  <HashRouter>
+    <AppLayout />
   </HashRouter>
   );
 }
