@@ -17,6 +17,7 @@ const messageBlocks = [
   { type: 'para', text: 'I don\'t know what next month looks like. But I know I want to find out with you.' },
   { type: 'signature', lines: ['Yours, always', '— Gagas', '(The guy who do it all, just for you)'] },
   { type: 'ps', text: 'P.S. Next month will be different. You\'ll have to wait. ♥' },
+  { type: 'gift' },
 ];
 
 const TypewriterMessage = ({ playlist }) => {
@@ -31,15 +32,16 @@ const TypewriterMessage = ({ playlist }) => {
     }
 
     const block = messageBlocks[visibleBlocks];
-    const words = block.type === 'badge' || block.type === 'title' || block.type === 'signature' || block.type === 'ps'
+    const words = block.type === 'badge' || block.type === 'title' || block.type === 'signature' || block.type === 'ps' || block.type === 'gift'
       ? [] // These appear instantly, no typewriter
       : block.text.split(' ');
 
     if (words.length === 0) {
       // Instant reveal for non-typewriter blocks
+      const delay = block.type === 'title' ? 800 : block.type === 'gift' ? 1200 : 400;
       const timer = setTimeout(() => {
         setVisibleBlocks((v) => v + 1);
-      }, block.type === 'title' ? 800 : 400);
+      }, delay);
       return () => clearTimeout(timer);
     }
 
@@ -112,6 +114,25 @@ const TypewriterMessage = ({ playlist }) => {
               return (
                 <div key={i} style={{ ...styles.messagePS, animation: 'fadeUp 0.5s ease-out both' }}>
                   <p style={styles.messagePSText}>{block.text}</p>
+                </div>
+              );
+            }
+            if (block.type === 'gift') {
+              const waMessage = encodeURIComponent('Hey you... I\'ve been thinking, what if...');
+              return (
+                <div key={i} style={{ ...styles.giftSection, animation: 'fadeUp 0.6s ease-out both' }}>
+                  <p style={styles.giftPrompt}>One more thing...</p>
+                  <p style={styles.giftSubtext}>I've been wondering what would make you smile right now. No pressure, just... curious.</p>
+                  <p style={styles.giftHint}>If anything comes to mind, you know where to find me</p>
+                  <a
+                    href={`https://wa.me/6285810840979?text=${waMessage}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={styles.waButton}
+                  >
+                    tell me here
+                  </a>
+                  <p style={styles.giftFooter}>even the smallest thing you mention, I'll remember</p>
                 </div>
               );
             }
@@ -756,6 +777,60 @@ const styles = {
     margin: 0,
     fontFamily: "'Lora', Georgia, serif",
   },
+
+  /* Gift / WhatsApp section */
+  giftSection: {
+    textAlign: 'center',
+    marginTop: '28px',
+    paddingTop: '24px',
+    borderTop: '1px solid rgba(255,255,255,0.06)',
+  },
+  giftPrompt: {
+    fontFamily: "'Cormorant Garamond', serif",
+    fontSize: '22px',
+    color: '#fff',
+    margin: '0 0 8px 0',
+    fontWeight: 600,
+  },
+  giftSubtext: {
+    fontSize: '14px',
+    color: 'rgba(255,255,255,0.5)',
+    lineHeight: '1.8',
+    margin: '0 0 12px 0',
+    fontFamily: "'Lora', Georgia, serif",
+  },
+  giftHint: {
+    fontSize: '13px',
+    color: 'rgba(255,255,255,0.35)',
+    margin: '0 0 20px 0',
+    fontStyle: 'italic',
+    fontFamily: "'Lora', Georgia, serif",
+  },
+  waButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '14px 28px',
+    background: 'rgba(183,28,28,0.85)',
+    color: '#fff',
+    borderRadius: '50px',
+    fontSize: '15px',
+    fontWeight: 600,
+    fontFamily: "'Lora', Georgia, serif",
+    textDecoration: 'none',
+    boxShadow: '0 4px 20px rgba(183,28,28,0.25)',
+    transition: 'all 0.3s ease',
+    border: '1px solid rgba(255,255,255,0.1)',
+    letterSpacing: '0.5px',
+  },
+  giftFooter: {
+    fontFamily: "'Caveat', cursive",
+    fontSize: '15px',
+    color: 'rgba(255,255,255,0.25)',
+    margin: '16px 0 0 0',
+    fontStyle: 'italic',
+  },
+
   cursor: {
     color: '#b71c1c',
     fontWeight: 300,

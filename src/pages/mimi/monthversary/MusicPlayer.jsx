@@ -3,18 +3,60 @@ import React, { useState, useRef, useEffect } from 'react';
 const MusicPlayer = ({ playlist, startIndex = 0 }) => {
   const [songIndex, setSongIndex] = useState(startIndex);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
   const audioRef = useRef(null);
+  const attemptedRef = useRef(false);
 
   useEffect(() => {
-    if (audioRef.current && playlist[songIndex]) {
-      audioRef.current.src = playlist[songIndex].src;
-      const p = audioRef.current.play();
-      if (p !== undefined) {
-        p.then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
-      }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onReady = () => {
+      if (attemptedRef.current) return;
+      attemptedRef.current = true;
+      audio.play().then(() => {
+        setIsPlaying(true);
+        setShowPrompt(false);
+      }).catch(() => {
+        setIsPlaying(false);
+        setShowPrompt(true);
+      });
+    };
+
+    // If already loaded enough, play immediately
+    if (audio.readyState >= 3) {
+      onReady();
+    } else {
+      audio.addEventListener('canplaythrough', onReady, { once: true });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [songIndex]);
+
+    return () => {
+      audio.removeEventListener('canplaythrough', onReady);
+    };
+  }, []);
+
+  // Retry on any user tap if autoplay was blocked
+  useEffect(() => {
+    if (!showPrompt) return;
+    const retry = () => {
+      if (audioRef.current) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+          setShowPrompt(false);
+        }).catch(() => {});
+      }
+    };
+    // Small delay to avoid the same click that rendered the prompt
+    const timer = setTimeout(() => {
+      document.addEventListener('click', retry, { once: true });
+      document.addEventListener('touchstart', retry, { once: true });
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('click', retry);
+      document.removeEventListener('touchstart', retry);
+    };
+  }, [showPrompt]);
 
   const handleNext = () => {
     setSongIndex((prev) => (prev + 1) % playlist.length);
@@ -25,7 +67,10 @@ const MusicPlayer = ({ playlist, startIndex = 0 }) => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        setShowPrompt(false);
+      }).catch(() => {});
     }
   };
 
@@ -33,31 +78,80 @@ const MusicPlayer = ({ playlist, startIndex = 0 }) => {
   if (!song) return null;
 
   return (
-    <div style={styles.player}>
-      <audio
-        ref={audioRef}
-        onPlay={() => setIsPlaying(true)}
+    <>
+      <audio ref={audioRef} src={song.src} preload="auto"
+        onPlay={() => { setIsPlaying(true); setShowPrompt(false); }}
         onPause={() => setIsPlaying(false)}
         onEnded={handleNext}
       />
-      <span style={{ ...styles.note, animationPlayState: isPlaying ? 'running' : 'paused' }}>♪</span>
-      <div style={styles.info}>
-        <span style={styles.title}>{song.title}</span>
-        <span style={styles.artist}>{song.artist}</span>
-      </div>
-      <button style={styles.btn} onClick={togglePlay}>
-        {isPlaying ? '⏸' : '▶'}
-      </button>
-      {playlist.length > 1 && (
-        <button style={{ ...styles.btn, fontSize: '11px' }} onClick={handleNext} title="Next song">
-          ⏭
-        </button>
+
+      {showPrompt && (
+        <div style={styles.prompt} onClick={togglePlay}>
+          <span style={styles.promptNote}>♪</span>
+          <span style={styles.promptText}>Tap to play our song</span>
+        </div>
       )}
-    </div>
+
+      <div style={styles.player}>
+        <span style={{ ...styles.note, animationPlayState: isPlaying ? 'running' : 'paused' }}>♪</span>
+        <div style={styles.info}>
+          <span style={styles.title}>{song.title}</span>
+          <span style={styles.artist}>{song.artist}</span>
+        </div>
+        <button style={styles.btn} onClick={togglePlay}>
+          {isPlaying ? '⏸' : '▶'}
+        </button>
+        {playlist.length > 1 && (
+          <button style={{ ...styles.btn, fontSize: '11px' }} onClick={handleNext} title="Next song">
+            ⏭
+          </button>
+        )}
+      </div>
+
+      <style>{`
+        @keyframes noteBounce {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          25% { transform: translateY(-3px) rotate(-8deg); }
+          75% { transform: translateY(-1px) rotate(8deg); }
+        }
+        @keyframes promptPulse {
+          0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+          50% { transform: translateX(-50%) scale(1.05); opacity: 1; }
+        }
+      `}</style>
+    </>
   );
 };
 
 const styles = {
+  prompt: {
+    position: 'fixed',
+    bottom: '70px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    background: 'rgba(183,28,28,0.9)',
+    borderRadius: '50px',
+    padding: '12px 24px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    cursor: 'pointer',
+    zIndex: 998,
+    animation: 'promptPulse 2s ease-in-out infinite',
+    boxShadow: '0 4px 20px rgba(183,28,28,0.4)',
+    WebkitTapHighlightColor: 'transparent',
+  },
+  promptNote: {
+    fontSize: '18px',
+    color: '#fff',
+  },
+  promptText: {
+    fontSize: '14px',
+    color: '#fff',
+    fontFamily: "'Lora', serif",
+    fontWeight: 500,
+    whiteSpace: 'nowrap',
+  },
   player: {
     position: 'fixed',
     bottom: '14px',

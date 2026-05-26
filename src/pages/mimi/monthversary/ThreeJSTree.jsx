@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as THREE from 'three';
+import { Tree, TreeType, BarkType, LeafType } from '@dgreenheck/ez-tree';
 
 // ── Month data ──
 const months = [
@@ -19,16 +20,16 @@ const months = [
 ];
 
 function getFruitPosition(index, total, p) {
-  const angle = (index / Math.max(total, 1)) * Math.PI * 2 + 0.3;
-  // Place fruit inside the canopy, not at the far edge
-  const r = p.canopyRadius * 0.45;
-  const y = p.trunkHeight + p.canopyHeight * 0.35 + (index % 2) * 0.2;
+  const angle = (index / Math.max(total, 1)) * Math.PI * 2 + 0.5;
+  // Place tulips on the ground around the tree base
+  const r = Math.max(0.5, p.canopyRadius * 0.6) + index * 0.15;
+  const y = -0.1;
   const x = Math.cos(angle) * r;
   const z = Math.sin(angle) * r;
   return [x, y, z];
 }
 
-export default function ThreeJSTreeTrial() {
+export default function ThreeJSTree() {
   const canvasRef = useRef(null);
   const history = useHistory();
   const [hoveredFruit, setHoveredFruit] = useState(null);
@@ -38,6 +39,7 @@ export default function ThreeJSTreeTrial() {
   const nowRef = useRef(new Date());
 
   const handleFruitClick = useCallback((month) => {
+    if (!month) return;
     const now = nowRef.current;
     const isUnlocked = !month.unlockDate || now >= month.unlockDate;
     if (isUnlocked) history.push(month.route);
@@ -105,13 +107,23 @@ export default function ThreeJSTreeTrial() {
     updateCamera();
 
     // ── Lighting ──
-    scene.add(new THREE.AmbientLight(0x2E7D32, 0.25));
-    const sun = new THREE.DirectionalLight(0xFFF8E1, 0.65);
+    const hemiLight = new THREE.HemisphereLight(0x87CEEB, 0x1B5E20, 0.15);
+    scene.add(hemiLight);
+    scene.add(new THREE.AmbientLight(0x2E7D32, 0.15));
+    const sun = new THREE.DirectionalLight(0xFFF8E1, 0.7);
     sun.position.set(4, 8, 3);
     scene.add(sun);
-    const fill = new THREE.DirectionalLight(0x81C784, 0.2);
+    const fill = new THREE.DirectionalLight(0x81C784, 0.18);
     fill.position.set(-3, 4, -2);
     scene.add(fill);
+    // Warm rim light from behind — adds depth and silhouette glow
+    const rim = new THREE.DirectionalLight(0xFFE0B2, 0.25);
+    rim.position.set(-2, 5, -5);
+    scene.add(rim);
+    // Cool moonlight from above-left
+    const moon = new THREE.DirectionalLight(0xB3E5FC, 0.1);
+    moon.position.set(-4, 10, 2);
+    scene.add(moon);
     const rootGlow = new THREE.PointLight(0x4CAF50, 0.4, 5);
     rootGlow.position.set(0, 0.3, 0);
     scene.add(rootGlow);
@@ -123,176 +135,186 @@ export default function ThreeJSTreeTrial() {
     const treeGroup = new THREE.Group();
     scene.add(treeGroup);
 
-    const barkMat = new THREE.MeshStandardMaterial({ color: 0x4E342E, roughness: 0.92 });
-    const barkDarkMat = new THREE.MeshStandardMaterial({ color: 0x3E2723, roughness: 0.95 });
+    // ── ez-tree procedural tree ──
+    const treeLevels = growth < 0.2 ? 1 : growth < 0.45 ? 2 : 3;
+    const treeScale = lerp(0.06, 0.22, growth);
 
-    // ── Trunk (twisted) ──
-    const trunkGeo = new THREE.CylinderGeometry(P.trunkRadiusTop, P.trunkRadiusBottom, P.trunkHeight, 12);
-    const tPos = trunkGeo.attributes.position;
-    for (let i = 0; i < tPos.count; i++) {
-      const y = tPos.getY(i);
-      const ny = (y + P.trunkHeight / 2) / P.trunkHeight;
-      const twist = ny * 0.18;
-      const x = tPos.getX(i), z = tPos.getZ(i);
-      tPos.setX(i, x * Math.cos(twist) - z * Math.sin(twist));
-      tPos.setZ(i, x * Math.sin(twist) + z * Math.cos(twist));
-    }
-    trunkGeo.computeVertexNormals();
-    const trunk = new THREE.Mesh(trunkGeo, barkMat);
-    trunk.position.y = P.trunkHeight / 2;
-    treeGroup.add(trunk);
+    const tree = new Tree();
+    tree.options.seed = 42;
+    tree.options.type = TreeType.Deciduous;
+    tree.options.bark.type = BarkType.Oak;
+    tree.options.bark.tint = 0x5D4037;
+    tree.options.bark.textured = true;
+    tree.options.bark.flatShading = false;
 
-    // ── Roots ──
-    for (let i = 0; i < P.rootCount; i++) {
-      const a = (i / P.rootCount) * Math.PI * 2 + Math.random() * 0.3;
-      const len = P.rootSpread * (0.7 + Math.random() * 0.3);
-      const rad = P.trunkRadiusBottom * (0.25 + Math.random() * 0.15);
-      const curve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 0.15, 0),
-        new THREE.Vector3(Math.cos(a) * len * 0.35, 0.04, Math.sin(a) * len * 0.35),
-        new THREE.Vector3(Math.cos(a) * len * 0.7, -0.06, Math.sin(a) * len * 0.7),
-        new THREE.Vector3(Math.cos(a) * len, -0.12, Math.sin(a) * len),
-      ]);
-      treeGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 8, rad, 5, false), barkDarkMat));
-    }
-
-    // ── Branches ──
-    const branchGroup = new THREE.Group();
-    branchGroup.position.y = P.trunkHeight;
-    treeGroup.add(branchGroup);
-
-    for (let i = 0; i < P.branchCount; i++) {
-      const a = (i / P.branchCount) * Math.PI * 2 + Math.random() * 0.4;
-      const elev = 0.25 + Math.random() * 0.55;
-      const len = P.branchSpread * (0.65 + Math.random() * 0.35);
-      const rad = P.trunkRadiusTop * (0.25 + (i < 5 ? 0.25 : 0.1));
-      // Branch curve — natural length without overextending
-      const curve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 0, 0),
-        new THREE.Vector3(Math.cos(a) * len * 0.3, elev * len * 0.35, Math.sin(a) * len * 0.3),
-        new THREE.Vector3(Math.cos(a) * len * 0.65, elev * len * 0.7, Math.sin(a) * len * 0.65),
-        new THREE.Vector3(Math.cos(a) * len * 0.9, elev * len * 0.9, Math.sin(a) * len * 0.9),
-        new THREE.Vector3(Math.cos(a) * len, elev * len, Math.sin(a) * len),
-      ]);
-      branchGroup.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 10, rad, 5, false), barkMat));
-    }
-
-    // ── Canopy ──
-    const canopyColors = [0x1B5E20, 0x2E7D32, 0x388E3C, 0x43A047, 0x4CAF50, 0x66BB6A, 0x81C784];
-    const canopyMeshes = [];
-    const baseY = P.trunkHeight;
-
-    // Leaf shape types: 0=round, 1=flat, 2=elongated, 3=pointy
-    const makeLeafGeo = (size, shapeType) => {
-      switch (shapeType) {
-        case 1: { // Flat leaf — wide and thin like a real leaf
-          const g = new THREE.IcosahedronGeometry(size, 1);
-          g.scale(1.3, 0.35, 1.0);
-          return g;
-        }
-        case 2: { // Elongated — long and narrow
-          const g = new THREE.IcosahedronGeometry(size, 1);
-          g.scale(0.5, 1.4, 0.5);
-          return g;
-        }
-        case 3: { // Pointy — like a pine/conifer leaf cluster
-          const g = new THREE.ConeGeometry(size * 0.7, size * 1.6, 5);
-          return g;
-        }
-        default: // Round cluster
-          return new THREE.IcosahedronGeometry(size, 1);
-      }
+    // Branch config scaled with growth
+    tree.options.branch.levels = treeLevels;
+    tree.options.branch.angle = { 1: lerp(50, 70, growth), 2: lerp(45, 60, growth), 3: 55 };
+    tree.options.branch.children = {
+      0: Math.max(2, Math.floor(lerp(3, 7, growth))),
+      1: Math.max(2, Math.floor(lerp(3, 6, growth))),
+      2: Math.max(1, Math.floor(lerp(2, 5, growth))),
     };
+    tree.options.branch.length = {
+      0: lerp(8, 16, growth),
+      1: lerp(5, 12, growth),
+      2: lerp(3, 6, growth),
+      3: lerp(0.5, 1.5, growth),
+    };
+    tree.options.branch.radius = {
+      0: lerp(0.8, 1.5, growth),
+      1: lerp(0.3, 0.7, growth),
+      2: lerp(0.2, 0.5, growth),
+      3: lerp(0.1, 0.3, growth),
+    };
+    tree.options.branch.gnarliness = {
+      0: lerp(0.08, 0.15, growth),
+      1: lerp(0.1, 0.2, growth),
+      2: lerp(0.15, 0.3, growth),
+      3: 0.02,
+    };
+    tree.options.branch.sections = { 0: 12, 1: 10, 2: 8, 3: 6 };
+    tree.options.branch.segments = { 0: 8, 1: 6, 2: 4, 3: 3 };
+    tree.options.branch.start = { 1: lerp(0.5, 0.35, growth), 2: 0.3, 3: 0.3 };
+    tree.options.branch.taper = { 0: 0.7, 1: 0.7, 2: 0.7, 3: 0.7 };
+    tree.options.branch.twist = { 0: 0, 1: 0, 2: 0, 3: 0 };
+    tree.options.branch.force = { direction: { x: 0, y: 1, z: 0 }, strength: 0.01 };
 
-    for (let i = 0; i < P.canopyLayers; i++) {
-      const t = i / (P.canopyLayers - 1);
-      // Natural taper — wider at bottom, narrower at top
-      const layerR = P.canopyRadius * (1.0 - t * 0.35);
-      const y = baseY + P.canopyHeight * (0.1 + t * 0.8);
-      const blobR = P.canopyRadius * (0.25 + (1 - t) * 0.2);
-      // More blobs per layer for a fuller canopy
-      const count = Math.max(2, Math.floor(lerp(2, 5, growth) + (1 - t) * lerp(3, 8, growth)));
+    // Leaf config
+    tree.options.leaves.type = LeafType.Oak;
+    tree.options.leaves.count = Math.max(3, Math.floor(lerp(5, 20, growth)));
+    tree.options.leaves.size = lerp(1.5, 3.0, growth);
+    tree.options.leaves.sizeVariance = 0.7;
+    tree.options.leaves.start = lerp(0.2, 0.0, growth);
+    tree.options.leaves.angle = lerp(15, 10, growth);
+    tree.options.leaves.tint = 0x4CAF50;
+    tree.options.leaves.alphaTest = 0.5;
 
-      for (let j = 0; j < count; j++) {
-        const a = (j / count) * Math.PI * 2 + t * 0.5 + Math.random() * 0.3;
-        // Tighter distribution — keep leaves connected to branches
-        const r = layerR * (0.15 + Math.random() * 0.55);
-        const size = blobR * (0.4 + Math.random() * 0.35);
-        const ci = Math.min(Math.floor(t * canopyColors.length + Math.random() * 2), canopyColors.length - 1);
-        // Mix leaf shapes — 30% round, 30% flat, 20% elongated, 20% pointy
-        const shapeType = Math.random() < 0.3 ? 0 : Math.random() < 0.5 ? 1 : Math.random() < 0.6 ? 2 : 3;
+    tree.generate();
+    tree.scale.set(treeScale, treeScale, treeScale);
+    treeGroup.add(tree);
 
-        const geo = makeLeafGeo(size, shapeType);
-        const mat = new THREE.MeshStandardMaterial({ color: canopyColors[ci], roughness: 0.7, flatShading: true });
-        const mesh = new THREE.Mesh(geo, mat);
-        mesh.position.set(Math.cos(a) * r, y + Math.random() * 0.15, Math.sin(a) * r);
-        mesh.rotation.set(Math.random() * 6, Math.random() * 6, Math.random() * 6);
-        treeGroup.add(mesh);
-        canopyMeshes.push({ mesh, baseY: mesh.position.y });
-      }
-    }
+    // Compute effective tree dimensions for fruit/feature placement
+    const effectiveTrunkHeight = tree.options.branch.length[0] * treeScale;
+    const effectiveBranchHeight = (tree.options.branch.length[1] || 0) * treeScale;
+    const effectiveCanopyTop = effectiveTrunkHeight + effectiveBranchHeight * 1.2;
+    const effectiveCanopyRadius = (tree.options.branch.length[1] || effectiveTrunkHeight * 0.5) * treeScale * 0.8;
 
-    // Core blob — fills center to connect trunk to outer leaves
-    const coreGeo = new THREE.IcosahedronGeometry(P.canopyRadius * 0.45, 1);
-    const coreMat = new THREE.MeshStandardMaterial({ color: 0x2E7D32, roughness: 0.75, flatShading: true });
-    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-    coreMesh.position.set(0, baseY + P.canopyHeight * 0.4, 0);
-    treeGroup.add(coreMesh);
-    canopyMeshes.push({ mesh: coreMesh, baseY: coreMesh.position.y });
+    // Override P values for fruit/feature positioning to match ez-tree output
+    P.trunkHeight = effectiveTrunkHeight;
+    P.canopyHeight = effectiveCanopyTop - effectiveTrunkHeight;
+    P.canopyRadius = effectiveCanopyRadius;
 
-    // ── Hanging vines / moss ──
-    const vineMat = new THREE.MeshStandardMaterial({ color: 0x33691E, roughness: 0.85, transparent: true, opacity: 0.7 });
-    for (let i = 0; i < P.vineCount; i++) {
-      const a = (i / P.vineCount) * Math.PI * 2 + Math.random() * 0.4;
-      const dist = P.canopyRadius * (0.5 + Math.random() * 0.4);
-      const hangLen = 0.6 + Math.random() * 1.0;
-      const startY = baseY + P.canopyHeight * (0.2 + Math.random() * 0.3);
-      const vine = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(Math.cos(a) * dist, startY, Math.sin(a) * dist),
-        new THREE.Vector3(Math.cos(a) * dist * 1.05, startY - hangLen * 0.4, Math.sin(a) * dist * 1.05),
-        new THREE.Vector3(Math.cos(a) * dist * 0.95, startY - hangLen * 0.8, Math.sin(a) * dist * 0.95),
-        new THREE.Vector3(Math.cos(a) * dist * 1.0, startY - hangLen, Math.sin(a) * dist * 1.0),
-      ]);
-      treeGroup.add(new THREE.Mesh(new THREE.TubeGeometry(vine, 6, 0.015 + Math.random() * 0.01, 4, false), vineMat));
-    }
-
-    // ── Fruits ──
+    // ── Tulips ──
     const fruitMeshes = [];
+    const flowerGroups = [];
 
-    unlocked.forEach((month, i) => {
-      const pos = getFruitPosition(i, unlocked.length, P);
+    const tulipColors = [0xF48FB1, 0xE91E63, 0xF06292, 0xCE93D8, 0xFFCDD2, 0xFF8A80, 0xEF5350];
+
+    // Tulip cup profile — smaller, more delicate
+    const tulipProfile = [
+      new THREE.Vector2(0.001, 0),
+      new THREE.Vector2(0.012, 0.003),
+      new THREE.Vector2(0.03, 0.012),
+      new THREE.Vector2(0.045, 0.03),
+      new THREE.Vector2(0.054, 0.055),
+      new THREE.Vector2(0.057, 0.075),
+      new THREE.Vector2(0.052, 0.095),
+      new THREE.Vector2(0.044, 0.105),
+    ];
+
+    const makeTulip = (pos, month) => {
       const g = new THREE.Group();
       g.position.set(...pos);
 
-      const orbGeo = new THREE.SphereGeometry(0.2, 16, 16);
-      const orbMat = new THREE.MeshStandardMaterial({
-        color: 0xFFD54F, emissive: 0xFFA000, emissiveIntensity: 0.9, roughness: 0.2, metalness: 0.3,
+      const color = tulipColors[Math.floor(Math.random() * tulipColors.length)];
+
+      // Tulip cup — LatheGeometry with 6 petal facets
+      const cupGeo = new THREE.LatheGeometry(tulipProfile, 6);
+      const cupColors = new Float32Array(cupGeo.attributes.position.count * 3);
+      const baseCol = new THREE.Color(color);
+      const tipCol = new THREE.Color(color).lerp(new THREE.Color(0xffffff), 0.35);
+      const posAttr = cupGeo.attributes.position;
+      for (let i = 0; i < posAttr.count; i++) {
+        const y = posAttr.getY(i);
+        const t = Math.min(1, y / 0.105);
+        const c = baseCol.clone().lerp(tipCol, t * 0.5);
+        const x = posAttr.getX(i), z = posAttr.getZ(i);
+        const angle = Math.atan2(z, x);
+        const petalIdx = Math.floor(((angle + Math.PI) / (Math.PI * 2)) * 6);
+        if (petalIdx % 2 === 0) c.multiplyScalar(0.88);
+        cupColors[i * 3] = c.r;
+        cupColors[i * 3 + 1] = c.g;
+        cupColors[i * 3 + 2] = c.b;
+      }
+      cupGeo.setAttribute('color', new THREE.BufferAttribute(cupColors, 3));
+      cupGeo.computeVertexNormals();
+      const cupMat = new THREE.MeshPhongMaterial({
+        vertexColors: true, shininess: 60, side: THREE.DoubleSide,
+        emissive: color, emissiveIntensity: 0.08,
       });
-      const orb = new THREE.Mesh(orbGeo, orbMat);
-      g.add(orb);
+      const cup = new THREE.Mesh(cupGeo, cupMat);
+      cup.position.y = 0.03;
+      g.add(cup);
 
-      const haloMat = new THREE.SpriteMaterial({ color: 0xFFC107, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
-      const halo = new THREE.Sprite(haloMat);
-      halo.scale.set(1.1, 1.1, 1.1);
-      g.add(halo);
+      // Inner pistil — larger for easier click targeting
+      const pistilGeo = new THREE.SphereGeometry(0.04, 8, 8);
+      const pistilMat = new THREE.MeshPhongMaterial({
+        color: 0xFFD54F, emissive: 0xFFA000, emissiveIntensity: 0.35, shininess: 40,
+        transparent: true, opacity: 0.9,
+      });
+      const pistil = new THREE.Mesh(pistilGeo, pistilMat);
+      pistil.position.y = 0.07;
+      g.add(pistil);
 
-      const ringGeo = new THREE.TorusGeometry(0.32, 0.02, 8, 24);
-      const ringMat = new THREE.MeshBasicMaterial({ color: 0xFFD54F, transparent: true, opacity: 0.5 });
+      // Stem — curved tube
+      const stemCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, -0.14, 0),
+        new THREE.Vector3(0.003, -0.07, 0.003),
+        new THREE.Vector3(-0.002, -0.01, 0),
+        new THREE.Vector3(0, 0.03, 0),
+      ]);
+      const stemGeo = new THREE.TubeGeometry(stemCurve, 6, 0.008, 4, false);
+      const stemMat = new THREE.MeshPhongMaterial({ color: 0x388E3C, shininess: 15 });
+      g.add(new THREE.Mesh(stemGeo, stemMat));
+
+      // Small leaf on stem
+      const leafShape = new THREE.Shape();
+      leafShape.moveTo(0, 0);
+      leafShape.quadraticCurveTo(0.02, 0.025, 0, 0.06);
+      leafShape.quadraticCurveTo(-0.02, 0.025, 0, 0);
+      const leafGeo = new THREE.ShapeGeometry(leafShape);
+      const leafMat = new THREE.MeshPhongMaterial({ color: 0x4CAF50, shininess: 10, side: THREE.DoubleSide });
+      const leaf = new THREE.Mesh(leafGeo, leafMat);
+      leaf.position.set(0.01, -0.08, 0);
+      leaf.rotation.set(0, Math.random() * Math.PI, -0.3);
+      g.add(leaf);
+
+      // Circular ring indicator — flat on the ground below tulip
+      const ringGeo = new THREE.RingGeometry(0.06, 0.09, 24);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: color, transparent: true, opacity: 0.35,
+        side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
+      });
       const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = -Math.PI / 2;
+      ring.position.y = 0;
       g.add(ring);
 
-      const stemGeo = new THREE.CylinderGeometry(0.01, 0.015, 0.18, 4);
-      const stem = new THREE.Mesh(stemGeo, new THREE.MeshStandardMaterial({ color: 0x5D4037 }));
-      stem.position.y = 0.26;
-      g.add(stem);
+      // Subtle point light
+      const flowerLight = new THREE.PointLight(color, 0.15, 0.8);
+      flowerLight.position.y = 0.07;
+      g.add(flowerLight);
 
-      // Point light at fruit for glow effect
-      const fruitLight = new THREE.PointLight(0xFFC107, 0.4, 2);
-      g.add(fruitLight);
-
-      orb.userData = { month, ring, halo, basePos: [...pos] };
+      pistil.userData = { month, ring, basePos: [...pos], flowerGroup: g };
       scene.add(g);
-      fruitMeshes.push(orb);
+      fruitMeshes.push(pistil);
+      flowerGroups.push(g);
+    };
+
+    unlocked.forEach((month, i) => {
+      const pos = getFruitPosition(i, unlocked.length, P);
+      makeTulip(pos, month);
     });
 
     // ── Rising energy particles ──
@@ -334,13 +356,153 @@ export default function ThreeJSTreeTrial() {
     });
     scene.add(new THREE.Points(ffGeo, ffMat));
 
+    // ── Falling leaves ──
+    const fallingLeafMeshes = [];
+    const fallingLeafCount = Math.floor(lerp(3, 18, growth));
+    const fallLeafColors = [0x4CAF50, 0x66BB6A, 0x81C784, 0x8D6E63, 0xA5D6A7];
+    for (let i = 0; i < fallingLeafCount; i++) {
+      const size = 0.03 + Math.random() * 0.05;
+      const leafGeo = new THREE.PlaneGeometry(size, size * 1.5);
+      const ci = Math.floor(Math.random() * fallLeafColors.length);
+      const leafMat = new THREE.MeshPhongMaterial({
+        color: fallLeafColors[ci], shininess: 10, side: THREE.DoubleSide,
+        transparent: true, opacity: 0.6 + Math.random() * 0.3,
+      });
+      const leaf = new THREE.Mesh(leafGeo, leafMat);
+      const a = Math.random() * Math.PI * 2;
+      const dist = Math.random() * P.canopyRadius * 0.9;
+      leaf.position.set(
+        Math.cos(a) * dist,
+        P.trunkHeight + Math.random() * P.canopyHeight,
+        Math.sin(a) * dist
+      );
+      leaf.userData = {
+        fallSpeed: 0.08 + Math.random() * 0.12,
+        swaySpeed: 0.5 + Math.random() * 1.0,
+        swayAmount: 0.15 + Math.random() * 0.2,
+        rotSpeed: 0.5 + Math.random() * 1.5,
+        phase: Math.random() * Math.PI * 2,
+        startY: P.trunkHeight + P.canopyHeight * 0.2 + Math.random() * P.canopyHeight * 0.8,
+      };
+      scene.add(leaf);
+      fallingLeafMeshes.push(leaf);
+    }
+
     // ── Ground ──
-    const groundGeo = new THREE.CircleGeometry(Math.max(2, P.canopyRadius * 1.5), 32);
-    const groundMat = new THREE.MeshStandardMaterial({ color: 0x1B5E20, roughness: 1, transparent: true, opacity: 0.08 });
+    const groundRadius = Math.max(2.5, P.canopyRadius * 1.8);
+    const groundGeo = new THREE.CircleGeometry(groundRadius, 48);
+    // Vertex color gradient — darker near trunk, lighter at edges
+    const gColors = new Float32Array(groundGeo.attributes.position.count * 3);
+    for (let i = 0; i < groundGeo.attributes.position.count; i++) {
+      const gx = groundGeo.attributes.position.getX(i);
+      const gz = groundGeo.attributes.position.getY(i);
+      const dist = Math.sqrt(gx * gx + gz * gz) / groundRadius;
+      // Greener ground with variation — darker near trunk, grassy at edges
+      const base = 0.05 + dist * 0.06;
+      gColors[i * 3] = base * 0.3;
+      gColors[i * 3 + 1] = base * 1.5 + Math.sin(gx * 5 + gz * 3) * 0.01;
+      gColors[i * 3 + 2] = base * 0.2;
+    }
+    groundGeo.setAttribute('color', new THREE.BufferAttribute(gColors, 3));
+    const groundMat = new THREE.MeshPhongMaterial({ vertexColors: true, shininess: 3, transparent: true, opacity: 0.4 });
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.1;
     scene.add(ground);
+
+    // Moss ring around trunk base
+    const mossGeo = new THREE.TorusGeometry(P.trunkRadiusBottom * 1.8, P.trunkRadiusBottom * 0.4, 6, 16);
+    const mossMat = new THREE.MeshPhongMaterial({ color: 0x33691E, shininess: 5, transparent: true, opacity: 0.45 });
+    const moss = new THREE.Mesh(mossGeo, mossMat);
+    moss.rotation.x = -Math.PI / 2;
+    moss.position.y = -0.05;
+    treeGroup.add(moss);
+
+    // Fallen leaves scattered on ground
+    const leafColors = [0x8D6E63, 0xA1887F, 0x6D4C41, 0x4CAF50, 0x388E3C, 0x2E7D32, 0x81C784];
+    const fallenLeafCount = Math.floor(lerp(5, 40, growth));
+    for (let i = 0; i < fallenLeafCount; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const dist = P.trunkRadiusBottom * 2 + Math.random() * (groundRadius * 0.7);
+      const leafSize = 0.04 + Math.random() * 0.08;
+      const leafGeo = new THREE.PlaneGeometry(leafSize, leafSize * 1.4);
+      const ci = Math.floor(Math.random() * leafColors.length);
+      const leafMat = new THREE.MeshPhongMaterial({
+        color: leafColors[ci], shininess: 10, side: THREE.DoubleSide,
+        transparent: true, opacity: 0.5 + Math.random() * 0.3,
+      });
+      const leaf = new THREE.Mesh(leafGeo, leafMat);
+      leaf.position.set(Math.cos(a) * dist, -0.08 + Math.random() * 0.02, Math.sin(a) * dist);
+      leaf.rotation.set(-Math.PI / 2 + (Math.random() - 0.5) * 0.4, Math.random() * Math.PI * 2, 0);
+      scene.add(leaf);
+    }
+
+    // Grass — dense InstancedMesh for performance
+    const grassBladeCount = Math.floor(lerp(50, 400, growth));
+    const bladeGeo = new THREE.PlaneGeometry(0.018, 0.22, 1, 3);
+    // Taper the blade to a point at top
+    const bladePos = bladeGeo.attributes.position;
+    for (let v = 0; v < bladePos.count; v++) {
+      const y = bladePos.getY(v);
+      const normalizedY = (y + 0.11) / 0.22; // 0 at base, 1 at tip
+      const taper = 1.0 - normalizedY * 0.85;
+      bladePos.setX(v, bladePos.getX(v) * taper);
+    }
+    bladeGeo.translate(0, 0.11, 0); // pivot at base
+    bladeGeo.computeVertexNormals();
+
+    const grassMat = new THREE.MeshPhongMaterial({
+      color: 0x388E3C, shininess: 5, side: THREE.DoubleSide,
+      transparent: true, opacity: 0.75,
+    });
+    const grassInstances = new THREE.InstancedMesh(bladeGeo, grassMat, grassBladeCount);
+    const grassColorAttr = new Float32Array(grassBladeCount * 3);
+    const dummy = new THREE.Object3D();
+    const grassBaseColors = [
+      new THREE.Color(0x1B5E20), new THREE.Color(0x2E7D32),
+      new THREE.Color(0x388E3C), new THREE.Color(0x43A047),
+      new THREE.Color(0x4CAF50), new THREE.Color(0x33691E),
+    ];
+    for (let i = 0; i < grassBladeCount; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const dist = P.trunkRadiusBottom * 1.5 + Math.random() * groundRadius * 0.9;
+      dummy.position.set(Math.cos(a) * dist, -0.1, Math.sin(a) * dist);
+      dummy.rotation.set(0, Math.random() * Math.PI * 2, (Math.random() - 0.5) * 0.4);
+      const s = 0.6 + Math.random() * 0.8;
+      dummy.scale.set(0.8 + Math.random() * 0.4, s, 1);
+      dummy.updateMatrix();
+      grassInstances.setMatrixAt(i, dummy.matrix);
+      const col = grassBaseColors[Math.floor(Math.random() * grassBaseColors.length)];
+      grassColorAttr[i * 3] = col.r;
+      grassColorAttr[i * 3 + 1] = col.g;
+      grassColorAttr[i * 3 + 2] = col.b;
+    }
+    grassInstances.instanceMatrix.needsUpdate = true;
+    grassInstances.instanceColor = new THREE.InstancedBufferAttribute(grassColorAttr, 3);
+    scene.add(grassInstances);
+
+    // ── Small mushrooms near roots ──
+    if (growth > 0.4) {
+      const mushroomCount = Math.floor(lerp(0, 6, growth));
+      for (let i = 0; i < mushroomCount; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const dist = P.trunkRadiusBottom * 1.2 + Math.random() * 0.6;
+        const mushGroup = new THREE.Group();
+        mushGroup.position.set(Math.cos(a) * dist, -0.1, Math.sin(a) * dist);
+        const stemH = 0.04 + Math.random() * 0.06;
+        const stemGeo = new THREE.CylinderGeometry(0.01, 0.015, stemH, 5);
+        const stemMat = new THREE.MeshPhongMaterial({ color: 0xFFF8E1, shininess: 20 });
+        const stem = new THREE.Mesh(stemGeo, stemMat);
+        stem.position.y = stemH / 2;
+        mushGroup.add(stem);
+        const capGeo = new THREE.SphereGeometry(0.025 + Math.random() * 0.02, 6, 4, 0, Math.PI * 2, 0, Math.PI / 2);
+        const capMat = new THREE.MeshPhongMaterial({ color: Math.random() > 0.5 ? 0xD32F2F : 0xFF8F00, shininess: 40 });
+        const cap = new THREE.Mesh(capGeo, capMat);
+        cap.position.y = stemH;
+        mushGroup.add(cap);
+        scene.add(mushGroup);
+      }
+    }
 
     // ── Stars ──
     const sBuf = new Float32Array(150 * 3);
@@ -369,12 +531,13 @@ export default function ThreeJSTreeTrial() {
     const checkFruitHover = () => {
       raycaster.setFromCamera(mouse, camera);
       const hits = raycaster.intersectObjects(fruitMeshes);
-      const newHover = hits.length > 0 ? hits[0].object.userData.month.number : null;
+      const hitMonth = hits.length > 0 ? hits[0].object.userData.month : null;
+      const newHover = hitMonth ? hitMonth.number : null;
       if (newHover !== hoveredRef.current) {
         hoveredRef.current = newHover;
         setHoveredFruit(newHover);
       }
-      canvas.style.cursor = orbit.isDragging ? 'grabbing' : (newHover ? 'pointer' : 'grab');
+      canvas.style.cursor = orbit.isDragging ? 'grabbing' : (hits.length > 0 ? 'pointer' : 'grab');
     };
 
     const onDown = (e) => {
@@ -441,11 +604,8 @@ export default function ThreeJSTreeTrial() {
       // Tree sway
       treeGroup.rotation.z = Math.sin(t * 0.12) * 0.005;
 
-      // Canopy sway
-      canopyMeshes.forEach((c, i) => {
-        c.mesh.rotation.y += 0.0004;
-        c.mesh.position.y = c.baseY + Math.sin(t * 0.3 + i * 0.35) * 0.01;
-      });
+      // Update ez-tree leaf wind shader
+      tree.update(t);
 
       // Rising particles
       const pp = pGeo.attributes.position;
@@ -473,15 +633,28 @@ export default function ThreeJSTreeTrial() {
       fp.needsUpdate = true;
       ffMat.opacity = 0.4 + Math.sin(t * 1.5) * 0.25;
 
-      // Fruit
-      fruitMeshes.forEach((orb, i) => {
-        const bp = orb.userData.basePos;
-        orb.parent.position.y = bp[1] + Math.sin(t * 1.2 + i) * 0.04;
-        orb.userData.ring.rotation.x = Math.sin(t + i) * 0.3;
-        orb.userData.ring.rotation.y = t * 0.6;
-        const pulse = 0.5 + Math.sin(t * 2 + i) * 0.15;
-        orb.userData.halo.scale.set(pulse, pulse, pulse);
-        orb.userData.halo.material.opacity = 0.35 + Math.sin(t * 2.5 + i) * 0.15;
+      // Falling leaves
+      fallingLeafMeshes.forEach((leaf) => {
+        const d = leaf.userData;
+        leaf.position.y -= d.fallSpeed * dt;
+        leaf.position.x += Math.sin(t * d.swaySpeed + d.phase) * d.swayAmount * dt;
+        leaf.position.z += Math.cos(t * d.swaySpeed * 0.7 + d.phase) * d.swayAmount * dt * 0.6;
+        leaf.rotation.x += d.rotSpeed * dt * 0.8;
+        leaf.rotation.z += d.rotSpeed * dt * 0.5;
+        if (leaf.position.y < -0.1) {
+          const a = Math.random() * Math.PI * 2;
+          const dist = Math.random() * P.canopyRadius * 0.9;
+          leaf.position.set(Math.cos(a) * dist, d.startY, Math.sin(a) * dist);
+        }
+      });
+
+      // Tulips — gentle bob + ring rotation + opacity pulse
+      fruitMeshes.forEach((hitTarget, i) => {
+        const bp = hitTarget.userData.basePos;
+        const fg = hitTarget.userData.flowerGroup;
+        fg.position.y = bp[1] + Math.sin(t * 0.6 + i * 1.5) * 0.01;
+        hitTarget.userData.ring.rotation.z += 0.005;
+        hitTarget.userData.ring.material.opacity = 0.2 + Math.sin(t * 0.8 + i * 0.9) * 0.1;
       });
 
       rootGlow.intensity = 0.3 + Math.sin(t * 0.8) * 0.1;
@@ -545,7 +718,7 @@ export default function ThreeJSTreeTrial() {
           const isUnlocked = !month.unlockDate || now >= month.unlockDate;
           return (
             <div style={styles.tooltip}>
-              <span>{isUnlocked ? '\uD83C\uDF4E' : '\uD83C\uDF31'}</span>
+              <span>{isUnlocked ? '\uD83C\uDF38' : '\uD83C\uDF31'}</span>
               <span style={styles.tooltipTitle}>{month.title}</span>
               <span style={styles.tooltipHint}>
                 {isUnlocked ? month.hint : 'Coming soon...'}
@@ -570,7 +743,7 @@ export default function ThreeJSTreeTrial() {
                 }}
                 onClick={() => handleFruitClick(month)}
               >
-                <span style={styles.monthEmoji}>{isUnlocked ? '\uD83C\uDF4E' : '\uD83C\uDF31'}</span>
+                <span style={styles.monthEmoji}>{isUnlocked ? '\uD83C\uDF38' : '\uD83C\uDF31'}</span>
                 <div style={styles.monthInfo}>
                   <p style={styles.monthTitle}>{month.title}</p>
                   <p style={styles.monthDate}>{month.date}</p>
@@ -583,7 +756,7 @@ export default function ThreeJSTreeTrial() {
             );
           })}
         </div>
-        <p style={styles.footer}>Our tree is still growing. More fruits will bloom soon.</p>
+        <p style={styles.footer}>Our tree is still growing. More flowers will bloom soon.</p>
       </div>
 
       <style>{`
@@ -633,13 +806,19 @@ const styles = {
   },
   headerOverlay: {
     position: 'absolute',
-    top: '20px',
+    top: '16px',
     left: '50%',
     transform: 'translateX(-50%)',
     textAlign: 'center',
     pointerEvents: 'none',
     animation: 'fadeUp 0.8s ease-out both',
     zIndex: 2,
+    width: '100%',
+    maxWidth: '420px',
+    padding: '12px 20px',
+    boxSizing: 'border-box',
+    background: 'radial-gradient(ellipse at center, rgba(5,10,5,0.6) 0%, rgba(5,10,5,0.3) 50%, transparent 80%)',
+    borderRadius: '16px',
   },
   topLabel: {
     fontFamily: "'Caveat', cursive",
@@ -677,6 +856,8 @@ const styles = {
     backdropFilter: 'blur(10px)',
     zIndex: 3,
     whiteSpace: 'nowrap',
+    maxWidth: 'calc(100% - 32px)',
+    boxSizing: 'border-box',
   },
   tooltipTitle: { fontSize: '13px', color: '#fff', fontWeight: 600 },
   tooltipHint: { fontSize: '12px', color: 'rgba(255,255,255,0.5)', fontStyle: 'italic' },
@@ -709,10 +890,10 @@ const styles = {
     transition: 'all 0.3s ease',
   },
   monthCardHover: {
-    background: 'rgba(76, 175, 80, 0.08)',
-    borderColor: 'rgba(76, 175, 80, 0.2)',
+    background: 'rgba(244, 143, 177, 0.08)',
+    borderColor: 'rgba(244, 143, 177, 0.2)',
     transform: 'translateY(-2px)',
-    boxShadow: '0 6px 24px rgba(76, 175, 80, 0.1)',
+    boxShadow: '0 6px 24px rgba(244, 143, 177, 0.1)',
   },
   monthCardLocked: { opacity: 0.5, cursor: 'not-allowed' },
   monthEmoji: { fontSize: '28px', flexShrink: 0 },

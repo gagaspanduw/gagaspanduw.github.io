@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv:*)",
+      "Bash(cd /Users/gagas/Public/Dev/Personal/gagaspanduw.github.io && npx craco build --silent 2>&1 | tail -5)",
+      "WebFetch(threejsresources.com)",
+      "Bash(gh api:*)",
+      "WebFetch(github.com)",
+      "WebFetch(www.npmjs.com)",
+      "Bash(cd /Users/gagas/Public/Dev/Personal/gagaspanduw.github.io && npm i @dgreenheck/ez-tree --silent 2>&1 | tail -5)",
+      "Bash(cd /Users/gagas/Public/Dev/Personal/gagaspanduw.github.io && node -e \"const m = require\\('@dgreenheck/ez-tree'\\); console.log\\(Object.keys\\(m\\)\\)\" 2>&1 | head -20)",
+      "Bash(cd /Users/gagas/Public/Dev/Personal/gagaspanduw.github.io && cat node_modules/@dgreenheck/ez-tree/package.json | python3 -c \"import json,sys;d=json.load\\(sys.stdin\\);print\\('main:',d.get\\('main'\\)\\);print\\('module:',d.get\\('module'\\)\\);print\\('exports:',d.get\\('exports'\\)\\);print\\('type:',d.get\\('type'\\)\\)\")",
+      "Bash(ls /Users/gagas/Public/Dev/Personal/gagaspanduw.github.io/node_modules/@dgreenheck/ez-tree/ 2>/dev/null && cat /Users/gagas/Public/Dev/Personal/gagaspanduw.github.io/node_modules/@dgreenheck/ez-tree/package.json | head -30)",
+      "Bash(npm i @dgreenheck/ez-tree --silent 2>&1)",
+      "Bash(npm i @dgreenheck/ez-tree 2>&1 | tail -20)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/three/package.json'\\).version\\)\" && node -e \"console.log\\(require\\('./package.json'\\).dependencies.three\\)\")",
+      "Bash(npm i @dgreenheck/ez-tree --legacy-peer-deps 2>&1 | tail -10)",
+      "Bash(ls node_modules/@dgreenheck/ez-tree/ && cat node_modules/@dgreenheck/ez-tree/package.json | grep -E '\"\\(main|module|exports|type|files\\)\"' )",
+      "Bash(cat node_modules/@dgreenheck/ez-tree/package.json | node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\);const p=JSON.parse\\(d\\);console.log\\('exports:',JSON.stringify\\(p.exports,null,2\\)\\);console.log\\('type:',p.type\\);console.log\\('main:',p.main\\);console.log\\('module:',p.module\\);\")",
+      "Bash(ls:*)",
+      "Bash(ls node_modules/@dgreenheck/ez-tree/build/ && wc -c node_modules/@dgreenheck/ez-tree/build/ez-tree.es.js)",
+      "Bash(npx craco build 2>&1 | tail -30)",
+      "Bash(npx craco build 2>&1 | tail -25)",
+      "Bash(npx craco build 2>&1 | tail -20)",
+      "Bash(npx craco build 2>&1 | tail -15)",
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npx craco build 2>&1 | tail -15)"
+    ]
+  }
+}

@@ -25,7 +25,7 @@ import TestCaseGenerator from './pages/tools/TestCaseGenerator';
 import ApiPlayground from './pages/tools/ApiPlayground';
 import ToolsIndex from './pages/tools/index';
 
-const ThreeJSTreeTrial = lazy(() => import('./pages/mimi/monthversary/ThreeJSTreeTrial'));
+const ThreeJSTree = lazy(() => import('./pages/mimi/monthversary/ThreeJSTree'));
 
 const immersiveRoutes = ['/mimi/if-youre-ready', '/mimi/monthversary', '/mimi/monthversary/4'];
 
@@ -47,7 +47,7 @@ function AppLayout() {
             <Route path="/valentine/success" exact component={ValentineSuccess}/>
             <Route path="/for-mimi" exact component={ForMimi}/>
             <Route path="/mimi/if-youre-ready" exact component={IfYoureReady}/>
-            <Route path="/mimi/monthversary" exact component={ThreeJSTreeTrial}/>
+            <Route path="/mimi/monthversary" exact component={ThreeJSTree}/>
             <Route path="/mimi/monthversary/4" exact component={FourthMonthversary}/>
             <Route path="/tools/bug-report" exact component={BugReportBuilder}/>
             <Route path="/tools/test-case" exact component={TestCaseGenerator}/>
