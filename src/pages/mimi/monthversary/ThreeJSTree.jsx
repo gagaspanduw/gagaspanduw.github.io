@@ -22,6 +22,7 @@ const months = [
 ];
 
 const GROUND_Y = -0.1;
+const GARDEN_UNLOCK_EVENT = 'monthversary-garden-unlock';
 
 const gardenPlaylist = [
   {
@@ -148,6 +149,7 @@ export default function ThreeJSTree() {
   const canvasRef = useRef(null);
   const history = useHistory();
   const [hoveredFruit, setHoveredFruit] = useState(null);
+  const [showEntryOverlay, setShowEntryOverlay] = useState(true);
 
   // Use refs so the Three.js effect doesn't re-run on state changes
   const hoveredRef = useRef(null);
@@ -162,6 +164,11 @@ export default function ThreeJSTree() {
 
   const handleFruitClickRef = useRef(handleFruitClick);
   handleFruitClickRef.current = handleFruitClick;
+
+  const handleEnterGarden = useCallback(() => {
+    setShowEntryOverlay(false);
+    window.dispatchEvent(new Event(GARDEN_UNLOCK_EVENT));
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -897,6 +904,21 @@ export default function ThreeJSTree() {
         <canvas ref={canvasRef} style={styles.canvas} />
         <div style={styles.canvasFadeTop} />
         <div style={styles.canvasFadeBottom} />
+        {showEntryOverlay && (
+          <button
+            type="button"
+            style={styles.entryOverlay}
+            className="monthversary-entry-overlay"
+            onClick={handleEnterGarden}
+            aria-label="Tap to unlock the garden and start the music"
+          >
+            <div style={styles.entryOverlayGlow} />
+            <div style={styles.entryOverlayCard}>
+              <p style={styles.entryTitle}>Tap to unlock the garden</p>
+              <p style={styles.entryText}>Open the garden and let the music start ♥</p>
+            </div>
+          </button>
+        )}
         <p style={styles.dragHint} className="monthversary-drag-hint">Drag to rotate · Tap a bloom to open it</p>
 
         {/* Floating header overlay */}
@@ -973,6 +995,9 @@ export default function ThreeJSTree() {
         startIndex={0}
         loop={true}
         promptText="Tap to play our garden song"
+        unlockEventName={GARDEN_UNLOCK_EVENT}
+        autoplayOnMount={false}
+        showPromptUi={false}
       />
 
       <style>{`
@@ -1116,6 +1141,58 @@ const styles = {
     background: 'linear-gradient(0deg, rgba(10,15,10,0.96) 0%, rgba(10,15,10,0.3) 55%, rgba(10,15,10,0) 100%)',
     pointerEvents: 'none',
     zIndex: 1,
+  },
+  entryOverlay: {
+    position: 'absolute',
+    inset: 0,
+    zIndex: 4,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '24px',
+    background: 'rgba(5,10,5,0.38)',
+    backdropFilter: 'blur(9px)',
+    WebkitBackdropFilter: 'blur(9px)',
+    border: 'none',
+    cursor: 'pointer',
+  },
+  entryOverlayGlow: {
+    position: 'absolute',
+    inset: 0,
+    background: 'radial-gradient(circle at center, rgba(244,143,177,0.12) 0%, rgba(129,199,132,0.08) 34%, rgba(5,10,5,0.36) 72%)',
+    pointerEvents: 'none',
+  },
+  entryOverlayCard: {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px',
+    maxWidth: '360px',
+    width: '100%',
+    padding: '24px 22px',
+    borderRadius: '22px',
+    background: 'rgba(8,14,8,0.58)',
+    border: '1px solid rgba(255,255,255,0.09)',
+    boxShadow: '0 18px 50px rgba(0,0,0,0.24)',
+    textAlign: 'center',
+    color: '#fff',
+  },
+  entryTitle: {
+    margin: 0,
+    fontFamily: "'Lora', Georgia, serif",
+    fontSize: 'clamp(24px, 5vw, 30px)',
+    fontWeight: 600,
+    color: '#fff',
+    textShadow: '0 2px 18px rgba(0,0,0,0.22)',
+  },
+  entryText: {
+    margin: 0,
+    color: 'rgba(255,255,255,0.72)',
+    fontSize: '14px',
+    lineHeight: 1.65,
+    fontStyle: 'italic',
   },
   dragHint: {
     position: 'absolute',
