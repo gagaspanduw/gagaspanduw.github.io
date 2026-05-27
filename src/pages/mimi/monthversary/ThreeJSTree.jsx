@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import * as THREE from 'three';
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { Tree, TreeType, BarkType, LeafType } from '@dgreenheck/ez-tree';
+import MusicPlayer from './MusicPlayer';
 
 // ── Month data ──
 const months = [
@@ -21,6 +22,14 @@ const months = [
 ];
 
 const GROUND_Y = -0.1;
+
+const gardenPlaylist = [
+  {
+    title: 'Kiss The Rain',
+    artist: 'Yiruma',
+    src: 'https://archive.org/download/YirumaKissTheRain_201602/Yiruma-KissTheRain.mp3',
+  },
+];
 
 function getUnlockedMonths(items, now) {
   return items.filter((month) => !month.unlockDate || now >= month.unlockDate);
@@ -958,6 +967,13 @@ export default function ThreeJSTree() {
         </div>
         <p style={styles.footer}>Our garden is still growing. More blooms will appear soon.</p>
       </div>
+
+      <MusicPlayer
+        playlist={gardenPlaylist}
+        startIndex={0}
+        loop={true}
+        promptText="Tap to play our garden song"
+      />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const MusicPlayer = ({ playlist, startIndex = 0 }) => {
+const MusicPlayer = ({ playlist, startIndex = 0, loop = false, promptText = 'Tap to play our song' }) => {
   const [songIndex, setSongIndex] = useState(startIndex);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
@@ -75,20 +75,21 @@ const MusicPlayer = ({ playlist, startIndex = 0 }) => {
   };
 
   const song = playlist[songIndex];
+  const shouldLoopSingleTrack = loop && playlist.length === 1;
   if (!song) return null;
 
   return (
     <>
-      <audio ref={audioRef} src={song.src} preload="auto"
+      <audio ref={audioRef} src={song.src} preload="auto" loop={shouldLoopSingleTrack}
         onPlay={() => { setIsPlaying(true); setShowPrompt(false); }}
         onPause={() => setIsPlaying(false)}
-        onEnded={handleNext}
+        onEnded={shouldLoopSingleTrack ? undefined : handleNext}
       />
 
       {showPrompt && (
         <div style={styles.prompt} onClick={togglePlay}>
           <span style={styles.promptNote}>♪</span>
-          <span style={styles.promptText}>Tap to play our song</span>
+          <span style={styles.promptText}>{promptText}</span>
         </div>
       )}
 

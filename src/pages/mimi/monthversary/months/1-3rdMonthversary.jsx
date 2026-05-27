@@ -221,7 +221,7 @@ const TypewriterMessage = ({ playlist, onReplay, onBack }) => {
         </div>
       </div>
 
-      {done && <MusicPlayer playlist={playlist} startIndex={0} />}
+      {done && <MusicPlayer playlist={playlist} startIndex={0} loop={true} promptText="Tap to play our song" />}
 
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
