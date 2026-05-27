@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.a90c0204.chunk.css",
-    "main.js": "/static/js/main.de554b61.chunk.js",
-    "main.js.map": "/static/js/main.de554b61.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.02508199.js",
-    "runtime-main.js.map": "/static/js/runtime-main.02508199.js.map",
+    "main.js": "/static/js/main.aadcc42f.chunk.js",
+    "main.js.map": "/static/js/main.aadcc42f.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.d9be5b8e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.d9be5b8e.js.map",
     "static/js/2.b9e67a76.chunk.js": "/static/js/2.b9e67a76.chunk.js",
     "static/js/2.b9e67a76.chunk.js.map": "/static/js/2.b9e67a76.chunk.js.map",
     "static/js/3.6d74c340.chunk.js": "/static/js/3.6d74c340.chunk.js",
     "static/js/3.6d74c340.chunk.js.map": "/static/js/3.6d74c340.chunk.js.map",
-    "static/js/4.4b5d630e.chunk.js": "/static/js/4.4b5d630e.chunk.js",
-    "static/js/4.4b5d630e.chunk.js.map": "/static/js/4.4b5d630e.chunk.js.map",
+    "static/js/4.e7248039.chunk.js": "/static/js/4.e7248039.chunk.js",
+    "static/js/4.e7248039.chunk.js.map": "/static/js/4.e7248039.chunk.js.map",
     "static/js/5.84fb5bfa.chunk.js": "/static/js/5.84fb5bfa.chunk.js",
     "static/js/5.84fb5bfa.chunk.js.map": "/static/js/5.84fb5bfa.chunk.js.map",
     "index.html": "/index.html",
@@ -52,9 +52,9 @@
     "static/media/wordpresslogo.6e6c848a.svg": "/static/media/wordpresslogo.6e6c848a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.02508199.js",
+    "static/js/runtime-main.d9be5b8e.js",
     "static/js/2.b9e67a76.chunk.js",
     "static/css/main.a90c0204.chunk.css",
-    "static/js/main.de554b61.chunk.js"
+    "static/js/main.aadcc42f.chunk.js"
   ]
 }
