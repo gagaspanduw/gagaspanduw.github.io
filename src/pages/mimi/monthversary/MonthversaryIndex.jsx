@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 
 const months = [
   {
-    number: 4,
-    route: '/mimi/monthversary/4',
-    title: '4th Monthversary',
+    number: 3,
+    route: '/mimi/monthversary/3',
+    title: '3rd Monthversary',
     date: 'May 26, 2026',
     hint: 'Tap to unwrap',
     emoji: '🍎',

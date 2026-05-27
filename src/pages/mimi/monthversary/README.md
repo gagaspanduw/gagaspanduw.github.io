@@ -40,7 +40,7 @@ src/pages/mimi/
 │   ├── MonthversaryIndex.jsx  ← Landing page — shows current month with hint
 │   ├── MusicPlayer.jsx        ← Optional shared music player
 │   └── months/
-│       ├── 1-4thMonthversary.jsx
+│       ├── 1-3rdMonthversary.jsx
 │       ├── 2-5thMonthversary.jsx
 │       └── ...
 ```
@@ -56,7 +56,7 @@ src/pages/mimi/
 
 ```
 /mimi/monthversary          → Landing page (current month)
-/mimi/monthversary/4        → 4th monthversary (gift unwrap)
+/mimi/monthversary/3        → 3rd monthversary (gift unwrap)
 /mimi/monthversary/5        → 5th monthversary (chat story)
 /mimi/monthversary/...      → etc.
 /mimi/monthversary/all      → Archive of all past months (future)

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import MusicPlayer from '../MusicPlayer';
 
 const UNLOCK_DATE = new Date('2026-05-26T00:00:00');
@@ -7,23 +8,54 @@ const playlist = [
   { title: 'River Flows In You', artist: 'Yiruma', src: "https://archive.org/download/yiruma-frame-2017/Yiruma%20-%20Frame%20(2017)/11.%20River%20Flows%20In%20You%20('f%20r%20a%20m%20e'%20Ver.).mp3" },
 ];
 
+const WHATSAPP_NUMBER = '6285810840979';
+const INSTANT_BLOCK_TYPES = new Set(['badge', 'title', 'signature', 'ps', 'gift']);
+const wishOptions = [
+  { label: 'playing games together', message: 'Hey you ♥ right now I think playing games together with you would make me smile.' },
+  { label: 'a tiny surprise', message: 'Hey you ♥ a tiny surprise from you would make me smile right now.' },
+  { label: 'quality time with you', message: 'Hey you ♥ honestly, quality time with you would make me smile right now.' },
+  { label: 'just call me', message: 'Hey you ♥ I think a call with you would make me smile right now.' },
+];
+
+const stageCopy = [
+  { prompt: 'Tap to unwrap', tease: 'Go on... I dare you.' },
+  { prompt: 'Tap to untie the ribbon', tease: 'Not so fast, enjoy it a little.' },
+  { prompt: 'Tap to open the lid', tease: 'Careful now...' },
+  { prompt: 'Tap to peek inside', tease: 'Almost there... or is it?' },
+  { prompt: 'Tap to open', tease: 'This is it. Ready?' },
+];
+
+const buildWhatsAppLink = (message) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+const createSparkles = (count = 12) => Array.from({ length: count }, (_, i) => {
+  const angle = ((Math.PI * 2) / count) * i + (Math.random() - 0.5) * 0.2;
+  const distance = 58 + Math.random() * 42;
+  return {
+    id: `${Date.now()}-${i}`,
+    tx: `${Math.cos(angle) * distance}px`,
+    ty: `${Math.sin(angle) * distance}px`,
+    delay: `${i * 0.04}s`,
+  };
+});
+
 // ── TYPEWRITER MESSAGE COMPONENT ──
 const messageBlocks = [
-  { type: 'badge', text: '4 months of us' },
-  { type: 'title', text: 'Happy 4th Monthversary' },
-  { type: 'para', text: 'Four months ago, something started. I didn\'t know then what it would become, but I know now that it\'s the best thing that\'s happened to me in a long time.' },
+  { type: 'badge', text: '3 months of us' },
+  { type: 'title', text: 'Happy 3rd Monthversary' },
+  { type: 'para', text: 'Three months ago, something started. I didn\'t know then what it would become, but I know now that it\'s the best thing that\'s happened to me in a long time.' },
   { type: 'para', text: 'This month tested us. We went through the hard part, and the fact that we made it through together. That means everything to me.' },
   { type: 'highlight', text: 'You\'re not just my favorite person, you\'re the one I want to keep choosing, every single month, even when it\'s hard.' },
   { type: 'para', text: 'I don\'t know what next month looks like. But I know I want to find out with you.' },
-  { type: 'signature', lines: ['Yours, always', '— Gagas', '(The guy who do it all, just for you)'] },
+  { type: 'signature', lines: ['Yours, always', '— Gagas', '(The guy who’d do all this, just for you)'] },
   { type: 'ps', text: 'P.S. Next month will be different. You\'ll have to wait. ♥' },
   { type: 'gift' },
 ];
 
-const TypewriterMessage = ({ playlist }) => {
+const TypewriterMessage = ({ playlist, onReplay, onBack }) => {
   const [visibleBlocks, setVisibleBlocks] = useState(0);
   const [typedWords, setTypedWords] = useState({});
   const [done, setDone] = useState(false);
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     if (visibleBlocks >= messageBlocks.length) {
@@ -32,12 +64,9 @@ const TypewriterMessage = ({ playlist }) => {
     }
 
     const block = messageBlocks[visibleBlocks];
-    const words = block.type === 'badge' || block.type === 'title' || block.type === 'signature' || block.type === 'ps' || block.type === 'gift'
-      ? [] // These appear instantly, no typewriter
-      : block.text.split(' ');
+    const words = INSTANT_BLOCK_TYPES.has(block.type) ? [] : block.text.split(' ');
 
     if (words.length === 0) {
-      // Instant reveal for non-typewriter blocks
       const delay = block.type === 'title' ? 800 : block.type === 'gift' ? 1200 : 400;
       const timer = setTimeout(() => {
         setVisibleBlocks((v) => v + 1);
@@ -45,10 +74,9 @@ const TypewriterMessage = ({ playlist }) => {
       return () => clearTimeout(timer);
     }
 
-    // Type word by word
     let wordIndex = 0;
     const typeInterval = setInterval(() => {
-      wordIndex++;
+      wordIndex += 1;
       setTypedWords((prev) => ({ ...prev, [visibleBlocks]: wordIndex }));
       if (wordIndex >= words.length) {
         clearInterval(typeInterval);
@@ -61,6 +89,21 @@ const TypewriterMessage = ({ playlist }) => {
     return () => clearInterval(typeInterval);
   }, [visibleBlocks]);
 
+  useEffect(() => {
+    if (!bottomRef.current) return;
+    bottomRef.current.scrollIntoView({ behavior: visibleBlocks > 0 ? 'smooth' : 'auto', block: 'end' });
+  }, [visibleBlocks, done]);
+
+  const revealAll = () => {
+    const fullyTyped = {};
+    messageBlocks.forEach((block, index) => {
+      if (block.text) fullyTyped[index] = block.text.split(' ').length;
+    });
+    setTypedWords(fullyTyped);
+    setVisibleBlocks(messageBlocks.length);
+    setDone(true);
+  };
+
   const getVisibleText = (blockIndex) => {
     const block = messageBlocks[blockIndex];
     const totalWords = block.text.split(' ');
@@ -71,11 +114,33 @@ const TypewriterMessage = ({ playlist }) => {
   return (
     <div style={styles.page}>
       <div style={styles.messageWrapper}>
+        <div style={styles.topActionRow}>
+          <button type="button" style={styles.secondaryButton} onClick={onBack}>
+            ← back to our garden
+          </button>
+          <div style={styles.messageActionGroup}>
+            {!done && (
+              <button type="button" style={styles.secondaryButton} onClick={revealAll}>
+                show all
+              </button>
+            )}
+            {done && (
+              <button type="button" style={styles.secondaryButton} onClick={onReplay}>
+                replay
+              </button>
+            )}
+          </div>
+        </div>
+
         <div style={styles.messageCard}>
+          <div style={styles.messageMetaRow}>
+            <p style={styles.messageSectionLabel}>a little letter for you</p>
+            {!done && <p style={styles.messageTapHint}>Let it unfold slowly... or tap “show all” if you can&apos;t wait ♥</p>}
+          </div>
+
           {messageBlocks.slice(0, visibleBlocks + 1).map((block, i) => {
             const isVisible = i <= visibleBlocks;
-            const isTyping = i === visibleBlocks && typedWords[i] !== undefined;
-            const isComplete = i < visibleBlocks || !isTyping;
+            const isTyping = i === visibleBlocks && typedWords[i] !== undefined && !done;
 
             if (block.type === 'badge') {
               return <p key={i} style={{ ...styles.messageBadge, animation: 'fadeUp 0.5s ease-out both' }}>{block.text}</p>;
@@ -118,26 +183,41 @@ const TypewriterMessage = ({ playlist }) => {
               );
             }
             if (block.type === 'gift') {
-              const waMessage = encodeURIComponent('Hey you... I\'ve been thinking, what if...');
               return (
                 <div key={i} style={{ ...styles.giftSection, animation: 'fadeUp 0.6s ease-out both' }}>
-                  <p style={styles.giftPrompt}>One more thing...</p>
-                  <p style={styles.giftSubtext}>I've been wondering what would make you smile right now. No pressure, just... curious.</p>
-                  <p style={styles.giftHint}>If anything comes to mind, you know where to find me</p>
+                  <p style={styles.giftPrompt}>One more little thing...</p>
+                  <p style={styles.giftSubtext}>
+                    If there&apos;s anything that would make you smile right now — tiny, simple, silly, anything — I want to hear it from you.
+                  </p>
+                  <div style={styles.giftOptionGrid}>
+                    {wishOptions.map((option) => (
+                      <a
+                        key={option.label}
+                        href={buildWhatsAppLink(option.message)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={styles.giftOptionChip}
+                      >
+                        {option.label}
+                      </a>
+                    ))}
+                  </div>
+                  <p style={styles.giftHint}>Or send your own little wish instead.</p>
                   <a
-                    href={`https://wa.me/6285810840979?text=${waMessage}`}
+                    href={buildWhatsAppLink('Hey you ♥ I was thinking about what would make me smile right now...')}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={styles.waButton}
                   >
-                    tell me here
+                    tell me what would make you smile
                   </a>
-                  <p style={styles.giftFooter}>even the smallest thing you mention, I'll remember</p>
+                  <p style={styles.giftFooter}>Even the smallest thing you mention, I&apos;ll remember.</p>
                 </div>
               );
             }
             return null;
           })}
+          <div ref={bottomRef} />
         </div>
       </div>
 
@@ -145,20 +225,23 @@ const TypewriterMessage = ({ playlist }) => {
 
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes revealIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes revealIn { 0% { transform: scale(0.96); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
       `}</style>
     </div>
   );
 };
 
-const FourthMonthversary = () => {
+const ThirdMonthversary = () => {
+  const history = useHistory();
   const [stage, setStage] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
   const [showSparkle, setShowSparkle] = useState(false);
+  const [sparkles, setSparkles] = useState([]);
   const [now, setNow] = useState(new Date());
 
   const isLocked = now < UNLOCK_DATE;
+  const currentStageCopy = stageCopy[stage] || stageCopy[stageCopy.length - 1];
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000);
@@ -180,20 +263,37 @@ const FourthMonthversary = () => {
     setTransitioning(true);
 
     if (stage === 4) {
-      // Final unwrap — trigger sparkle + reveal
+      setSparkles(createSparkles());
       setShowSparkle(true);
       setTimeout(() => {
         setStage(5);
         setTransitioning(false);
         setShowSparkle(false);
+        setSparkles([]);
       }, 800);
     } else {
       setTimeout(() => {
-        setStage(stage + 1);
+        setStage((prev) => prev + 1);
         setTransitioning(false);
       }, 600);
     }
   };
+
+  const handleGiftKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleTap();
+    }
+  };
+
+  const handleReplay = () => {
+    setStage(0);
+    setTransitioning(false);
+    setShowSparkle(false);
+    setSparkles([]);
+  };
+
+  const handleBack = () => history.push('/mimi/monthversary');
 
   // ── COUNTDOWN ──
   if (isLocked) {
@@ -204,24 +304,31 @@ const FourthMonthversary = () => {
 
     return (
       <div style={styles.page}>
-        <div style={styles.countdownWrapper}>
-          <p style={styles.countdownLabel}>4th monthversary</p>
-          <h1 style={styles.countdownTitle}>Not yet</h1>
-          <p style={styles.countdownSub}>Come back on May 26</p>
-          <div style={styles.countdownTimer}>
-            {[
-              { value: days, label: 'days' },
-              { value: hours, label: 'hrs' },
-              { value: minutes, label: 'min' },
-              { value: seconds, label: 'sec' },
-            ].map((unit) => (
-              <div key={unit.label} style={styles.countdownUnit}>
-                <span style={styles.countdownValue}>{unit.value}</span>
-                <span style={styles.countdownLabelSmall}>{unit.label}</span>
-              </div>
-            ))}
+        <div style={styles.countdownShell}>
+          <div style={styles.topActionRow}>
+            <button type="button" style={styles.secondaryButton} onClick={handleBack}>
+              ← back to our garden
+            </button>
           </div>
-          <p style={styles.countdownHint}>Patience is part of the gift.</p>
+          <div style={styles.countdownWrapper}>
+            <p style={styles.countdownLabel}>3rd monthversary</p>
+            <h1 style={styles.countdownTitle}>Not yet</h1>
+            <p style={styles.countdownSub}>Come back on May 26</p>
+            <div style={styles.countdownTimer}>
+              {[
+                { value: days, label: 'days' },
+                { value: hours, label: 'hrs' },
+                { value: minutes, label: 'min' },
+                { value: seconds, label: 'sec' },
+              ].map((unit) => (
+                <div key={unit.label} style={styles.countdownUnit}>
+                  <span style={styles.countdownValue}>{unit.value}</span>
+                  <span style={styles.countdownLabelSmall}>{unit.label}</span>
+                </div>
+              ))}
+            </div>
+            <p style={styles.countdownHint}>Patience is part of the gift.</p>
+          </div>
         </div>
         <style>{`
           @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -232,56 +339,68 @@ const FourthMonthversary = () => {
 
   // ── REVEALED MESSAGE (typewriter) ──
   if (stage === 5) {
-    return <TypewriterMessage playlist={playlist} />;
+    return <TypewriterMessage playlist={playlist} onReplay={handleReplay} onBack={handleBack} />;
   }
 
   // ── GIFT UNWRAP ──
   return (
     <div style={styles.page}>
       <div style={styles.giftWrapper}>
-        <p style={styles.giftTopLabel}>4th monthversary</p>
+        <div style={styles.topActionRow}>
+          <button type="button" style={styles.secondaryButton} onClick={handleBack}>
+            ← back to our garden
+          </button>
+          <span style={styles.giftStepBadge}>step {stage + 1} of 5</span>
+        </div>
 
-        <div style={styles.giftContainer} onClick={handleTap}>
-          {/* Sparkle burst */}
+        <p style={styles.giftTopLabel}>3rd monthversary</p>
+        <p style={styles.giftLead}>A small gift for you. Open it slowly — that&apos;s part of the charm.</p>
+
+        <div
+          style={styles.giftContainer}
+          onClick={handleTap}
+          onKeyDown={handleGiftKeyDown}
+          role="button"
+          tabIndex={0}
+          aria-label={currentStageCopy.prompt}
+        >
+          <div style={styles.giftShadow} />
+
           {showSparkle && (
             <div style={styles.sparkleContainer}>
-              {[...Array(12)].map((_, i) => (
+              {sparkles.map((sparkle) => (
                 <div
-                  key={i}
+                  key={sparkle.id}
                   style={{
                     ...styles.sparkle,
-                    '--angle': `${i * 30}deg`,
-                    '--distance': `${60 + Math.random() * 40}px`,
-                    animationDelay: `${i * 0.05}s`,
+                    '--tx': sparkle.tx,
+                    '--ty': sparkle.ty,
+                    animationDelay: sparkle.delay,
                   }}
                 />
               ))}
             </div>
           )}
 
-          {/* The box itself */}
           <div style={{
             ...styles.boxBody,
             ...(transitioning ? styles.boxBodyShake : {}),
           }}>
-            {/* Box base color */}
             <div style={styles.boxBase} />
+            <div style={styles.boxBaseHighlight} />
 
-            {/* Vertical ribbon */}
             <div style={{
               ...styles.ribbonVertical,
               opacity: stage < 2 ? 1 : 0,
               transform: stage >= 2 ? 'scaleX(0)' : 'scaleX(1)',
             }} />
 
-            {/* Horizontal ribbon */}
             <div style={{
               ...styles.ribbonHorizontal,
               opacity: stage < 2 ? 1 : 0,
               transform: stage >= 2 ? 'scaleY(0)' : 'scaleY(1)',
             }} />
 
-            {/* Ribbon bow */}
             <div style={{
               ...styles.ribbonBow,
               opacity: stage < 2 ? 1 : 0,
@@ -292,14 +411,12 @@ const FourthMonthversary = () => {
               <div style={styles.bowCenter} />
             </div>
 
-            {/* Wrapping paper — stage 0 only */}
             <div style={{
               ...styles.wrappingPaper,
               opacity: stage === 0 ? 1 : 0,
               transform: stage === 0 ? 'scale(1)' : 'scale(1.1)',
             }} />
 
-            {/* Box lid — stages 0-2 */}
             <div style={{
               ...styles.boxLid,
               opacity: stage < 3 ? 1 : 0,
@@ -309,7 +426,6 @@ const FourthMonthversary = () => {
               <div style={styles.lidRibbon} />
             </div>
 
-            {/* Tissue paper — stage 3 */}
             <div style={{
               ...styles.tissuePaper,
               opacity: stage === 3 ? 1 : 0,
@@ -320,38 +436,24 @@ const FourthMonthversary = () => {
               <div style={styles.tissueFold3} />
             </div>
 
-            {/* Glow from inside — stage 4 */}
             <div style={{
               ...styles.insideGlow,
               opacity: stage === 4 ? 1 : 0,
             }} />
           </div>
 
-          {/* Tap prompt */}
           <p style={{
             ...styles.tapPrompt,
             opacity: transitioning ? 0 : 1,
           }}>
-            {stage === 0 && 'Tap to unwrap'}
-            {stage === 1 && 'Tap to untie the ribbon'}
-            {stage === 2 && 'Tap to open the lid'}
-            {stage === 3 && 'Tap to peek inside'}
-            {stage === 4 && 'Tap to open'}
+            {currentStageCopy.prompt}
           </p>
 
-          {/* Tease text */}
           {!transitioning && (
-            <p style={styles.teaseText}>
-              {stage === 0 && 'Go on... I dare you.'}
-              {stage === 1 && 'Not so fast, enjoy it a little.'}
-              {stage === 2 && 'Careful now...'}
-              {stage === 3 && 'Almost there... or is it?'}
-              {stage === 4 && 'This is it. Ready?'}
-            </p>
+            <p style={styles.teaseText}>{currentStageCopy.tease}</p>
           )}
         </div>
 
-        {/* Progress */}
         <div style={styles.progressDots}>
           {[0, 1, 2, 3, 4].map((i) => (
             <div
@@ -372,7 +474,7 @@ const FourthMonthversary = () => {
         @keyframes shake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-2deg); } 75% { transform: rotate(2deg); } }
         @keyframes sparkle {
           0% { transform: translate(0, 0) scale(1); opacity: 1; }
-          100% { transform: translate(calc(cos(var(--angle)) * var(--distance)), calc(sin(var(--angle)) * var(--distance))) scale(0); opacity: 0; }
+          100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
         }
         @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
         @keyframes tapFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
@@ -384,6 +486,7 @@ const FourthMonthversary = () => {
 const styles = {
   page: {
     minHeight: '100vh',
+    width: '100%',
     background: '#0a0a0a',
     backgroundImage: `
       radial-gradient(ellipse at 30% 30%, rgba(183,28,28,0.08) 0%, transparent 50%),
@@ -393,12 +496,50 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '24px 14px',
+    padding: 'calc(22px + env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom))',
     boxSizing: 'border-box',
-    overflow: 'hidden',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+  },
+  topActionRow: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '12px',
+    flexWrap: 'wrap',
+  },
+  messageActionGroup: {
+    display: 'flex',
+    gap: '10px',
+    flexWrap: 'wrap',
+  },
+  secondaryButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '6px',
+    padding: '10px 14px',
+    background: 'rgba(255,255,255,0.04)',
+    color: 'rgba(255,255,255,0.72)',
+    border: '1px solid rgba(255,255,255,0.08)',
+    borderRadius: '999px',
+    fontFamily: "'Lora', Georgia, serif",
+    fontSize: '13px',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.25s ease',
+    backdropFilter: 'blur(8px)',
   },
 
   /* Countdown */
+  countdownShell: {
+    width: '100%',
+    maxWidth: '560px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+  },
   countdownWrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -425,7 +566,7 @@ const styles = {
     margin: '0 0 36px 0',
     fontStyle: 'italic',
   },
-  countdownTimer: { display: 'flex', gap: '20px', marginBottom: '32px' },
+  countdownTimer: { display: 'flex', gap: '20px', marginBottom: '32px', flexWrap: 'wrap', justifyContent: 'center' },
   countdownUnit: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' },
   countdownValue: {
     fontFamily: "'Caveat', cursive",
@@ -450,10 +591,12 @@ const styles = {
 
   /* Gift */
   giftWrapper: {
+    width: '100%',
+    maxWidth: '560px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '28px',
+    gap: '20px',
     animation: 'fadeUp 0.8s ease-out both',
   },
   giftTopLabel: {
@@ -463,6 +606,28 @@ const styles = {
     margin: 0,
     letterSpacing: '0.5px',
   },
+  giftLead: {
+    fontSize: '14px',
+    color: 'rgba(255,255,255,0.42)',
+    margin: '-10px 0 4px 0',
+    textAlign: 'center',
+    maxWidth: '420px',
+    lineHeight: 1.7,
+    fontStyle: 'italic',
+  },
+  giftStepBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '8px 12px',
+    borderRadius: '999px',
+    fontSize: '11px',
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    color: 'rgba(255,255,255,0.55)',
+    background: 'rgba(255,255,255,0.04)',
+    border: '1px solid rgba(255,255,255,0.08)',
+  },
   giftContainer: {
     cursor: 'pointer',
     WebkitTapHighlightColor: 'transparent',
@@ -471,6 +636,17 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    outline: 'none',
+  },
+  giftShadow: {
+    position: 'absolute',
+    bottom: '56px',
+    width: '180px',
+    height: '28px',
+    borderRadius: '50%',
+    background: 'radial-gradient(circle, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.12) 55%, transparent 100%)',
+    filter: 'blur(4px)',
+    zIndex: 0,
   },
   boxBody: {
     width: '220px',
@@ -488,6 +664,14 @@ const styles = {
     inset: 0,
     background: 'linear-gradient(135deg, #c0392b 0%, #b71c1c 50%, #8e1a1a 100%)',
     borderRadius: '12px',
+  },
+  boxBaseHighlight: {
+    position: 'absolute',
+    inset: '6px 10px auto 10px',
+    height: '34px',
+    background: 'linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)',
+    borderRadius: '12px',
+    pointerEvents: 'none',
   },
   ribbonVertical: {
     position: 'absolute',
@@ -686,9 +870,12 @@ const styles = {
   /* Revealed message */
   messageWrapper: {
     width: '100%',
-    maxWidth: '520px',
+    maxWidth: '560px',
     animation: 'revealIn 0.7s ease-out both',
     paddingBottom: '80px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
   },
   messageCard: {
     background: 'rgba(255,255,255,0.04)',
@@ -696,6 +883,26 @@ const styles = {
     borderRadius: '20px',
     padding: '32px 28px',
     backdropFilter: 'blur(10px)',
+    boxShadow: '0 20px 60px rgba(0,0,0,0.28)',
+  },
+  messageMetaRow: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+    marginBottom: '14px',
+  },
+  messageSectionLabel: {
+    margin: 0,
+    fontSize: '11px',
+    color: 'rgba(255,255,255,0.4)',
+    letterSpacing: '0.09em',
+    textTransform: 'uppercase',
+  },
+  messageTapHint: {
+    margin: 0,
+    fontFamily: "'Caveat', cursive",
+    fontSize: '17px',
+    color: 'rgba(255,255,255,0.34)',
   },
   messageBadge: {
     display: 'inline-block',
@@ -806,6 +1013,29 @@ const styles = {
     fontStyle: 'italic',
     fontFamily: "'Lora', Georgia, serif",
   },
+  giftOptionGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+    gap: '10px',
+    width: '100%',
+    margin: '10px 0 14px',
+  },
+  giftOptionChip: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    minHeight: '44px',
+    padding: '10px 12px',
+    borderRadius: '14px',
+    color: 'rgba(255,255,255,0.82)',
+    background: 'rgba(255,255,255,0.04)',
+    border: '1px solid rgba(255,255,255,0.08)',
+    textDecoration: 'none',
+    fontSize: '13px',
+    lineHeight: 1.45,
+    fontFamily: "'Lora', Georgia, serif",
+  },
   waButton: {
     display: 'inline-flex',
     alignItems: 'center',
@@ -839,4 +1069,4 @@ const styles = {
   },
 };
 
-export default FourthMonthversary;
+export default ThirdMonthversary;
