@@ -5,18 +5,18 @@ const UNLOCK_DATE = new Date('2026-06-26T00:00:00');
 const JAR_UNLOCK_EVENT = 'monthversary-jar-unlock';
 
 const playlist = [
-  { title: 'River Flows In You', artist: 'Yiruma', src: "https://archive.org/download/yiruma-frame-2017/Yiruma%20-%20Frame%20(2017)/11.%20River%20Flows%20In%20You%20('f%20r%20a%20m%20e'%20Ver.).mp3" },
+    { title: 'ILYSB', artist: 'LANY', src: 'https://archive.org/download/LANYILYSBlyricVideo/LANY%20-%20ILYSB%20%28lyric%20video%29.mp3' },
 ];
 
 const notes = [
-  { text: 'Remember when we first started talking? I never thought it would lead to this.', color: '#FFD54F' },
-  { text: 'You have this way of making ordinary days feel special.', color: '#FF8A65' },
-  { text: 'Even when we argue, I am still glad it is with you.', color: '#AED581' },
-  { text: 'I love how you remember the little things I say.', color: '#4FC3F7' },
+  { text: 'Remember when we first started talking and i as a bacon? I never thought it would lead to this.', color: '#FFD54F' },
+  { text: 'You always making ordinary days feel special for me.', color: '#FF8A65' },
+  { text: 'Even when we argue, I am still happy it is with you.', color: '#AED581' },
+  { text: 'I love how you remember the little things about me.', color: '#4FC3F7' },
   { text: 'You are my favorite notification.', color: '#F06292' },
-  { text: 'I still get butterflies when you text me first.', color: '#BA68C8' },
+  { text: 'Talking with you always makes my day better.', color: '#BA68C8' },
   { text: 'Thank you for being patient with me. I know I am not always easy.', color: '#4DB6AC' },
-  { text: 'Four months. And I would choose you again for the next four hundred.', color: '#FFD54F' },
+  { text: 'Four months. And I would choose you again for the next four thousands.', color: '#FFD54F' },
 ];
 
 const FourthMonthversary = () => {
