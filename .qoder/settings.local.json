@@ -23,7 +23,19 @@
       "Bash(npx craco build 2>&1 | tail -25)",
       "Bash(npx craco build 2>&1 | tail -20)",
       "Bash(npx craco build 2>&1 | tail -15)",
-      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npx craco build 2>&1 | tail -15)"
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npx craco build 2>&1 | tail -15)",
+      "Bash(npm run build > /tmp/build_jar.txt 2>&1; echo \"EXIT: $?\")",
+      "Bash(node --version && npm run build > /tmp/build_jar2.txt 2>&1; echo \"EXIT: $?\")",
+      "Bash(rm -rf node_modules/.cache && npm run build > /tmp/build_jar3.txt 2>&1; echo \"EXIT: $?\")",
+      "Bash(rm -rf node_modules/postcss-safe-parser/node_modules/postcss && npm run build > /tmp/build_jar4.txt 2>&1; echo \"EXIT: $?\")",
+      "Bash(lsof -ti :3000 2>/dev/null | xargs kill -9 2>/dev/null; npx craco start > /tmp/dev_jar.txt 2>&1 &\necho \"Starting dev server...\"\nsleep 12\ncat /tmp/dev_jar.txt | tail -20)",
+      "Bash(lsof -ti :3000 2>/dev/null | xargs kill -9 2>/dev/null; NODE_OPTIONS=--openssl-legacy-provider npx craco start > /tmp/dev_jar2.txt 2>&1 &\necho \"Starting dev server with legacy openssl...\"\nsleep 15\ncat /tmp/dev_jar2.txt | tail -25)",
+      "Bash(NODE_OPTIONS=--openssl-legacy-provider npm run build > /tmp/build_jar_final.txt 2>&1; echo \"EXIT: $?\")",
+      "Bash(lsof -ti :3000 2>/dev/null | xargs kill -9 2>/dev/null; NODE_OPTIONS=--openssl-legacy-provider npx craco start > /tmp/dev_final.txt 2>&1 &\necho \"Starting...\"\nsleep 15\ncat /tmp/dev_final.txt | tail -15)",
+      "Bash(sleep 10 && cat /tmp/dev_final.txt | tail -15)",
+      "Bash(sleep 8 && cat /tmp/dev_final.txt | tail -10)",
+      "Bash(sleep 5 && tail -5 /tmp/dev_final.txt)",
+      "WebFetch(*)"
     ]
   }
 }

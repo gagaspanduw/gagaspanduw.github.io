@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as THREE from 'three';
-import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { Tree, TreeType, BarkType, LeafType } from '@dgreenheck/ez-tree';
 import MusicPlayer from './MusicPlayer';
 
@@ -14,6 +14,14 @@ const months = [
     date: 'May 26, 2026',
     hint: 'Tap to unwrap',
     unlockDate: new Date('2026-05-26T00:00:00'),
+  },
+  {
+    number: 4,
+    route: '/mimi/monthversary/4',
+    title: '4th Monthversary',
+    date: 'June 26, 2026',
+    hint: 'Tap to open the jar',
+    unlockDate: new Date('2026-06-26T00:00:00'),
   },
   // { number: 5, route: '/mimi/monthversary/5', title: '5th Monthversary', date: 'June 26, 2026', hint: '...', unlockDate: new Date('2026-06-26T00:00:00') },
   // { number: 6, route: '/mimi/monthversary/6', title: '6th Monthversary', date: 'July 26, 2026', hint: '...', unlockDate: new Date('2026-07-26T00:00:00') },
@@ -108,7 +116,7 @@ function createGrassTuftGeometry() {
     return geometry;
   };
 
-  return mergeBufferGeometries([
+  return BufferGeometryUtils.mergeBufferGeometries([
     makeBlade(0, -0.18, 0, 0, 1),
     makeBlade(Math.PI / 3, 0.12, 0.01, -0.004, 0.92),
     makeBlade(-Math.PI / 3, 0.16, -0.008, 0.006, 0.88),
@@ -358,6 +366,7 @@ export default function ThreeJSTree() {
     const makeTulip = (pos, month) => {
       const g = new THREE.Group();
       g.position.set(...pos);
+      g.scale.set(1.3, 1.3, 1.3);
 
       const color = tulipColors[Math.floor(Math.random() * tulipColors.length)];
       const baseCol = new THREE.Color(color);
@@ -665,6 +674,146 @@ export default function ThreeJSTree() {
       }
     }
 
+    // ── Bunny + carrot (appears when 4th monthversary blooms) ──
+    let bunny = null;
+    let bunnyBody = null;
+    const bunnyEars = [];
+    const hasBunny = unlocked.some((m) => m.number >= 4);
+
+    if (hasBunny) {
+      bunny = new THREE.Group();
+      const furMat = new THREE.MeshPhongMaterial({ color: 0xF5F0E8, shininess: 2 });
+      const noseMat = new THREE.MeshPhongMaterial({ color: 0xE91E63, shininess: 20 });
+      const earInnerMat = new THREE.MeshPhongMaterial({ color: 0xF8BBD0, shininess: 3, side: THREE.DoubleSide });
+      const carrotMat = new THREE.MeshPhongMaterial({ color: 0xFF6F00, shininess: 8 });
+      const leafMat = new THREE.MeshPhongMaterial({ color: 0x4CAF50, shininess: 5 });
+
+      // Body — smooth pear shape via LatheGeometry
+      const bodyProfile = [
+        new THREE.Vector2(0.00, 0.00),
+        new THREE.Vector2(0.06, 0.01),
+        new THREE.Vector2(0.11, 0.04),
+        new THREE.Vector2(0.15, 0.10),
+        new THREE.Vector2(0.16, 0.16),
+        new THREE.Vector2(0.14, 0.23),
+        new THREE.Vector2(0.10, 0.29),
+        new THREE.Vector2(0.05, 0.33),
+        new THREE.Vector2(0.01, 0.35),
+        new THREE.Vector2(0.00, 0.36),
+      ];
+      bunnyBody = new THREE.Mesh(new THREE.LatheGeometry(bodyProfile, 24), furMat);
+      bunny.add(bunnyBody);
+
+      // Head — slightly flattened sphere on top
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.1, 20, 18), furMat);
+      head.scale.set(1, 0.95, 1.05);
+      head.position.set(0, 0.38, 0.04);
+      bunny.add(head);
+
+      // Ears — flat shaped geometry, like real rabbit ears
+      const earShape = new THREE.Shape();
+      earShape.moveTo(0, 0);
+      earShape.bezierCurveTo(0.022, 0.02, 0.025, 0.08, 0.018, 0.13);
+      earShape.bezierCurveTo(0.012, 0.16, 0.005, 0.17, 0, 0.17);
+      earShape.bezierCurveTo(-0.005, 0.17, -0.012, 0.16, -0.018, 0.13);
+      earShape.bezierCurveTo(-0.025, 0.08, -0.022, 0.02, 0, 0);
+
+      for (let i = 0; i < 2; i++) {
+        const earGroup = new THREE.Group();
+        // Outer ear
+        const earGeo = new THREE.ShapeGeometry(earShape, 12);
+        const ear = new THREE.Mesh(earGeo, furMat);
+        ear.material.side = THREE.DoubleSide;
+        earGroup.add(ear);
+        // Inner ear — pink, slightly smaller
+        const innerScale = 0.65;
+        const earInner = new THREE.Mesh(earGeo.clone(), earInnerMat);
+        earInner.scale.set(innerScale, innerScale, 1);
+        earInner.position.z = 0.003;
+        earGroup.add(earInner);
+
+        earGroup.position.set(i === 0 ? -0.05 : 0.05, 0.42, 0.02);
+        earGroup.rotation.z = i === 0 ? 0.12 : -0.12;
+        earGroup.rotation.x = -0.15;
+        earGroup.scale.set(1.3, 1.3, 1);
+        bunny.add(earGroup);
+        bunnyEars.push(earGroup);
+      }
+
+      // Eyes — positioned on head surface, using MeshBasicMaterial for visibility
+      const eyeMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+      for (let i = 0; i < 2; i++) {
+        const eye = new THREE.Mesh(new THREE.SphereGeometry(0.015, 12, 12), eyeMat);
+        eye.position.set(i === 0 ? -0.06 : 0.06, 0.385, 0.135);
+        bunny.add(eye);
+        const highlight = new THREE.Mesh(
+          new THREE.SphereGeometry(0.005, 6, 6),
+          new THREE.MeshBasicMaterial({ color: 0xffffff }),
+        );
+        highlight.position.set(i === 0 ? -0.055 : 0.065, 0.39, 0.145);
+        bunny.add(highlight);
+      }
+
+      // Nose
+      const nose = new THREE.Mesh(new THREE.SphereGeometry(0.01, 10, 10), noseMat);
+      nose.position.set(0, 0.355, 0.13);
+      bunny.add(nose);
+
+      // Front paws
+      for (let i = 0; i < 2; i++) {
+        const paw = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 8), furMat);
+        paw.scale.set(0.7, 1.2, 0.8);
+        paw.position.set(i === 0 ? -0.05 : 0.05, 0.03, 0.1);
+        bunny.add(paw);
+      }
+
+      // Tail
+      const tail = new THREE.Mesh(new THREE.SphereGeometry(0.04, 12, 10), furMat);
+      tail.position.set(0, 0.12, -0.14);
+      bunny.add(tail);
+
+      // Position bunny on ground, facing the tree
+      const bunnyDist = Math.max(1.3, P.canopyRadius * 0.65);
+      const bunnyAngle = -0.4;
+      bunny.position.set(
+        Math.cos(bunnyAngle) * bunnyDist,
+        GROUND_Y,
+        Math.sin(bunnyAngle) * bunnyDist,
+      );
+      bunny.rotation.y = -bunnyAngle - Math.PI / 2;
+      scene.add(bunny);
+
+      // Carrot — bigger, lying on ground in front of bunny (toward the tree)
+      const carrotGroup = new THREE.Group();
+      const carrot = new THREE.Mesh(
+        new THREE.ConeGeometry(0.06, 0.22, 10),
+        carrotMat,
+      );
+      carrot.rotation.z = Math.PI / 2;
+      carrot.position.x = 0.05;
+      carrotGroup.add(carrot);
+      // Leaves — at the wide end of the carrot
+      for (let i = 0; i < 4; i++) {
+        const leaf = new THREE.Mesh(
+          new THREE.ConeGeometry(0.015, 0.06, 5),
+          leafMat,
+        );
+        leaf.position.set(-0.12, 0.01, (i - 1.5) * 0.012);
+        leaf.rotation.z = -Math.PI / 2 + (i - 1.5) * 0.25;
+        carrotGroup.add(leaf);
+      }
+      const bunnyX = Math.cos(bunnyAngle) * bunnyDist;
+      const bunnyZ = Math.sin(bunnyAngle) * bunnyDist;
+      const carrotOffset = 0.3;
+      carrotGroup.position.set(
+        bunnyX - Math.cos(bunnyAngle) * carrotOffset,
+        GROUND_Y + 0.06,
+        bunnyZ - Math.sin(bunnyAngle) * carrotOffset,
+      );
+      carrotGroup.rotation.y = bunnyAngle + Math.PI / 2;
+      scene.add(carrotGroup);
+    }
+
     // ── Stars ──
     const starSprites = [];
     const starMeta = [];
@@ -842,6 +991,15 @@ export default function ThreeJSTree() {
       });
 
       rootGlow.intensity = 0.3 + Math.sin(t * 0.8) * 0.1;
+
+      // Bunny — subtle breathing + ear twitch (no hop)
+      if (bunny && bunnyBody) {
+        const breath = 1 + Math.sin(t * 1.5) * 0.015;
+        bunnyBody.scale.set(1, breath, 1);
+        bunnyEars.forEach((ear, i) => {
+          ear.rotation.x = -0.15 + Math.sin(t * 2.5 + i * 2) * 0.04;
+        });
+      }
 
       renderer.render(scene, camera);
     };

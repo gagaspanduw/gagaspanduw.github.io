@@ -25,7 +25,6 @@ const MusicPlayer = ({ playlist, startIndex = 0, loop = false, promptText = 'Tap
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (!autoplayOnMount) return;
     if (!shouldAutoplayRef.current) return;
 
     let cancelled = false;
@@ -48,12 +47,15 @@ const MusicPlayer = ({ playlist, startIndex = 0, loop = false, promptText = 'Tap
     }, 1800);
 
     audio.load();
-    attemptAutoplay();
 
-    audio.addEventListener('loadedmetadata', attemptAutoplay);
-    audio.addEventListener('loadeddata', attemptAutoplay);
-    audio.addEventListener('canplay', attemptAutoplay);
-    audio.addEventListener('canplaythrough', attemptAutoplay);
+    if (autoplayOnMount) {
+      attemptAutoplay();
+
+      audio.addEventListener('loadedmetadata', attemptAutoplay);
+      audio.addEventListener('loadeddata', attemptAutoplay);
+      audio.addEventListener('canplay', attemptAutoplay);
+      audio.addEventListener('canplaythrough', attemptAutoplay);
+    }
 
     return () => {
       cancelled = true;

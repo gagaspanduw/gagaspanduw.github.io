@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import MusicPlayer from '../MusicPlayer';
 
 const UNLOCK_DATE = new Date('2026-05-26T00:00:00');
+const GIFT_UNLOCK_EVENT = 'monthversary-gift-unlock';
 
 const playlist = [
   { title: 'River Flows In You', artist: 'Yiruma', src: "https://archive.org/download/yiruma-frame-2017/Yiruma%20-%20Frame%20(2017)/11.%20River%20Flows%20In%20You%20('f%20r%20a%20m%20e'%20Ver.).mp3" },
@@ -56,6 +57,10 @@ const TypewriterMessage = ({ playlist, onReplay, onBack }) => {
   const [typedWords, setTypedWords] = useState({});
   const [done, setDone] = useState(false);
   const bottomRef = useRef(null);
+
+  useEffect(() => {
+    window.dispatchEvent(new Event(GIFT_UNLOCK_EVENT));
+  }, []);
 
   useEffect(() => {
     if (visibleBlocks >= messageBlocks.length) {
@@ -221,7 +226,14 @@ const TypewriterMessage = ({ playlist, onReplay, onBack }) => {
         </div>
       </div>
 
-      {done && <MusicPlayer playlist={playlist} startIndex={0} loop={true} promptText="Tap to play our song" />}
+      <MusicPlayer
+        playlist={playlist}
+        startIndex={0}
+        loop={true}
+        autoplayOnMount={false}
+        unlockEventName={GIFT_UNLOCK_EVENT}
+        showPromptUi={false}
+      />
 
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -239,6 +251,7 @@ const ThirdMonthversary = () => {
   const [showSparkle, setShowSparkle] = useState(false);
   const [sparkles, setSparkles] = useState([]);
   const [now, setNow] = useState(new Date());
+  const musicUnlocked = useRef(false);
 
   const isLocked = now < UNLOCK_DATE;
   const currentStageCopy = stageCopy[stage] || stageCopy[stageCopy.length - 1];
@@ -260,6 +273,12 @@ const ThirdMonthversary = () => {
 
   const handleTap = () => {
     if (transitioning || stage >= 5) return;
+
+    if (!musicUnlocked.current) {
+      musicUnlocked.current = true;
+      window.dispatchEvent(new Event(GIFT_UNLOCK_EVENT));
+    }
+
     setTransitioning(true);
 
     if (stage === 4) {
@@ -467,6 +486,14 @@ const ThirdMonthversary = () => {
           ))}
         </div>
       </div>
+
+      <MusicPlayer
+        playlist={playlist}
+        loop={true}
+        autoplayOnMount={false}
+        unlockEventName={GIFT_UNLOCK_EVENT}
+        showPromptUi={false}
+      />
 
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
