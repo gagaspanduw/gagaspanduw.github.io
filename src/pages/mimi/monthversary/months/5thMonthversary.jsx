@@ -10,8 +10,8 @@ const playlist = [
 
 const stars = [
   { text: 'Five months ago, I didn\'t know my whole sky was about to change.', x: 18, y: 14 },
-  { text: 'I love that even our silences feel like home.', x: 70, y: 20 },
-  { text: 'Every argument we survived just proved we are not giving up on this.', x: 35, y: 45 },
+  { text: 'Five months feels like a five minutes, and i need a hundred more.', x: 70, y: 20 },
+  { text: 'I love that we can be weird together and call it normal.', x: 35, y: 45 },
   { text: 'Thank you for loving me even on days I forget to love myself.', x: 75, y: 60 },
   { text: 'Five months. And you are still my favorite constellation.', x: 30, y: 78 },
 ];
@@ -253,7 +253,7 @@ const FifthMonthversary = () => {
 
           <div style={styles.finalCard}>
             <p style={styles.finalPara}>
-              Five stars. Five months. Five reasons I kept choosing you. And honestly, I ran out of sky — there are a thousand more I could have written.
+              Five stars. Five months. Five reasons I kept choosing you, and honestly, I ran out of sky there are a thousand more I could have written.
             </p>
             <p style={styles.finalPara}>
               Five months with you and I still feel like I am in the beginning of something that does not have an ending. You make forever feel too short.
@@ -262,7 +262,7 @@ const FifthMonthversary = () => {
               You are not just someone in my sky. You are the whole sky. Every star, every color, every quiet night that feels like enough because you are in it.
             </p>
             <p style={styles.finalPara}>
-              Here is to five months behind us, and every single one ahead. I am not going anywhere.
+              Here is to five months behind us, and every single one ahead. I am not going anywhere and i will gonna love you for the rest of my life.
             </p>
             <div style={styles.finalSignature}>
               <p style={styles.finalSigLine}>Yours, under every sky</p>
