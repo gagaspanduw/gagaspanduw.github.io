@@ -19,6 +19,7 @@ import ForMimi from './pages/mimi/forMimi';
 import IfYoureReady from './pages/mimi/ifYoureReady';
 import ThirdMonthversary from './pages/mimi/monthversary/months/1-3rdMonthversary';
 import FourthMonthversary from './pages/mimi/monthversary/months/4thMonthversary';
+import FifthMonthversary from './pages/mimi/monthversary/months/5thMonthversary';
 
 // Tools
 import BugReportBuilder from './pages/tools/BugReportBuilder';
@@ -28,7 +29,7 @@ import ToolsIndex from './pages/tools/index';
 
 const ThreeJSTree = lazy(() => import('./pages/mimi/monthversary/ThreeJSTree'));
 
-const immersiveRoutes = ['/mimi/if-youre-ready', '/mimi/monthversary', '/mimi/monthversary/3', '/mimi/monthversary/4'];
+const immersiveRoutes = ['/mimi/if-youre-ready', '/mimi/monthversary', '/mimi/monthversary/3', '/mimi/monthversary/4', '/mimi/monthversary/5'];
 
 function AppLayout() {
   const location = useLocation();
@@ -51,6 +52,7 @@ function AppLayout() {
             <Route path="/mimi/monthversary" exact component={ThreeJSTree}/>
             <Route path="/mimi/monthversary/3" exact component={ThirdMonthversary}/>
             <Route path="/mimi/monthversary/4" exact component={FourthMonthversary}/>
+            <Route path="/mimi/monthversary/5" exact component={FifthMonthversary}/>
             <Route path="/tools/bug-report" exact component={BugReportBuilder}/>
             <Route path="/tools/test-case" exact component={TestCaseGenerator}/>
             <Route path="/tools/api-playground" exact component={ApiPlayground}/>
