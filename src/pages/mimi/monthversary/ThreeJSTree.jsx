@@ -31,7 +31,14 @@ const months = [
     hint: 'Tap to look at the stars',
     unlockDate: new Date('2026-07-26T00:00:00'),
   },
-  // { number: 6, route: '/mimi/monthversary/6', title: '6th Monthversary', date: 'July 26, 2026', hint: '...', unlockDate: new Date('2026-07-26T00:00:00') },
+  {
+    number: 6,
+    route: '/mimi/monthversary/6',
+    title: '6th Monthversary',
+    date: 'August 26, 2026',
+    hint: 'Look what grew',
+    unlockDate: new Date('2026-08-26T00:00:00'),
+  },
   // { number: 7, route: '/mimi/monthversary/7', title: '7th Monthversary', date: 'August 26, 2026', hint: '...', unlockDate: new Date('2026-08-26T00:00:00') },
   // { number: 8, route: '/mimi/monthversary/8', title: '8th Monthversary', date: 'September 26, 2026', hint: '...', unlockDate: new Date('2026-09-26T00:00:00') },
 ];

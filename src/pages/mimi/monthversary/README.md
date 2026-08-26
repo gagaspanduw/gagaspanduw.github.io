@@ -18,18 +18,18 @@ A growing tree of monthly surprises — each monthversary is a fruit on our tree
 
 Each month alternates between **interactive** (she has to do something) and **passive** (she just enjoys). Never two of the same type in a row.
 
-| Month # | Miv | Format | Type | Description |
-|---------|-----|--------|------|-------------|
-| 1 | 4th | Gift unwrap | Interactive | Layered gift box — unwrap wrapping, ribbon, lid, tissue to reveal the message |
-| 2 | 5th | Chat story | Passive | Fake WhatsApp/iMessage thread where messages appear one by one with typing indicators |
-| 3 | 6th | Trivia game | Interactive | "How well do you know us?" quiz — she has to answer correctly to unlock the love letter at the end |
-| 4 | 7th | Star map | Passive | A night sky where each star is a memory — tap stars to see what happened on that date |
-| 5 | 8th | Scratch card | Interactive | Scratch-to-reveal cards with reasons you love her — satisfying scratch effect |
-| 6 | 9th | Music box | Passive | Animated music box that opens and plays "your song" with lyrics scrolling |
-| 7 | 10th | Puzzle | Interactive | Drag puzzle pieces to complete a photo/image — message appears when done |
-| 8 | 11th | Letter from future | Passive | "A letter from us, 1 year from now" — written as if you're looking back |
-| 9 | 12th | Time capsule | Interactive | She picks from sealed envelopes — each has a different memory/promise/photo |
-| 10 | 13th | Movie credits | Passive | Animated movie-style credits rolling your relationship highlights with soundtrack |
+| Month # | Miv | File | Format | Type | Status |
+|---------|-----|------|--------|------|--------|
+| 1 | 3rd | `1-3rdMonthversary.jsx` | Gift unwrap | Interactive | ✅ Shipped |
+| 2 | 4th | `4thMonthversary.jsx` | Notes jar (pull a note) | Passive | ✅ Shipped |
+| 3 | 5th | `5thMonthversary.jsx` | Star map (tap a star) | Passive | ✅ Shipped |
+| 4 | 6th | `6thMonthversary.jsx` | Love in Bloom (flower garden) | Interactive | ✅ Shipped |
+| 5 | 7th | TBD | Scratch card | Interactive | 📋 Planned |
+| 6 | 8th | TBD | Music box | Passive | 📋 Planned |
+| 7 | 9th | TBD | Puzzle | Interactive | 📋 Planned |
+| 8 | 10th | TBD | Letter from future | Passive | 📋 Planned |
+| 9 | 11th | TBD | Time capsule | Interactive | 📋 Planned |
+| 10 | 12th | TBD | Movie credits | Passive | 📋 Planned |
 
 ### Structure
 

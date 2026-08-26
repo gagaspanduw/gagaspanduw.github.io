@@ -14,6 +14,17 @@ const months = [
     cx: 50,
     cy: 30,
   },
+  {
+    number: 6,
+    route: '/mimi/monthversary/6',
+    title: '6th Monthversary',
+    date: 'August 26, 2026',
+    hint: 'Look what grew',
+    emoji: '🌸',
+    unlockDate: new Date('2026-08-26T00:00:00'),
+    cx: 32,
+    cy: 20,
+  },
   // Future months — positioned throughout the canopy
   // { number: 5, route: '/mimi/monthversary/5', title: '5th Monthversary', date: 'June 26, 2026', hint: '...', emoji: '🍊', unlockDate: new Date('2026-06-26T00:00:00'), cx: 32, cy: 24 },
   // { number: 6, route: '/mimi/monthversary/6', title: '6th Monthversary', date: 'July 26, 2026', hint: '...', emoji: '🍋', unlockDate: new Date('2026-07-26T00:00:00'), cx: 68, cy: 26 },
